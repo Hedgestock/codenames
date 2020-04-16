@@ -1,0 +1,12 @@
+{
+  "background_color": "#3367D6",
+  "description": "A card game for my friends",
+  "display": "fullscreen",
+  "icons": [],
+  "name": "Codenames but better by Hedgestock",
+  "permissions": ["cookies", "tabs", "http://192.168.1.28:8080"],
+  "scope": "/",
+  "short_name": "Codenames",
+  "start_url": "/?source=pwa",
+  "theme_color": "#3367D6"
+}

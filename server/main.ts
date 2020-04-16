@@ -36,7 +36,7 @@ app.get("/chooseName", function (req: any, res: any) {
     );
     res.redirect("/");
   } else {
-    res.send("chooseName" + JSON.stringify(cookie));
+    res.sendFile(path.join(__dirname, "index.html"));
   }
 });
 

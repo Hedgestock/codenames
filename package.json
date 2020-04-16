@@ -1,30 +1,23 @@
 {
-  "name": "codenames",
-  "version": "1.0.0",
-  "description": "A card game to play with friends",
-  "scripts": {
-    "build-server": "tsc -p tsconfig.server.json",
-    "build-dev": "webpack --config webpack.dev.js",
-    "build-ui": "webpack --config webpack.prod.js",
-    "postbuild-ui": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && -r cp ./resources ./out/",
-    "postbuild-dev": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/ && mv ./out/dist/server.js.map ./out/",
-    "start": "nodemon out/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Hedgestock/codenames.git"
-  },
-  "keywords": [
-    "codenames",
-    "card",
-    "game"
-  ],
   "author": "Hedgestock",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Hedgestock/codenames/issues"
   },
-  "homepage": "https://github.com/Hedgestock/codenames#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
+    "cookie": "^0.4.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "ts-loader": "^7.0.0",
+    "uuid": "^7.0.3"
+  },
+  "description": "A card game to play with friends",
   "devDependencies": {
     "@types/cookie": "^0.3.3",
     "@types/cookie-parser": "^1.4.2",
@@ -39,15 +32,20 @@
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
   },
-  "dependencies": {
-    "cookie": "^0.4.0",
-    "cookie-parser": "^1.4.5",
-    "express": "^4.17.1",
-    "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "ts-loader": "^7.0.0",
-    "uuid": "^7.0.3"
-  }
+  "homepage": "https://github.com/Hedgestock/codenames#readme",
+  "keywords": ["codenames", "card", "game"],
+  "license": "ISC",
+  "name": "codenames",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hedgestock/codenames.git"
+  },
+  "scripts": {
+    "build-dev": "webpack --config webpack.dev.js",
+    "build-prod": "webpack --config webpack.prod.js",
+    "postbuild-dev": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/ && mv ./out/dist/server.js.map ./out/",
+    "postbuild-prod": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && -r cp ./resources ./out/",
+    "start": "nodemon out/server.js"
+  },
+  "version": "1.0.0"
 }

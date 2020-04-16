@@ -1,0 +1,49 @@
+{
+  "name": "codenames",
+  "version": "1.0.0",
+  "description": "A card game to play with friends",
+  "scripts": {
+    "build-server": "tsc -p tsconfig.server.json",
+    "build-dev": "webpack --config webpack.dev.js",
+    "build-ui": "webpack --config webpack.prod.js",
+    "postbuild-ui": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/",
+    "postbuild-dev": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/",
+    "start": "nodemon out/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hedgestock/codenames.git"
+  },
+  "keywords": [
+    "codenames",
+    "card",
+    "game"
+  ],
+  "author": "Hedgestock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hedgestock/codenames/issues"
+  },
+  "homepage": "https://github.com/Hedgestock/codenames#readme",
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.6",
+    "@types/node-fetch": "^2.5.6",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ts-loader": "^7.0.0"
+  }
+}

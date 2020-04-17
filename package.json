@@ -41,8 +41,8 @@
     "url": "git+https://github.com/Hedgestock/codenames.git"
   },
   "scripts": {
-    "build-dev": "webpack --config webpack.dev.js",
-    "build-prod": "webpack --config webpack.prod.js",
+    "build-dev": "webpack --config webpack.dev.js --progress",
+    "build-prod": "webpack --config webpack.prod.js --progress",
     "postbuild-dev": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/ && mv ./out/dist/server.js.map ./out/",
     "postbuild-prod": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && -r cp ./resources ./out/",
     "start": "nodemon out/server.js"

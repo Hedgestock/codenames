@@ -4,31 +4,50 @@ import Cookie from "cookie";
 import { fr, en } from "./lang";
 
 export const Store = React.createContext(undefined);
-console.log(Cookie.parse(document.cookie)["codenames.pamarthur.fr.cookie"]);
+const cookieName = "codenames.pamarthur.fr.cookie";
+const cookie = JSON.parse(
+  Cookie.parse(document.cookie)[cookieName].substring(2)
+);
+
+function getLangFromCookie() {
+  switch (cookie.lang) {
+    case "en":
+      return en;
+    case "fr":
+    default:
+      return fr;
+  }
+}
+
 const initialState = {
-  lang: "fr",
-  langRes: fr,
-  username: JSON.parse(Cookie.parse(document.cookie)["codenames.pamarthur.fr.cookie"].substring(2)).name,
+  langRes: getLangFromCookie(),
+  cookieName,
+  cookie,
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_LANG":
-      switch (action.payload) {
+      switch (action.payload.lang) {
         case "en":
           return {
             ...state,
-            lang: action.payload,
+            cookie: { ...state.cookie, lang: action.payload },
             langRes: en,
           };
         case "fr":
         default:
           return {
             ...state,
-            lang: action.payload,
+            cookie: { ...state.cookie, lang: action.payload },
             langRes: fr,
           };
       }
+    case "SET_COOKIE":
+      return {
+        ...state,
+        cookie: action.payload,
+      };
     default:
       return state;
   }

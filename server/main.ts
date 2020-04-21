@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
   if (!cookie || !cookie.userUUID) {
     res.cookie(
       cookieName,
-      { userUUID: uuidv4(), accept: null, darkTheme: false, lang: "fr" },
+      { userUUID: uuidv4(), accept: false, darkTheme: true, lang: "fr" },
       { maxAge: 900000000 }
     );
   }
@@ -34,4 +34,4 @@ app.get("**/*", function (req: any, res: any) {
 });
 
 console.info(`Server is listening at port ${port}`);
-app.listen(port);
+const server = app.listen(port);

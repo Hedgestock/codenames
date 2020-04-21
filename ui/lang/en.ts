@@ -7,6 +7,11 @@ export const en = {
       "This site uses cookie to keep track of your username. Agree or go away.",
     name: "Name",
     title: "Choose a user name",
+    emptyName: "Please enter a name.",
+    cookieError: "Please accept the cookies."
+  },
+  chat:{
+    input: "Chat",
   },
   nameChange: "Change name",
   profile: {

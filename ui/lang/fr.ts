@@ -7,6 +7,11 @@ export const fr = {
       "Ce site utilise des cookies pour se souvenir de votre nom d'utilisateur. Acceptez-le ou partez.",
     name: "Nom",
     title: "Choisissez un nom",
+    emptyName: "Veuillez entrer un nom.",
+    cookieError: "Veuillez accepter les cookies."
+  },
+  chat:{
+    input: "Chat",
   },
   nameChange: "Changer de nom",
   profile: {

@@ -1,4 +1,10 @@
-import { Button, Checkbox, FormControlLabel, Divider, Switch } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Divider,
+  Switch,
+} from "@material-ui/core";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Store } from "../../Store";
@@ -36,7 +42,16 @@ const Profile = () => {
 
   return (
     <div className="page">
-      <div className="page-container" style={{width: "600px"}}>
+      <div
+        className="profile--container"
+        style={{
+          width: "600px",
+          display: "flex",
+          flexFlow: "column",
+          alignItems: "baseline",
+          justifyContent: "center",
+        }}
+      >
         <Button variant="contained" onClick={resetName}>
           {state.langRes.nameChange}
         </Button>

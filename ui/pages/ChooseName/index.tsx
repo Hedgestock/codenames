@@ -8,11 +8,12 @@ const ChooseNameModal = () => {
   const { state, dispatch } = React.useContext(Store);
 
   const [name, setName] = React.useState("");
+  const [error, setError] = React.useState(false);
+  const [help, setHelp] = React.useState("");
   const [warningClassNames, setWarningClassNames] = React.useState(
     "choose-name--cell"
   );
 
-  const history = useHistory();
   const theme = useTheme();
 
   const containerStyle = {
@@ -22,14 +23,27 @@ const ChooseNameModal = () => {
   function onNameChoose() {
     if (!state.cookie.accept) {
       setWarningClassNames(warningClassNames + " error--cell");
-    } else if (name.length > 0) {
-      setCookie(state.cookieName, { ...state.cookie, name }, dispatch);
+      setHelp(state.langRes.chooseName.cookieError);
+      setError(true);
+    } else if (name.trim().length <= 0) {
+      setHelp(state.langRes.chooseName.emptyName);
+      setError(true);
+    } else {
+      setCookie(
+        state.cookieName,
+        { ...state.cookie, name: name.trim() },
+        dispatch
+      );
       setName("");
+      setHelp("");
+      setError(false);
     }
   }
 
   function onCookieAccept() {
     setCookie(state.cookieName, { ...state.cookie, accept: true }, dispatch);
+    setHelp("");
+    setError(false);
   }
 
   return (
@@ -38,10 +52,12 @@ const ChooseNameModal = () => {
         <Typography variant="h4">{state.langRes.chooseName.title}</Typography>
         <div className="choose-name--cell">
           <TextField
+            error={error}
             label={state.langRes.chooseName.name}
             variant="outlined"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            helperText={help}
           />
           <Button variant="contained" color="primary" onClick={onNameChoose}>
             {state.langRes.chooseName.choose}

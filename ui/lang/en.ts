@@ -1,4 +1,7 @@
 export const en = {
+  home: {
+    createGame: "Create game."
+  },
   chooseName: {
     accept: "Accept",
     agree: "Agree",

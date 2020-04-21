@@ -1,4 +1,7 @@
 export const fr = {
+  home: {
+    createGame: "Créer une partie."
+  },
   chooseName: {
     accept: "J'accepte",
     agree: "Je suis d'accord",

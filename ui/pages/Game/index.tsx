@@ -1,13 +1,18 @@
 import * as React from "react";
 import { Store } from "../../Store";
 import Board from "./Board";
-import { TextField } from "@material-ui/core";
 import GameChat from "./Chat";
-import { InsertChartOutlinedTwoTone } from "@material-ui/icons";
 import GameHistory from "./History";
 
-const Test = () => {
+interface GameProps {
+  guid: string;
+}
+
+const Test = ({ guid }: GameProps) => {
+
   const { state, dispatch } = React.useContext(Store);
+
+  const eventSource = new EventSource(`/sse/${guid}`);
 
   return (
     <div className="page">
@@ -22,7 +27,11 @@ const Test = () => {
       >
         <GameHistory />
         <Board />
-        <GameChat inputLabel={state.langRes.chat.input}/>
+        <GameChat
+          inputLabel={state.langRes.chat.input}
+          guid={guid}
+          eventSource={eventSource}
+        />
       </div>
     </div>
   );

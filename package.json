@@ -10,17 +10,19 @@
     "cookie-parser": "^1.4.5",
     "cookies": "^0.8.0",
     "express": "^4.17.1",
+    "express-sse": "^0.5.3",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
-    "socket.io": "^2.3.0",
     "ts-loader": "^7.0.0",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "uws": "^10.148.1"
   },
   "description": "A card game to play with friends",
   "devDependencies": {
+    "@types/body-parser": "^1.19.0",
     "@types/cookie": "^0.3.3",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.6",
@@ -29,6 +31,8 @@
     "@types/react-dom": "^16.9.6",
     "@types/socket.io": "^2.1.4",
     "@types/uuid": "^7.0.2",
+    "body-parser": "^1.19.0",
+    "socket.io": "^2.3.0",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
@@ -48,10 +52,14 @@
     "url": "git+https://github.com/Hedgestock/codenames.git"
   },
   "scripts": {
-    "build-dev": "webpack --config webpack.dev.js --progress",
-    "build-prod": "webpack --config webpack.prod.js --progress",
-    "postbuild-dev": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/ && mv ./out/dist/server.js.map ./out/",
-    "postbuild-prod": "mv ./out/dist/server.js ./out/ && cp ./ui/index.html ./out/ && cp -r ./resources ./out/",
+    "build-server": "webpack --config webpack.server.js --progress",
+    "build-server-dev": "webpack --config webpack.server.dev.js --progress",
+    "build-ui": "webpack --config webpack.ui.js --progress",
+    "build-ui-dev": "webpack --config webpack.ui.dev.js --progress",
+    "postbuild-server": "mv ./out/dist/server.js ./out/",
+    "postbuild-server-dev": "mv ./out/dist/server.js ./out/ && mv ./out/dist/server.js.map ./out/",
+    "postbuild-ui": "cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/",
+    "postbuild-ui-dev": "npm run postbuild-ui",
     "start": "nodemon out/server.js"
   },
   "version": "1.0.0"

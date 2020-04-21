@@ -1,12 +1,11 @@
 module.exports = {
   entry: {
     app: "./ui/index.tsx",
-    server: "./server/main.ts",
   },
   module: {
     rules: [
       {
-        exclude: ["/node_modules/"],
+        exclude: ["/node_modules/", "/server/"],
         loader: "ts-loader",
         test: /\.ts(x?)$/,
       },
@@ -20,9 +19,4 @@ module.exports = {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
   },
-  target: "node",
-  node: {
-    __dirname: false,
-    __filename: false,
-  }
 };

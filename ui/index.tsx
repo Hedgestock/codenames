@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import { Store, StoreProvider } from "./Store";
 import theme from "./theme";
-import Test from "./pages/Test";
+import Game from "./pages/Game";
 
 const App = () => {
   const { state, dispatch } = React.useContext(Store);
@@ -22,8 +22,11 @@ const App = () => {
           {state.cookie.name ? null : <ChooseNameModal />}
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/test" exact component={Test} />
-            <Route path="/profile" exact component={Profile} />
+            <Route
+              path="/:guid([0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12})"
+              render={({ match }: any) => <Game guid={match.params.guid} />}
+            />
+            <Route path="/profile" component={Profile} />
             <Route component={NotFound} />
           </Switch>
         </>

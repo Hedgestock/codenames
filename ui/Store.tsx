@@ -6,7 +6,7 @@ import { fr, en } from "./lang";
 export const Store = React.createContext(undefined);
 const cookieName = "codenames.pamarthur.fr.cookie";
 const cookie = JSON.parse(
-  Cookie.parse(document.cookie)[cookieName].substring(2)
+  Cookie.parse(document.cookie)[cookieName]
 );
 
 function getLangFromCookie() {

@@ -9,12 +9,15 @@ module.exports = {
         exclude: ["/node_modules/", "/ui/"],
         loader: "ts-loader",
         test: /\.ts(x?)$/,
+        options: {
+          configFile: "server.tsconfig.json",
+        },
       },
     ],
   },
   output: {
     filename: "[name].js",
-    path: __dirname + "/out/dist",
+    path: __dirname + "/out",
   },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
@@ -24,5 +27,5 @@ module.exports = {
   node: {
     __dirname: false,
     __filename: false,
-  }
+  },
 };

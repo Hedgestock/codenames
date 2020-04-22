@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "esModuleInterop": true,
-    "outDir": "out",
+    "outDir": "out"
   },
-  "include": ["ui", "server"]
+  "include": ["ui/**/*"]
 }

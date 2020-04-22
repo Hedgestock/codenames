@@ -5,11 +5,7 @@ export function setCookie(name: string, content: object, dispatch, options?) {
     type: "SET_COOKIE",
     payload: content,
   });
-  document.cookie = Cookie.serialize(
-    name,
-    "j:" + JSON.stringify(content),
-    options
-  );
+  document.cookie = Cookie.serialize(name, JSON.stringify(content), options);
 }
 
 export function setLang(name: string, content: object, dispatch, options?) {
@@ -17,9 +13,5 @@ export function setLang(name: string, content: object, dispatch, options?) {
     type: "SET_LANG",
     payload: content,
   });
-  document.cookie = Cookie.serialize(
-    name,
-    "j:" + JSON.stringify(content),
-    options
-  );
+  document.cookie = Cookie.serialize(name, JSON.stringify(content), options);
 }

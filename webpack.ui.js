@@ -8,6 +8,9 @@ module.exports = {
         exclude: ["/node_modules/", "/server/"],
         loader: "ts-loader",
         test: /\.ts(x?)$/,
+        options: {
+          configFile: "ui.tsconfig.json",
+        },
       },
     ],
   },

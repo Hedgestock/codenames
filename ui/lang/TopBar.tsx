@@ -80,9 +80,6 @@ const TopBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => navigate("/test")}>
-        test
-      </MenuItem>
       <MenuItem onClick={() => navigate("/")}>
         {state.langRes.topBar.home}
       </MenuItem>

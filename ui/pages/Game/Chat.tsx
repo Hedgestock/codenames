@@ -2,49 +2,32 @@ import { IconButton, TextField } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
 import * as React from "react";
 import { Store } from "../../Store";
+import io from "socket.io-client";
 
 interface ChatProps {
   guid: string;
-  eventSource: EventSource;
   inputLabel?: string;
   historyLabel?: string;
 }
 
-const Chat = ({ inputLabel, eventSource, guid, historyLabel }: ChatProps) => {
+const Chat = ({ inputLabel, guid, historyLabel }: ChatProps) => {
   const { state, dispatch } = React.useContext(Store);
 
   const [chat, setChat] = React.useState([]);
   const [message, setMessage] = React.useState("");
-
-  const onInit = React.useCallback((event: MessageEvent) => {
-    console.debug("init", event);
-    setChat(JSON.parse(event.data));
-  }, []);
-
-  const onUpdate = React.useCallback(
-    (event: MessageEvent) => {
-      console.debug("update", event);
-      let tmp = [...chat];
-      console.debug("tmp", chat);
-      tmp.push(JSON.parse(event.data));
-      setChat(tmp);
-    },
-    [chat]
-  );
+  const [socket, setSocket] = React.useState(null);
 
   React.useEffect(() => {
-    eventSource.addEventListener("chatInit", onInit);
+    setSocket(
+      // io('/my-namespace')
+      io("/my-namespace", {
+        path: "/ws",
+      })
+    );
     return () => {
-      eventSource.removeEventListener("chatInit", onInit);
+      socket.close();
     };
   }, []);
-
-  React.useEffect(() => {
-    eventSource.addEventListener("chatUpdate", onUpdate);
-    return () => {
-      eventSource.removeEventListener("chatUpdate", onUpdate);
-    };
-  }, [onUpdate]);
 
   console.debug(chat);
   function handleChange(e) {
@@ -52,12 +35,9 @@ const Chat = ({ inputLabel, eventSource, guid, historyLabel }: ChatProps) => {
   }
 
   function sendMessage() {
-    fetch(`/chat/${guid}`, {
-      method: "post",
-      body: JSON.stringify({ author: state.cookie.name, message }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    socket.emit("message", {
+      author: state.cookie.name,
+      message: message.trim(),
     });
     setMessage("");
   }

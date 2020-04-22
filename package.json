@@ -7,8 +7,6 @@
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
     "cookie": "^0.4.0",
-    "cookie-parser": "^1.4.5",
-    "cookies": "^0.8.0",
     "express": "^4.17.1",
     "express-sse": "^0.5.3",
     "node-fetch": "^2.6.0",
@@ -56,10 +54,8 @@
     "build-server-dev": "webpack --config webpack.server.dev.js --progress",
     "build-ui": "webpack --config webpack.ui.js --progress",
     "build-ui-dev": "webpack --config webpack.ui.dev.js --progress",
-    "postbuild-server": "mv ./out/dist/server.js ./out/",
-    "postbuild-server-dev": "mv ./out/dist/server.js ./out/ && mv ./out/dist/server.js.map ./out/",
     "postbuild-ui": "cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/",
-    "postbuild-ui-dev": "npm run postbuild-ui",
+    "postbuild-ui-dev": "cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/",
     "start": "nodemon out/server.js"
   },
   "version": "1.0.0"

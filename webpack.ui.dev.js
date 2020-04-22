@@ -13,6 +13,9 @@ module.exports = merge(common, {
               test: /\.ts(x?)$/,
               exclude: ["/node_modules/"],
               loader: 'ts-loader',
+              options: {
+                configFile: "ui.tsconfig.json",
+              },
           },
           // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
           {

@@ -12,8 +12,6 @@ const Test = ({ guid }: GameProps) => {
 
   const { state, dispatch } = React.useContext(Store);
 
-  const eventSource = new EventSource(`/sse/${guid}`);
-
   return (
     <div className="page">
       <div
@@ -30,7 +28,6 @@ const Test = ({ guid }: GameProps) => {
         <GameChat
           inputLabel={state.langRes.chat.input}
           guid={guid}
-          eventSource={eventSource}
         />
       </div>
     </div>

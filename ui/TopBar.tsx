@@ -10,8 +10,8 @@ import {
 import { Menu as MenuIcon } from "@material-ui/icons";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import { Store } from "../Store";
-import { setCookie, setLang } from "../tools/helpers";
+import { Store } from "./Store";
+import { setCookie, setLang } from "./tools/helpers";
 
 const TopBar = () => {
   const { state, dispatch } = React.useContext(Store);

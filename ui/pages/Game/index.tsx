@@ -44,13 +44,13 @@ const Test = ({ guid }: GameProps) => {
           width: "100%",
         }}
       >
-        <GameHistory />
-        <Board />
         <GameChat
           inputLabel={state.langRes.chat.input}
           guid={guid}
           socket={socket}
         />
+        <Board socket={socket}/>
+        <GameHistory socket={socket}/>
       </div>
     </div>
   );

@@ -31,22 +31,42 @@ io.on("connection", function (socket) {
   const { name, userUUID, gameUUID } = socket.handshake.query;
   console.log(name + " joined " + gameUUID);
 
-  if (games[gameUUID]) {
-  } else {
-    games[gameUUID] = new Game({ uuid: userUUID, name }, gameUUID, io);
-  }
-
   socket.join(gameUUID);
 
-  socket.emit("chatInit", games[gameUUID].chat);
+  if (!games[gameUUID]) {
+    games[gameUUID] = new Game({ name, uuid: userUUID }, gameUUID, io);
+    setInterval(() => console.debug(games[gameUUID]), 10000);
+  }
+
+  const game: Game = games[gameUUID];
+
+  socket.emit("historyMessage", game.addPlayer({ name, uuid: userUUID }));
+
+  socket.emit("chatInit", game.getChat());
+
+  function boardUpdate() {
+    if (game.isSpy(userUUID)) {
+      socket.emit("boardUpdate", game.getSpyBoard());
+    } else {
+      socket.emit("boardUpdate", game.getPlayerBoard());
+    }
+  }
+  
+  boardUpdate();
+
+  game.eventEmitter.on("boardUpdate", boardUpdate);
 
   socket.on("message", function (message: any) {
     console.log(name, message);
-    games[gameUUID].pushMessage({ message, author: name });
-    io.to(gameUUID).emit("message", { message, author: name });
+    game.pushMessage({ message, author: name });
+  });
+
+  socket.on("tryReveal", (pos) => {
+    game.revealCard(userUUID, pos);
   });
 
   socket.on("disconnect", () => {
+    game.removePlayer(userUUID);
     console.log("deco");
   });
 });

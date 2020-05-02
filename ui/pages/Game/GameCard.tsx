@@ -1,20 +1,29 @@
 import * as React from "react";
 import { Badge, Button } from "@material-ui/core";
 
-interface CardProps extends React.ComponentProps<"div"> {
+interface GameCardProps extends React.ComponentProps<"div"> {
   column: number;
   row: number;
   style: React.CSSProperties;
   votes?: number;
+  onClick: () => void;
 }
 
-const Card = ({ column, row, style, children, votes }: CardProps) => {
+const GameCard = ({
+  column,
+  row,
+  style,
+  children,
+  votes,
+  onClick,
+}: GameCardProps) => {
   return (
     <Badge badgeContent={votes} color="primary">
       <Button
         className="game-card"
         variant="contained"
         style={{ flexGrow: 1, gridColumn: column, gridRow: row, ...style }}
+        onClick={onClick}
       >
         {children}
       </Button>
@@ -22,4 +31,4 @@ const Card = ({ column, row, style, children, votes }: CardProps) => {
   );
 };
 
-export default Card;
+export default GameCard;

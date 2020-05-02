@@ -1,4 +1,4 @@
-import { IconButton, TextField } from "@material-ui/core";
+import { IconButton, TextField, InputAdornment } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
 import * as React from "react";
 import { Store } from "../../Store";
@@ -11,8 +11,6 @@ interface ChatProps {
 }
 
 const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
-  const { state, dispatch } = React.useContext(Store);
-
   const [chat, setChat] = React.useState([]);
   const [message, setMessage] = React.useState("");
 
@@ -33,8 +31,18 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
   }
 
   function sendMessage() {
-    socket.emit("message", message.trim());
+    const trimmed = message.trim();
+    if (trimmed !== "") {
+      socket.emit("message", trimmed);
+    }
     setMessage("");
+  }
+
+  function handleKeyPress(e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      sendMessage();
+    }
   }
 
   return (
@@ -44,8 +52,6 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
         flexFlow: "column",
         margin: "10px",
         flexGrow: 1,
-        maxHeight: "90%",
-        minHeight: "90%",
       }}
     >
       <TextField
@@ -64,13 +70,20 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
           multiline
           variant="outlined"
           rowsMax={4}
-          style={{ flexGrow: 1 }}
+          fullWidth
           onChange={handleChange}
+          onKeyDown={handleKeyPress}
           value={message}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton color="primary" onClick={sendMessage}>
+                  <Send />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
-        <IconButton color="primary" onClick={sendMessage}>
-          <Send />
-        </IconButton>
       </div>
     </div>
   );

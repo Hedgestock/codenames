@@ -1,23 +1,16 @@
 import socketio from "socket.io";
-
-interface IChatMessage {
-  author: string;
-  message: string;
-}
-
-interface IPlayer {
-  uuid: string;
-  name: string;
-}
-
-interface ICard {
-  word: string;
-  color: undefined | "blue" | "red" | "white" | "black";
-  revealed: boolean;
-}
+import { EventEmitter } from "events";
+import {
+  IUser,
+  IChatMessage,
+  ICard,
+  GameState,
+  IPlayer,
+} from "../shared/interfaces";
 
 export default class Game {
-  constructor(gameMaster: IPlayer, uuid: string, io: socketio.Server) {
+  constructor(gameMaster: IUser, uuid: string, io: socketio.Server) {
+    this.first = "blue";
     this.io = io;
     this.uuid = uuid;
     this.gameMaster = gameMaster.uuid;
@@ -25,31 +18,44 @@ export default class Game {
     this.chat = [];
     this.spyMasterBlue = undefined;
     this.spyMasterRed = undefined;
-    this.playersBlue = {};
-    this.playersRed = {};
     this.players = {};
-    this.players[gameMaster.uuid] = gameMaster.name;
     this.board = this.initBoard();
+    this.eventEmitter = new EventEmitter();
   }
 
-  io: socketio.Server;
-  uuid: string;
-  history: any[];
-  chat: IChatMessage[];
-  gameMaster: string;
-  spyMasterBlue: string;
-  spyMasterRed: string;
-  playersBlue;
-  playersRed;
-  players;
-  board: ICard[];
+  eventEmitter: EventEmitter;
+  private io: socketio.Server;
+  private uuid: string;
+  private history: any[];
+  private chat: IChatMessage[];
+  private gameMaster: string;
+  private spyMasterBlue: string;
+  private spyMasterRed: string;
+  private players;
+  private board: ICard[];
+  private state: GameState;
+  private first: "blue" | "red";
 
-  private initBoard(
-    remainingFirst = 9,
-    remainingSecond = 8,
-    first: "blue" | "red" = "blue"
-  ): ICard[] {
-    const second: "blue" | "red" = first === "blue" ? "red" : "blue";
+  getSpyBoard(): ICard[] {
+    return this.board;
+  }
+
+  getPlayerBoard(): ICard[] {
+    return this.board.map((c) => {
+      if (!c.revealed) {
+        return { ...c, color: undefined };
+      }
+      return c;
+    });
+    // this.io.to(this.uuid).emit("boardUpdate", this.board);
+  }
+
+  getChat() {
+    return this.chat;
+  }
+
+  private initBoard(remainingFirst = 9, remainingSecond = 8): ICard[] {
+    const second: "blue" | "red" = this.first === "blue" ? "red" : "blue";
     let board: ICard[] = [
       { word: "word", revealed: false, color: "white" },
       { word: "word", revealed: false, color: "white" },
@@ -84,7 +90,7 @@ export default class Game {
     while (remainingFirst) {
       index = Math.floor(Math.random() * board.length);
       if (board[index].color === "white") {
-        board[index].color = first;
+        board[index].color = this.first;
         remainingFirst--;
       }
     }
@@ -100,43 +106,160 @@ export default class Game {
     return board;
   }
 
-  makePlayerRed(player: IPlayer) {
-    if (this.players[player.uuid]) {
-      delete this.playersRed[player.uuid];
-      this.playersBlue[player.uuid] = player.name;
+  playersBlue(): number {
+    return Object.entries(this.players).filter(
+      //@ts-ignore
+      (e) => e[1].team === "blue"
+    ).length;
+  }
+
+  playersRed(): number {
+    return Object.entries(this.players).filter(
+      //@ts-ignore
+      (e) => e[1].team === "red"
+    ).length;
+  }
+
+  makePlayerRed(playerUUID: string) {
+    if (this.players[playerUUID] && this.players[playerUUID].team === "blue") {
+      if ((this.players[playerUUID].role = "spyMaster")) {
+        this.players[playerUUID].role = "player";
+        this.spyMasterBlue = undefined;
+      }
+      this.players[playerUUID].team = "red";
     }
   }
 
-  makePlayerBlue(player: IPlayer) {
-    if (this.players[player.uuid]) {
-      delete this.playersBlue[player.uuid];
-      this.playersRed[player.uuid] = player.name;
+  makePlayerBlue(playerUUID: string) {
+    if (this.players[playerUUID] && this.players[playerUUID].team === "red") {
+      if ((this.players[playerUUID].role = "spyMaster")) {
+        this.players[playerUUID].role = "player";
+        this.spyMasterRed = undefined;
+      }
+      this.players[playerUUID].team = "blue";
     }
   }
 
-  makePlayerGameMaster(player: IPlayer) {
-    if (this.players[player.uuid]) {
-      this.gameMaster = player.uuid;
+  makePlayerGameMaster(user: IUser) {
+    if (this.players[user.uuid]) {
+      this.gameMaster = user.uuid;
     }
   }
 
-  makePlayerBlueSpy(player: IPlayer) {
-    if (this.playersBlue[player.uuid]) {
-      this.spyMasterBlue = player.uuid;
-    }
-  }
-
-  makePlayerRedSpy(player: IPlayer) {
-    if (this.playersRed[player.uuid]) {
-      this.spyMasterRed = player.uuid;
-    }
+  makePlayerSpy(player: IUser) {
+    throw "Not Implemented";
   }
 
   pushMessage(message: IChatMessage) {
     this.chat.push(message);
+    this.io.to(this.uuid).emit("message", message);
   }
 
-  sendBoard() {
-    this.io.to(this.uuid).emit("gameUpdate", this.board);
+  revealCard(playerUUID: string, pos: number) {
+    if (!this.players[playerUUID].isSpyMaster) {
+      this.board[pos].revealed = true;
+      this.eventEmitter.emit("boardUpdate");
+      // this.sendBoard();
+      // if (this.state === GameState.blueGuess &&  this.playersBlue[playerUUID])
+      // {
+      //   this.board[pos].revealed = true;
+      //   this.sendBoard();
+      // }
+      // if (this.state === GameState.redGuess &&  this.playersRed[playerUUID])
+      // {
+      //   this.board[pos].revealed = true;
+      //   this.sendBoard();
+      // }
+    }
+  }
+
+  addPlayer(user: IUser) {
+    let team: "blue" | "red";
+    let isSpyMaster = false;
+
+    if (this.playersBlue() > this.playersRed()) {
+      if (!this.spyMasterRed) {
+        this.spyMasterRed = user.uuid;
+        isSpyMaster = true;
+      }
+      team = "red";
+    } else {
+      if (!this.spyMasterBlue) {
+        this.spyMasterBlue = user.uuid;
+        isSpyMaster = true;
+      }
+      team = "blue";
+    }
+
+    let player: IPlayer = {
+      admin: this.isGameMaster(user),
+      team,
+      isSpyMaster,
+    };
+    this.players[user.uuid] = player;
+    return player;
+  }
+
+  isGameMaster(param: string | IUser) {
+    if (typeof param === "string") {
+      return param === this.gameMaster;
+    }
+
+    return param.uuid === this.gameMaster;
+  }
+
+  isBlueSpy(param: string | IUser) {
+    if (typeof param === "string") {
+      return param === this.spyMasterBlue;
+    }
+
+    return param.uuid === this.spyMasterBlue;
+  }
+
+  isRedSpy(param: string | IUser) {
+    if (typeof param === "string") {
+      return param === this.spyMasterRed;
+    }
+
+    return param.uuid === this.spyMasterRed;
+  }
+
+  isSpy(param: string | IUser) {
+    if (typeof param !== "string") {
+      return (param = param.uuid);
+    }
+
+    return this.players[param].isSpyMaster;
+  }
+
+  startGame() {
+    if (
+      Object.entries(this.players).length >= 4 &&
+      this.state === GameState.beforeStart
+    ) {
+      this.state =
+        this.first === "blue"
+          ? GameState.blueSpyTalking
+          : GameState.redSpyTalking;
+    } else {
+      console.error("Couldn't start game.");
+    }
+  }
+
+  removePlayer(param: string | IUser) {
+    if (typeof param !== "string") {
+      param = param.uuid;
+    }
+    if (this.players[param]) {
+      if (this.players[param].isSpyMaster) {
+        if (this.players[param].team === "red") {
+          this.spyMasterRed = undefined;
+        }
+        if (this.players[param].team === "blue") {
+          this.spyMasterBlue = undefined;
+        }
+      }
+      delete this.players[param];
+    }
   }
 }

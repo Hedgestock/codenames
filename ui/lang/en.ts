@@ -13,6 +13,9 @@ export const en = {
     emptyName: "Please enter a name.",
     cookieError: "Please accept the cookies."
   },
+  board: {
+    roomLinkTitle: "Copy this link to share the room."
+  },
   chat:{
     input: "Chat",
   },

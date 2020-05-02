@@ -23,7 +23,7 @@ export function cookieMiddleWare(req, res, next) {
         darkTheme: true,
         lang: "fr",
       }),
-      { maxAge: 900000000 }
+      { path: '/', maxAge: 900000000 }
     );
   }
   next();

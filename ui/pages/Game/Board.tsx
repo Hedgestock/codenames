@@ -18,6 +18,8 @@ const Board = () => {
   const UnrevealedPlayer = { backgroundColor: "#888", color: "#000" };
 
   return (
+    <div style={{display: "flex", flexFlow: "column"}}>
+
     <div className="game-board">
       <GameCard column={1} row={1} style={blackUnrevealedSpy} votes={1}>
         Black unrevealed spy
@@ -94,6 +96,7 @@ const Board = () => {
       <GameCard column={5} row={5} style={UnrevealedPlayer}>
         unrevealed player
       </GameCard>
+    </div>
     </div>
   );
 };

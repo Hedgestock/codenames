@@ -86,7 +86,6 @@ const TopBar = () => {
       <MenuItem onClick={() => navigate("/profile")}>
         {state.langRes.topBar.profile}
       </MenuItem>
-      <MenuItem onClick={resetName}>{state.langRes.topBar.nameChange}</MenuItem>
     </Menu>
   );
 

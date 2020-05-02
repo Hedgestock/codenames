@@ -3,15 +3,17 @@ import express from "express";
 import path from "path";
 import socketio from "socket.io";
 import { cookieMiddleWare } from "./tools/helpers";
-import wsCallback from "./ws";
+import Game from "./Game";
+
+let games = {};
 
 const port = process.argv[2] ?? 8080;
 
 const app: express.Application = express();
 
-let httpServer = require("http").Server(app);
+const httpServer = require("http").Server(app);
 
-let io = socketio(httpServer, { serveClient: false, path: "/ws" });
+const io = socketio(httpServer, { serveClient: false, path: "/ws" });
 
 app.use(bodyParser.json());
 app.use(cookieMiddleWare);
@@ -20,13 +22,33 @@ app.use("/dist", express.static(path.join(__dirname, "./dist")));
 app.use("/resources", express.static(path.join(__dirname, "./resources")));
 
 app.get("**/*", function (req: any, res: any) {
+  console.debug("request on ", req.path);
+  console.debug("from ", req.ip);
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+io.on("connection", function (socket) {
+  const { name, userUUID, gameUUID } = socket.handshake.query;
+  console.log(name + " joined " + gameUUID);
 
-const nsp = io.of("/my-namespace");
-nsp.on("connection", function (socket) {
-  console.log("someone connected");
+  if (games[gameUUID]) {
+  } else {
+    games[gameUUID] = new Game({ uuid: userUUID, name }, gameUUID, io);
+  }
+
+  socket.join(gameUUID);
+
+  socket.emit("chatInit", games[gameUUID].chat);
+
+  socket.on("message", function (message: any) {
+    console.log(name, message);
+    games[gameUUID].pushMessage({ message, author: name });
+    io.to(gameUUID).emit("message", { message, author: name });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("deco");
+  });
 });
 
 httpServer.listen(port, () =>

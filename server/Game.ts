@@ -194,7 +194,6 @@ export default class Game {
   addPlayer(user: IUser): IHistoryItem[] {
     let team: "blue" | "red";
     let isSpyMaster = false;
-    let actionsTaken: IHistoryItem[] = [];
 
     if (this.playersBlue() > this.playersRed()) {
       if (!this.spyMasterRed) {
@@ -217,7 +216,15 @@ export default class Game {
       name: user.name,
     };
 
-    actionsTaken.push({ player, action: "is" + this.capitalize(player.team) as HistoryAction });
+    let actionsTaken: IHistoryItem[] = [
+      {
+        player,
+        action: ("is" + this.capitalize(player.team)) as HistoryAction,
+      },
+    ];
+    if (isSpyMaster) {
+      actionsTaken.push({ player, action: "isSpyMaster" });
+    }
 
     this.players[user.uuid] = player;
 

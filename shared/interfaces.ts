@@ -35,4 +35,4 @@ export interface IHistoryItem {
   action: HistoryAction;
 }
 
-export type HistoryAction = "init" | "isRed" | "isBlue";
+export type HistoryAction = "init" | "isRed" | "isBlue" | "isSpyMaster";

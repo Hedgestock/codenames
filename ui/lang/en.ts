@@ -2,8 +2,8 @@ export const en = {
   history:{
     isRed : " joins red team.",
     isBlue : " joins blue team.",
-    isSpymaster: " becomes a spy master!"
-
+    isSpyMaster: " becomes a spy master!",
+    isGameMaster: "is the game master."
   },
   home: {
     createGame: "Create game."

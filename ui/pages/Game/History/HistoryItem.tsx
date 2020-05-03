@@ -30,6 +30,7 @@ const HistoryItem = ({ player, action }: HistoryItemProps) => {
               : player.team === "blue"
               ? blueTeamColor
               : "",
+          marginRight: "5px",
         }}
       />
       <Typography>{state.langRes.history[action]}</Typography>

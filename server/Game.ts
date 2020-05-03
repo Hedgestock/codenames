@@ -290,15 +290,47 @@ export default class Game {
       param = param.uuid;
     }
     if (this.players[param]) {
-      if (this.players[param].isSpyMaster) {
-        if (this.players[param].team === "red") {
-          this.spyMasterRed = undefined;
-        }
-        if (this.players[param].team === "blue") {
-          this.spyMasterBlue = undefined;
+      const deletedPlayer = this.players[param];
+      delete this.players[param];
+      this.pushHistory({ player: deletedPlayer, action: "disconnected" });
+
+      if (deletedPlayer.isAdmin) {
+        const found = Object.entries(this.players)[0];
+        if (found) {
+          //@ts-ignore
+          let newAdmin: IPlayer = found[1];
+          //@ts-ignore
+          newAdmin.isAdmin = true;
+          this.pushHistory({
+            player: newAdmin,
+            action: "isGameMaster",
+          });
         }
       }
-      delete this.players[param];
+
+      if (deletedPlayer.isSpyMaster) {
+        //@ts-ignore
+        const found: [string, IPlayer] = Object.entries(this.players).find(
+          //@ts-ignore
+          (pair) => pair[1].team === deletedPlayer.team
+        );
+        let newSpyMasterId = undefined;
+        if (found) {
+          newSpyMasterId = found[0];
+          //@ts-ignore
+          found[1].isSpyMaster = true;
+          this.pushHistory({
+            player: found[1],
+            action: "isSpyMaster",
+          });
+        }
+        if (deletedPlayer.team === "red") {
+          this.spyMasterRed = newSpyMasterId;
+        }
+        if (deletedPlayer.team === "blue") {
+          this.spyMasterBlue = newSpyMasterId;
+        }
+      }
     }
   }
 }

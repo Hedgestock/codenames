@@ -10,26 +10,29 @@ interface GameProps {
 }
 
 const Test = ({ guid }: GameProps) => {
+  const { state } = React.useContext(Store);
 
-  const { state, dispatch } = React.useContext(Store);
-  
   const [socket, setSocket] = React.useState(null);
 
   React.useEffect(() => {
-    const tmpSocket = io({
-      query: {
-        userUUID: state.cookie.userUUID,
-        name: state.cookie.name,
-        gameUUID: guid,
-      },
-      path: "/ws",
-    });
+    if (state.cookie.name) {
+      const tmpSocket = io({
+        query: {
+          userUUID: state.cookie.userUUID,
+          name: state.cookie.name,
+          gameUUID: guid,
+        },
+        path: "/ws",
+      });
 
-    setSocket(tmpSocket);
+      setSocket(tmpSocket);
+    }
 
     return () => {
-      console.debug("socket closing");
-      tmpSocket.close();
+      if (socket) {
+        console.debug("socket closing");
+        socket.close();
+      }
     };
   }, [state.cookie.userUUID, state.cookie.name]);
 
@@ -49,8 +52,8 @@ const Test = ({ guid }: GameProps) => {
           guid={guid}
           socket={socket}
         />
-        <Board socket={socket}/>
-        <GameHistory socket={socket}/>
+        <Board socket={socket} />
+        <GameHistory socket={socket} />
       </div>
     </div>
   );

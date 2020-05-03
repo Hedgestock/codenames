@@ -27,4 +27,12 @@ export interface IPlayer {
   team: "blue" | "red";
   isSpyMaster: boolean;
   admin: boolean;
+  name: string;
 }
+
+export interface IHistoryItem {
+  player: IPlayer;
+  action: HistoryAction;
+}
+
+export type HistoryAction = "init" | "isRed" | "isBlue";

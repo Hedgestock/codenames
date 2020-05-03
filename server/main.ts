@@ -35,14 +35,17 @@ io.on("connection", function (socket) {
 
   if (!games[gameUUID]) {
     games[gameUUID] = new Game({ name, uuid: userUUID }, gameUUID, io);
-    setInterval(() => console.debug(games[gameUUID]), 10000);
+    // setInterval(() => console.debug(games[gameUUID]), 10000);
   }
 
   const game: Game = games[gameUUID];
 
-  socket.emit("historyMessage", game.addPlayer({ name, uuid: userUUID }));
+  game
+    .addPlayer({ name, uuid: userUUID })
+    .map((a) => game.pushHistory(a));
 
-  socket.emit("chatInit", game.getChat());
+    socket.emit("chatInit", game.getChat());
+    socket.emit("historyInit", game.getHistory());
 
   function boardUpdate() {
     if (game.isSpy(userUUID)) {
@@ -51,7 +54,7 @@ io.on("connection", function (socket) {
       socket.emit("boardUpdate", game.getPlayerBoard());
     }
   }
-  
+
   boardUpdate();
 
   game.eventEmitter.on("boardUpdate", boardUpdate);

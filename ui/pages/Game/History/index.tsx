@@ -1,39 +1,40 @@
 import * as React from "react";
-import { TextField, InputBase, Button, IconButton } from "@material-ui/core";
-
+import HistoryItem from "./HistoryItem";
 
 interface GameHistoryProps {
   socket: SocketIOClient.Socket;
 }
 
 const GameHistory = ({ socket }: GameHistoryProps) => {
-
-const [testValue, setTestValue] = React.useState("")
+  const [historyValue, setHistoryValue] = React.useState([]);
 
   React.useEffect(() => {
     if (socket) {
       socket.on("historyMessage", (historyMessage) => {
         console.log(historyMessage);
-        setTestValue(JSON.stringify(historyMessage));
+        setHistoryValue((prevHistory) => [...prevHistory, historyMessage]);
+      });
+
+      socket.on("historyInit", (historyObject) => {
+        setHistoryValue(historyObject);
       });
     }
   }, [socket]);
+
+  function renderHistory() {
+    return historyValue.map((item, i) => <HistoryItem key={i} {...item} />);
+  }
 
   return (
     <div
       style={{
         display: "flex",
         flexFlow: "column",
-        margin: "10px",
         flexGrow: 1,
+        margin: "10px",
       }}
     >
-       <TextField disabled value={testValue} />
-   
-      <br />
-      <div style={{ display: "flex" }}>
-       <TextField disabled/>
-      </div>
+      {renderHistory()}
     </div>
   );
 };

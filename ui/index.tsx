@@ -12,7 +12,7 @@ import theme from "./theme";
 import Game from "./pages/Game";
 
 const App = () => {
-  const { state, dispatch } = React.useContext(Store);
+  const { state } = React.useContext(Store);
   return (
     <ThemeProvider theme={theme(state.cookie.darkTheme)}>
       <CssBaseline />

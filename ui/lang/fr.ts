@@ -1,4 +1,8 @@
 export const fr = {
+  history:{
+    isRed : "rejoint l'équipe rouge.",
+    isBlue : "rejoint l'équipe bleue."
+  },
   home: {
     createGame: "Créer une partie."
   },

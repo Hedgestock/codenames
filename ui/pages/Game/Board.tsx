@@ -4,6 +4,7 @@ import { TextField, IconButton, InputAdornment } from "@material-ui/core";
 import { Store } from "../../Store";
 import { OpenInNew } from "@material-ui/icons";
 import { ICard } from "../../../shared/interfaces";
+import { redTeamColor, blueTeamColor } from "../../theme";
 
 
 interface GameBoardProps {
@@ -11,15 +12,15 @@ interface GameBoardProps {
 }
 
 const Board = ({ socket }: GameBoardProps) => {
-  const { state, dispatch } = React.useContext(Store);
+  const { state } = React.useContext(Store);
 
   const blackRevealed = { backgroundColor: "#000", color: "#DDD" };
-  const blueRevealed = { backgroundColor: "#00008B", color: "#DDD" };
-  const redRevealed = { backgroundColor: "#8B0000", color: "#DDD" };
+  const blueRevealed = { backgroundColor: blueTeamColor, color: "#DDD" };
+  const redRevealed = { backgroundColor: redTeamColor, color: "#DDD" };
   const whiteRevealed = { backgroundColor: "#FFF", color: "#000" };
   const blackUnrevealedSpy = { backgroundColor: "#333", color: "#DDD" };
-  const blueUnrevealedSpy = { backgroundColor: "#888", color: "#00008B" };
-  const redUnrevealedSpy = { backgroundColor: "#888", color: "#8B0000" };
+  const blueUnrevealedSpy = { backgroundColor: "#888", color: blueTeamColor };
+  const redUnrevealedSpy = { backgroundColor: "#888", color: redTeamColor };
   const whiteUnrevealedSpy = { backgroundColor: "#888", color: "#FFF" };
   const UnrevealedPlayer = { backgroundColor: "#888", color: "#000" };
 

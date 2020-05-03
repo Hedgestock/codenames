@@ -6,6 +6,8 @@ import {
   ICard,
   GameState,
   IPlayer,
+  IHistoryItem,
+  HistoryAction,
 } from "../shared/interfaces";
 
 export default class Game {
@@ -52,6 +54,10 @@ export default class Game {
 
   getChat() {
     return this.chat;
+  }
+
+  getHistory() {
+    return this.history;
   }
 
   private initBoard(remainingFirst = 9, remainingSecond = 8): ICard[] {
@@ -150,6 +156,11 @@ export default class Game {
     throw "Not Implemented";
   }
 
+  pushHistory(historyItem: IHistoryItem) {
+    this.history.push(historyItem);
+    this.io.to(this.uuid).emit("historyMessage", historyItem);
+  }
+
   pushMessage(message: IChatMessage) {
     this.chat.push(message);
     this.io.to(this.uuid).emit("message", message);
@@ -173,9 +184,17 @@ export default class Game {
     }
   }
 
-  addPlayer(user: IUser) {
+  private capitalize(str: string): string {
+    if (str.length > 0) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    return "";
+  }
+
+  addPlayer(user: IUser): IHistoryItem[] {
     let team: "blue" | "red";
     let isSpyMaster = false;
+    let actionsTaken: IHistoryItem[] = [];
 
     if (this.playersBlue() > this.playersRed()) {
       if (!this.spyMasterRed) {
@@ -191,13 +210,18 @@ export default class Game {
       team = "blue";
     }
 
-    let player: IPlayer = {
+    const player: IPlayer = {
       admin: this.isGameMaster(user),
       team,
       isSpyMaster,
+      name: user.name,
     };
+
+    actionsTaken.push({ player, action: "is" + this.capitalize(player.team) as HistoryAction });
+
     this.players[user.uuid] = player;
-    return player;
+
+    return actionsTaken;
   }
 
   isGameMaster(param: string | IUser) {

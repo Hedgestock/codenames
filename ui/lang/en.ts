@@ -1,4 +1,8 @@
 export const en = {
+  history:{
+    isRed : "joins red team.",
+    isBlue : "joins blue team."
+  },
   home: {
     createGame: "Create game."
   },

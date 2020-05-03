@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
 
 const Home = () => {
-  const { state, dispatch } = React.useContext(Store);
+  const { state } = React.useContext(Store);
 
   const history = useHistory();
 

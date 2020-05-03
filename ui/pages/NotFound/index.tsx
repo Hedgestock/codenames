@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Store } from "../../Store";
 
 const NotFound = () => {
-  const { state, dispatch } = React.useContext(Store);
+  const { state } = React.useContext(Store);
   function find() {
     window.location.href = "https://www.google.com/search?q=" + window.location.href;
   }

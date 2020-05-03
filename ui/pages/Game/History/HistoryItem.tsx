@@ -18,6 +18,7 @@ const HistoryItem = ({ player, action }: HistoryItemProps) => {
         display: "flex",
         flexFlow: "row",
         marginBottom: "5px",
+        alignItems: "baseline",
       }}
     >
       <Chip

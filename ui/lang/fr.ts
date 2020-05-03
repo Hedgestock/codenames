@@ -1,7 +1,8 @@
 export const fr = {
   history:{
-    isRed : "rejoint l'équipe rouge.",
-    isBlue : "rejoint l'équipe bleue."
+    isRed : " rejoint l'équipe rouge.",
+    isBlue : " rejoint l'équipe bleue.",
+    isSpymaster: " devient un maître espion !"
   },
   home: {
     createGame: "Créer une partie."

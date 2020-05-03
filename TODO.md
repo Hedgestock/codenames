@@ -3,7 +3,12 @@
 ## Game
 - [ ] Game loop
 - [ ] Lobby
-- [ ] History
+
+### History
+- [ ] Handle card reveal
+- [x] Fix text alignment
+- [ ] Handle set spy master
+- [ ] Hanldle set game master
 
 ## Tests
 

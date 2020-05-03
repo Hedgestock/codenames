@@ -2,7 +2,7 @@ import * as React from "react";
 import GameCard from "./GameCard";
 import { TextField, IconButton, InputAdornment } from "@material-ui/core";
 import { Store } from "../../Store";
-import { OpenInNew } from "@material-ui/icons";
+import { OpenInNew, FileCopy } from "@material-ui/icons";
 import { ICard } from "../../../shared/interfaces";
 import { redTeamColor, blueTeamColor } from "../../theme";
 
@@ -108,7 +108,7 @@ const Board = ({ socket }: GameBoardProps) => {
                   document.body.removeChild(dummy);
                 }}
               >
-                <OpenInNew />
+                <FileCopy color="action" fontSize="small" />
               </IconButton>
             </InputAdornment>
           ),

@@ -192,6 +192,10 @@ export default class Game {
   }
 
   addPlayer(user: IUser) {
+    if (this.players[user.uuid]) {
+      return;
+    }
+
     let team: "blue" | "red";
     let isSpyMaster = false;
 
@@ -222,7 +226,6 @@ export default class Game {
         action: "isGameMaster",
       });
     }
-
 
     this.pushHistory({
       player,

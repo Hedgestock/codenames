@@ -41,8 +41,7 @@ io.on("connection", function (socket) {
   const game: Game = games[gameUUID];
 
   game
-    .addPlayer({ name, uuid: userUUID })
-    .map((a) => game.pushHistory(a));
+    .addPlayer({ name, uuid: userUUID });
 
     socket.emit("chatInit", game.getChat());
     socket.emit("historyInit", game.getHistory());

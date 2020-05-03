@@ -26,7 +26,7 @@ export interface ICard {
 export interface IPlayer {
   team: "blue" | "red";
   isSpyMaster: boolean;
-  admin: boolean;
+  isAdmin: boolean;
   name: string;
 }
 
@@ -35,4 +35,4 @@ export interface IHistoryItem {
   action: HistoryAction;
 }
 
-export type HistoryAction = "init" | "isRed" | "isBlue" | "isSpyMaster";
+export type HistoryAction = "init" | "isRed" | "isBlue" | "isSpyMaster" | "isGameMaster";

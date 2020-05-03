@@ -37,24 +37,22 @@ const Test = ({ guid }: GameProps) => {
   }, [state.cookie.userUUID, state.cookie.name]);
 
   return (
-    <div className="page">
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          height: "100%",
-          width: "100%",
-        }}
-      >
-        <GameChat
-          inputLabel={state.langRes.chat.input}
-          guid={guid}
-          socket={socket}
-        />
-        <Board socket={socket} />
-        <GameHistory socket={socket} />
-      </div>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        height: "90%",
+        width: "100%",
+      }}
+    >
+      <GameChat
+        inputLabel={state.langRes.chat.input}
+        guid={guid}
+        socket={socket}
+      />
+      <Board socket={socket} />
+      <GameHistory socket={socket} />
     </div>
   );
 };

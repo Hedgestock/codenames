@@ -32,6 +32,9 @@ const GameHistory = ({ socket }: GameHistoryProps) => {
         flexFlow: "column",
         flexGrow: 1,
         margin: "10px",
+        border: "1px solid red",
+        overflowY: "scroll",
+        height: "100%",
       }}
     >
       {renderHistory()}

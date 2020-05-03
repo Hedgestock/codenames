@@ -6,7 +6,6 @@ import { OpenInNew } from "@material-ui/icons";
 import { ICard } from "../../../shared/interfaces";
 import { redTeamColor, blueTeamColor } from "../../theme";
 
-
 interface GameBoardProps {
   socket: SocketIOClient.Socket;
 }
@@ -85,7 +84,8 @@ const Board = ({ socket }: GameBoardProps) => {
   }
 
   return (
-    <div style={{ display: "flex", flexFlow: "column", flexGrow: 2}}>
+    <div style={{ display: "flex", flexFlow: "column", flexGrow: 2 }}>
+      {renderBoard()}
       <TextField
         id="shareURL"
         label={state.langRes.board.roomLinkTitle}
@@ -114,7 +114,6 @@ const Board = ({ socket }: GameBoardProps) => {
           ),
         }}
       />
-      {renderBoard()}
     </div>
   );
 };

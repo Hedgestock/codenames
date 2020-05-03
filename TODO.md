@@ -3,12 +3,14 @@
 ## Game
 - [ ] Game loop
 - [ ] Lobby
+- [ ] Fix chat size
 
 ### History
 - [ ] Handle card reveal
 - [x] Fix text alignment
-- [ ] Handle set spy master
-- [ ] Hanldle set game master
+- [x] Handle set spy master
+- [x] Hanldle set game master
+- [ ] Fix all of the above
 
 ## Tests
 

@@ -191,7 +191,7 @@ export default class Game {
     return "";
   }
 
-  addPlayer(user: IUser): IHistoryItem[] {
+  addPlayer(user: IUser) {
     let team: "blue" | "red";
     let isSpyMaster = false;
 
@@ -210,25 +210,30 @@ export default class Game {
     }
 
     const player: IPlayer = {
-      admin: this.isGameMaster(user),
+      isAdmin: this.isGameMaster(user),
       team,
       isSpyMaster,
       name: user.name,
     };
 
-    let actionsTaken: IHistoryItem[] = [
-      {
+    if (player.isAdmin) {
+      this.pushHistory({
         player,
-        action: ("is" + this.capitalize(player.team)) as HistoryAction,
-      },
-    ];
+        action: "isGameMaster",
+      });
+    }
+
+
+    this.pushHistory({
+      player,
+      action: ("is" + this.capitalize(player.team)) as HistoryAction,
+    });
+
     if (isSpyMaster) {
-      actionsTaken.push({ player, action: "isSpyMaster" });
+      this.pushHistory({ player, action: "isSpyMaster" });
     }
 
     this.players[user.uuid] = player;
-
-    return actionsTaken;
   }
 
   isGameMaster(param: string | IUser) {

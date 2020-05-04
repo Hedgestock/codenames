@@ -7,15 +7,15 @@ import {
 import { Send } from "@material-ui/icons";
 import * as React from "react";
 import { Store } from "../../Store";
+import { SocketConnectedProps } from "../../../shared/interfaces";
 
-interface ChatProps {
+interface ChatProps extends SocketConnectedProps {
   guid: string;
-  inputLabel?: string;
-  historyLabel?: string;
-  socket: SocketIOClient.Socket;
 }
 
-const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
+const Chat = ({ guid, socket }: ChatProps) => {
+  const { state } = React.useContext(Store);
+
   const [chat, setChat] = React.useState([]);
   const [message, setMessage] = React.useState("");
 
@@ -74,7 +74,7 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
       <br />
       <div style={{ display: "flex" }}>
         <TextField
-          label={inputLabel}
+          label={state.langRes.chat.input}
           multiline
           variant="outlined"
           rowsMax={4}

@@ -1,11 +1,9 @@
 import * as React from "react";
 import HistoryItem from "./HistoryItem";
+import { SocketConnectedProps } from "../../../../shared/interfaces";
 
-interface GameHistoryProps {
-  socket: SocketIOClient.Socket;
-}
 
-const GameHistory = ({ socket }: GameHistoryProps) => {
+const GameHistory = ({ socket }: SocketConnectedProps) => {
   const [historyValue, setHistoryValue] = React.useState([]);
 
   React.useEffect(() => {

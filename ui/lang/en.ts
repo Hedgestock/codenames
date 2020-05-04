@@ -1,6 +1,7 @@
 export const en = {
-  board: {
+  game: {
     roomLinkTitle: "Copy this link to share the room.",
+    startGame: "Start the game!",
   },
   chat: {
     input: "Chat",
@@ -23,6 +24,7 @@ export const en = {
     isRed: " joins red team.",
     isSpyMaster: " becomes a spy master!",
     revealed: "revealed",
+    startedGame: "started a game.",
   },
   home: {
     createGame: "Create game.",

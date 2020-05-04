@@ -40,11 +40,11 @@ io.on("connection", function (socket) {
 
   const game: Game = games[gameUUID];
 
-  game
-    .addPlayer({ name, uuid: userUUID });
+  game.addPlayer({ name, uuid: userUUID });
 
-    socket.emit("chatInit", game.getChat());
-    socket.emit("historyInit", game.getHistory());
+  socket.emit("chatInit", game.getChat());
+  socket.emit("historyInit", game.getHistory());
+  socket.emit("gameStateChanged", game.getGameState());
 
   function boardUpdate() {
     if (game.isSpy(userUUID)) {
@@ -65,6 +65,10 @@ io.on("connection", function (socket) {
 
   socket.on("tryReveal", (pos) => {
     game.tryReveal(userUUID, pos);
+  });
+
+  socket.on("tryStartGame", () => {
+    game.tryStartGame(userUUID);
   });
 
   socket.on("disconnect", () => {

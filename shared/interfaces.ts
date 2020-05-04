@@ -43,4 +43,9 @@ export type HistoryAction =
   | "isSpyMaster"
   | "isGameMaster"
   | "disconnected"
-  | "revealed";
+  | "revealed"
+  | "startedGame";
+
+export interface SocketConnectedProps {
+    socket: SocketIOClient.Socket;
+  }

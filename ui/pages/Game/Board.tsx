@@ -1,16 +1,10 @@
 import * as React from "react";
-import GameCard from "./GameCard";
-import { TextField, IconButton, InputAdornment } from "@material-ui/core";
+import { ICard, SocketConnectedProps } from "../../../shared/interfaces";
 import { Store } from "../../Store";
-import { OpenInNew, FileCopy } from "@material-ui/icons";
-import { ICard } from "../../../shared/interfaces";
-import { redTeamColor, blueTeamColor } from "../../theme";
+import { blueTeamColor, redTeamColor } from "../../theme";
+import GameCard from "./GameCard";
 
-interface GameBoardProps {
-  socket: SocketIOClient.Socket;
-}
-
-const Board = ({ socket }: GameBoardProps) => {
+const Board = ({ socket }: SocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
   const blackRevealed = { backgroundColor: "#000", color: "#DDD" };
@@ -67,53 +61,20 @@ const Board = ({ socket }: GameBoardProps) => {
     }
   }
 
-  function renderBoard() {
-    let cards = board.map((c, i) => (
-      <GameCard
-        key={i}
-        column={(i % 5) + 1}
-        row={Math.floor(i / 5 + 1)}
-        style={getStyle(c)}
-        // votes={Math.floor(Math.random() * 5)}
-        onClick={() => socket.emit("tryReveal", i)}
-      >
-        {c.word}
-      </GameCard>
-    ));
-    return <div className="game-board">{cards}</div>;
-  }
-
   return (
-    <div style={{ display: "flex", flexFlow: "column", flexGrow: 2 }}>
-      {renderBoard()}
-      <TextField
-        id="shareURL"
-        label={state.langRes.board.roomLinkTitle}
-        multiline
-        variant="outlined"
-        margin="dense"
-        disabled
-        value={window.location.href}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={() => {
-                  const dummy = document.createElement("textarea");
-                  // dummy.style.display = 'none'
-                  document.body.appendChild(dummy);
-                  dummy.value = window.location.href;
-                  dummy.select();
-                  document.execCommand("copy");
-                  document.body.removeChild(dummy);
-                }}
-              >
-                <FileCopy color="action" fontSize="small" />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
+    <div className="game-board">
+      {board.map((c, i) => (
+        <GameCard
+          key={i}
+          column={(i % 5) + 1}
+          row={Math.floor(i / 5 + 1)}
+          style={getStyle(c)}
+          // votes={Math.floor(Math.random() * 5)}
+          onClick={() => socket.emit("tryReveal", i)}
+        >
+          {c.word}
+        </GameCard>
+      ))}
     </div>
   );
 };

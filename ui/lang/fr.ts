@@ -1,6 +1,7 @@
 export const fr = {
-  board: {
+  game: {
     roomLinkTitle: "Copiez ce lien pour partager cette partie.",
+    startGame: "Commencer la partie !",
   },
   chat: {
     input: "Chat",
@@ -23,6 +24,7 @@ export const fr = {
     isRed: "rejoint l'équipe rouge.",
     isSpyMaster: "devient un maître espion !",
     revealed: "a révélé",
+    startedGame: "a lancé une partie.",
   },
   home: {
     createGame: "Créer une partie.",

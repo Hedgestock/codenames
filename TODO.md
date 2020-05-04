@@ -10,12 +10,14 @@
 - [ ] use maps to get rid of @ts-ignore
 - [ ] Fix goback with websocket ??
 - [ ] Add word picking/board generation
+- [ ] sort Game.ts methods
 
 ### Lobby
 
 - [ ] Lobby
 - [ ] Add room overview
 - [ ] Add gamemaster commands
+- [ ] Disable startGame for nonGameMaster
 
 ### History
 

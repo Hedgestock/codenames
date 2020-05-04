@@ -20,9 +20,10 @@ export default class Game {
     this.chat = [];
     this.spyMasterBlue = undefined;
     this.spyMasterRed = undefined;
-    this.players = new Map();
+    this.players = {};
     this.board = this.initBoard();
     this.eventEmitter = new EventEmitter();
+    this.state = GameState.beforeStart;
   }
 
   eventEmitter: EventEmitter;
@@ -33,10 +34,14 @@ export default class Game {
   private gameMaster: string;
   private spyMasterBlue: string;
   private spyMasterRed: string;
-  private players: Map<string, IPlayer>;
+  private players;
   private board: ICard[];
   private state: GameState;
   private first: "blue" | "red";
+
+  getPlayers() {
+    return this.players;
+  }
 
   getSpyBoard(): ICard[] {
     return this.board;
@@ -49,7 +54,6 @@ export default class Game {
       }
       return c;
     });
-    // this.io.to(this.uuid).emit("boardUpdate", this.board);
   }
 
   getChat() {
@@ -58,6 +62,15 @@ export default class Game {
 
   getHistory() {
     return this.history;
+  }
+
+  getGameState() {
+    return this.state;
+  }
+
+  private setGameState(newState: GameState) {
+    this.state = newState;
+    this.io.to(this.uuid).emit("gameStateChanged", this.state);
   }
 
   private initBoard(remainingFirst = 9, remainingSecond = 8): ICard[] {
@@ -127,29 +140,15 @@ export default class Game {
   }
 
   makePlayerRed(playerUUID: string) {
-    if (this.players[playerUUID] && this.players[playerUUID].team === "blue") {
-      if ((this.players[playerUUID].role = "spyMaster")) {
-        this.players[playerUUID].role = "player";
-        this.spyMasterBlue = undefined;
-      }
-      this.players[playerUUID].team = "red";
-    }
+    throw "Not Implemented";
   }
 
   makePlayerBlue(playerUUID: string) {
-    if (this.players[playerUUID] && this.players[playerUUID].team === "red") {
-      if ((this.players[playerUUID].role = "spyMaster")) {
-        this.players[playerUUID].role = "player";
-        this.spyMasterRed = undefined;
-      }
-      this.players[playerUUID].team = "blue";
-    }
+    throw "Not Implemented";
   }
 
   makePlayerGameMaster(user: IUser) {
-    if (this.players[user.uuid]) {
-      this.gameMaster = user.uuid;
-    }
+    throw "Not Implemented";
   }
 
   makePlayerSpy(player: IUser) {
@@ -166,10 +165,35 @@ export default class Game {
     this.io.to(this.uuid).emit("message", message);
   }
 
+  tryStartGame(playerUUID: string) {
+    if (
+      this.state === GameState.beforeStart &&
+      this.players[playerUUID] &&
+      this.players[playerUUID].isAdmin
+    ) {
+      this.setGameState(GameState.blueSpyTalking);
+      this.pushHistory({
+        player: this.players[playerUUID],
+        action: "startedGame",
+      });
+
+      this.eventEmitter.emit("boardUpdate");
+    }
+  }
+
   tryReveal(playerUUID: string, pos: number) {
-    if (!this.players[playerUUID].isSpyMaster && !this.board[pos].revealed) {
+    if (
+      this.players[playerUUID] &&
+      this.board[pos] &&
+      !this.players[playerUUID].isSpyMaster &&
+      !this.board[pos].revealed
+    ) {
       this.board[pos].revealed = true;
-      this.pushHistory({player :this.players[playerUUID], action: "revealed", card: this.board[pos]})
+      this.pushHistory({
+        player: this.players[playerUUID],
+        action: "revealed",
+        card: this.board[pos],
+      });
       this.eventEmitter.emit("boardUpdate");
       // this.sendBoard();
       // if (this.state === GameState.blueGuess &&  this.playersBlue[playerUUID])

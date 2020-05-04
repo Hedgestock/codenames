@@ -1,4 +1,9 @@
-import { IconButton, TextField, InputAdornment } from "@material-ui/core";
+import {
+  IconButton,
+  TextField,
+  InputAdornment,
+  Typography,
+} from "@material-ui/core";
 import { Send } from "@material-ui/icons";
 import * as React from "react";
 import { Store } from "../../Store";
@@ -17,7 +22,7 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
   React.useEffect(() => {
     if (socket) {
       socket.on("message", (messageObject) =>
-        setChat((prevChat) => [...prevChat, messageObject])
+        setChat((prevChat) => [messageObject, ...prevChat])
       );
 
       socket.on("chatInit", (chatObject) => {
@@ -52,17 +57,20 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
         flexFlow: "column",
         margin: "10px",
         flexGrow: 1,
+        height: "100%",
       }}
     >
-      <TextField
-        label={historyLabel}
-        multiline
-        variant="outlined"
-        rows={30}
-        rowsMax={30}
-        disabled
-        value={chatToText(chat)}
-      />
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "column-reverse",
+          margin: "10px",
+          flexGrow: 1,
+          overflowY: "auto",
+        }}
+      >
+        {chatToText(chat)}
+      </div>
       <br />
       <div style={{ display: "flex" }}>
         <TextField
@@ -89,10 +97,12 @@ const Chat = ({ inputLabel, guid, historyLabel, socket }: ChatProps) => {
   );
 };
 
-function chatToText(chat: string[][]): string {
-  let res = "";
-  chat.map((entry) => (res += ` ${entry["author"]}:  ${entry["message"]}\n\n`));
-  return res;
+function chatToText(chat) {
+  return chat.map((entry, i) => (
+    <Typography
+      key={i}
+    >{`${entry["author"]}:  ${entry["message"]}`}</Typography>
+  ));
 }
 
 export default Chat;

@@ -12,7 +12,7 @@ const GameHistory = ({ socket }: GameHistoryProps) => {
     if (socket) {
       socket.on("historyMessage", (historyMessage) => {
         console.log(historyMessage);
-        setHistoryValue((prevHistory) => [...prevHistory, historyMessage]);
+        setHistoryValue((prevHistory) => [historyMessage, ...prevHistory]);
       });
 
       socket.on("historyInit", (historyObject) => {
@@ -29,11 +29,11 @@ const GameHistory = ({ socket }: GameHistoryProps) => {
     <div
       style={{
         display: "flex",
-        flexFlow: "column",
+        flexFlow: "column-reverse",
         flexGrow: 1,
         margin: "10px",
-        border: "1px solid red",
-        overflowY: "scroll",
+        overflowY: "auto",
+        overflowX: "hidden",
         height: "100%",
       }}
     >

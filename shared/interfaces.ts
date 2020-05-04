@@ -31,8 +31,16 @@ export interface IPlayer {
 }
 
 export interface IHistoryItem {
-  player: IPlayer;
+  player?: IPlayer;
   action: HistoryAction;
+  card?: ICard;
 }
 
-export type HistoryAction = "init" | "isRed" | "isBlue" | "isSpyMaster" | "isGameMaster" | "disconnected";
+export type HistoryAction =
+  | "init"
+  | "isRed"
+  | "isBlue"
+  | "isSpyMaster"
+  | "isGameMaster"
+  | "disconnected"
+  | "revealed";

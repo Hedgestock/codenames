@@ -20,7 +20,7 @@ export default class Game {
     this.chat = [];
     this.spyMasterBlue = undefined;
     this.spyMasterRed = undefined;
-    this.players = {};
+    this.players = new Map();
     this.board = this.initBoard();
     this.eventEmitter = new EventEmitter();
   }
@@ -33,7 +33,7 @@ export default class Game {
   private gameMaster: string;
   private spyMasterBlue: string;
   private spyMasterRed: string;
-  private players;
+  private players: Map<string, IPlayer>;
   private board: ICard[];
   private state: GameState;
   private first: "blue" | "red";
@@ -157,18 +157,19 @@ export default class Game {
   }
 
   pushHistory(historyItem: IHistoryItem) {
-    this.history.push(historyItem);
+    this.history.unshift(historyItem);
     this.io.to(this.uuid).emit("historyMessage", historyItem);
   }
 
   pushMessage(message: IChatMessage) {
-    this.chat.push(message);
+    this.chat.unshift(message);
     this.io.to(this.uuid).emit("message", message);
   }
 
-  revealCard(playerUUID: string, pos: number) {
-    if (!this.players[playerUUID].isSpyMaster) {
+  tryReveal(playerUUID: string, pos: number) {
+    if (!this.players[playerUUID].isSpyMaster && !this.board[pos].revealed) {
       this.board[pos].revealed = true;
+      this.pushHistory({player :this.players[playerUUID], action: "revealed", card: this.board[pos]})
       this.eventEmitter.emit("boardUpdate");
       // this.sendBoard();
       // if (this.state === GameState.blueGuess &&  this.playersBlue[playerUUID])

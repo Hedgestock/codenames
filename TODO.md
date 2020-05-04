@@ -3,20 +3,23 @@
 ## Game
 
 - [ ] Game loop
-- [ ] Fix chat size
+- [ ] Add spymaster interface
+- [x] Fix chat size
 - [ ] Delete game on last quit
 - [ ] Get rid of spymaster red and blue properties
 - [ ] use maps to get rid of @ts-ignore
 - [ ] Fix goback with websocket ??
+- [ ] Add word picking/board generation
 
 ### Lobby
 
 - [ ] Lobby
 - [ ] Add room overview
+- [ ] Add gamemaster commands
 
 ### History
 
-- [ ] Handle card reveal
+- [x] Handle card reveal
 - [x] Handle disconnect
 - [x] Fix text alignment
 - [x] Handle set spy master

@@ -64,7 +64,7 @@ io.on("connection", function (socket) {
   });
 
   socket.on("tryReveal", (pos) => {
-    game.revealCard(userUUID, pos);
+    game.tryReveal(userUUID, pos);
   });
 
   socket.on("disconnect", () => {

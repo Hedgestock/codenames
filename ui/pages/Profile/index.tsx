@@ -8,17 +8,12 @@ import {
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Store } from "../../Store";
-import { setCookie } from "../../tools/helpers";
+import { setCookie, expireCookie } from "../../tools/helpers";
 
 const Profile = () => {
   const { state, dispatch } = React.useContext(Store);
 
   const history = useHistory();
-
-  function expireCookie() {
-    setCookie(state.cookieName, {}, dispatch, { expires: new Date(0) });
-    window.location.href = "https://www.cookiebot.com/";
-  }
 
   function handleCookieChange() {
     setCookie(
@@ -76,7 +71,10 @@ const Profile = () => {
           label={state.langRes.profile.cookieStatus}
         />
         {state.cookie.accept ? (
-          <Button variant="contained" onClick={expireCookie}>
+          <Button
+            variant="contained"
+            onClick={() => expireCookie(state.cookieName)}
+          >
             {state.langRes.profile.cookieErase}
           </Button>
         ) : null}

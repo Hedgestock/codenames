@@ -1,5 +1,10 @@
 import Cookie from "cookie";
 
+export function expireCookie(name: string) {
+  document.cookie = Cookie.serialize(name, "", { expires: new Date(0) });
+  window.location.href = "https://www.cookiebot.com/";
+}
+
 export function setCookie(name: string, content: object, dispatch) {
   dispatch({
     type: "SET_COOKIE",

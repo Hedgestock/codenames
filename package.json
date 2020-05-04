@@ -51,6 +51,7 @@
     "url": "git+https://github.com/Hedgestock/codenames.git"
   },
   "scripts": {
+    "clean": "rm -rf ./out",
     "build-server": "webpack --config webpack.server.js --progress",
     "build-server-dev": "webpack --config webpack.server.dev.js --progress",
     "build-ui": "webpack --config webpack.ui.js --progress",

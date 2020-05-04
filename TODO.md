@@ -42,3 +42,9 @@
 - [ ] unify admin and GameMaster
 - [ ] get rid of GameMasterUUID
 - [ ] make setter to dispatch players changed event
+
+## Features
+
+- [ ] Display name on profile page
+- [ ] Add possibility of custom wordlist
+- [ ] Add possibility of custom board

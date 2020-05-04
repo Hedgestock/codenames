@@ -20,13 +20,30 @@ const GameLobby = ({ socket }: SocketConnectedProps) => {
     }
   }, [socket]);
 
+  const tryMakePlayerSpyMaster = React.useCallback(
+    (playerUUID: string) => {
+      return () => {
+        if (socket) {
+          socket.emit("tryMakePlayerSpyMaster", playerUUID);
+        }
+      };
+    },
+    [socket]
+  );
+
   return (
     <>
       <div style={{ display: "flex", height: "100%", padding: "5px" }}>
         {Object.entries(players).map((e, i) => {
           console.log(e);
-          //@ts-ignore
-          return <PlayerChip key={i} player={e[1]} />;
+          return (
+            <PlayerChip
+              key={i}
+              //@ts-ignore
+              player={e[1]}
+              makeSpyMaster={tryMakePlayerSpyMaster(e[0])}
+            />
+          );
         })}
       </div>
       <Button

@@ -25,7 +25,7 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => (
       border: player.isAdmin ? "1px solid #FFF" : "none",
     }}
     size="small"
-    onDelete={makeSpyMaster}
+    onDelete={makeSpyMaster ?? (() => null)}
     deleteIcon={player.isSpyMaster ? <Visibility /> : <VisibilityOff />}
   />
 );

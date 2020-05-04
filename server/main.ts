@@ -59,7 +59,7 @@ io.on("connection", function (socket) {
   game.eventEmitter.on("boardUpdate", boardUpdate);
 
   socket.on("requestPlayers", () => {
-    console.debug("requestPlayers")
+    console.debug("requestPlayers");
     socket.emit("playersUpdate", game.getPlayers());
   });
 
@@ -74,6 +74,12 @@ io.on("connection", function (socket) {
 
   socket.on("tryStartGame", () => {
     game.tryStartGame(userUUID);
+  });
+
+  socket.on("tryMakePlayerSpyMaster", (playerUUID) => {
+    if (game.gameMasterUUID === userUUID) {
+      game.makePlayerSpy(playerUUID);
+    }
   });
 
   socket.on("disconnect", () => {

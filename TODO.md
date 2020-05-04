@@ -9,11 +9,12 @@
 - [ ] Fix goback with websocket ??
 - [ ] Add word picking/board generation
 - [ ] implement win condition
+- [ ] Add english board generation
 
 ### Lobby
 
-- [ ] Lobby
-- [ ] Add room overview
+- [x] Lobby
+- [x] Add room overview
 - [ ] Add gamemaster commands
 - [ ] Disable startGame for nonGameMaster
 
@@ -33,9 +34,11 @@
 
 ## Cleanup
 
-- [ ] `this.player[playerUUID] -> player`
+- [x] `this.player[playerUUID] -> player`  vv
 - [x] Get rid of spymaster red and blue properties
 - [ ] use maps to get rid of @ts-ignore
 - [ ] sort Game.ts methods
-- [ ] fix get spies and admins
+- [x] fix get spies and admins
 - [ ] unify admin and GameMaster
+- [ ] get rid of GameMasterUUID
+- [ ] make setter to dispatch players changed event

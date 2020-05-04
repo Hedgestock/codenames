@@ -1,4 +1,5 @@
 import socketio from "socket.io";
+import words_list from "./tools/words_list";
 import { EventEmitter } from "events";
 import {
   IUser,
@@ -15,7 +16,7 @@ export default class Game {
     this.first = "blue";
     this.io = io;
     this.uuid = uuid;
-    this.gameMaster = gameMaster.uuid;
+    this.gameMasterUUID = gameMaster.uuid;
     this.history = [];
     this.chat = [];
     this.players = {};
@@ -29,7 +30,7 @@ export default class Game {
   private uuid: string;
   private history: any[];
   private chat: IChatMessage[];
-  private gameMaster: string;
+  gameMasterUUID: string;
   private players;
   private board: ICard[];
   private state: GameState;
@@ -98,33 +99,14 @@ export default class Game {
 
   private initBoard(remainingFirst = 9, remainingSecond = 8): ICard[] {
     const second: "blue" | "red" = this.first === "blue" ? "red" : "blue";
-    let board: ICard[] = [
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-      { word: "word", revealed: false, color: "white" },
-    ];
+    let board: ICard[] = [];
+    for (let i = 0; i < 25; i++) {
+      board.push({
+        word: words_list[Math.floor(Math.random() * words_list.length)],
+        revealed: false,
+        color: "white",
+      });
+    }
 
     let index = Math.floor(Math.random() * board.length);
     board[index].color = "black";
@@ -163,19 +145,26 @@ export default class Game {
   }
 
   makePlayerRed(playerUUID: string) {
-    this.players[playerUUID] && (this.players[playerUUID].team = "red");
+    const player: IPlayer = this.players[playerUUID];
+    player && (player.team = "red");
+    this.io.to(this.uuid).emit("playersUpdate", this.getPlayers());
   }
 
   makePlayerBlue(playerUUID: string) {
-    this.players[playerUUID] && (this.players[playerUUID].team = "blue");
+    const player: IPlayer = this.players[playerUUID];
+    player && (player.team = "blue");
+    this.pushHistory({ player, action: "isSpyMaster" });
+    this.io.to(this.uuid).emit("playersUpdate", this.getPlayers());
   }
 
   makePlayerGameMaster(playerUUID: string) {
-    this.players[playerUUID] && (this.players[playerUUID].team = "blue");
+    throw "Not implemented";
+    this.io.to(this.uuid).emit("playersUpdate", this.getPlayers());
   }
 
   makePlayerSpy(playerUUID: string) {
-    const player = this.players[playerUUID];
+    const player: IPlayer = this.players[playerUUID];
+    if (player.isSpyMaster) return;
     if (player.team == "red") {
       const redSpy = this.getRedspyMaster();
       //@ts-ignore
@@ -185,6 +174,9 @@ export default class Game {
       //@ts-ignore
       blueSpy && (blueSpy.isSpyMaster = false);
     }
+    player.isSpyMaster = true;
+    this.pushHistory({ player, action: "isSpyMaster" });
+    this.io.to(this.uuid).emit("playersUpdate", this.getPlayers());
   }
 
   pushHistory(historyItem: IHistoryItem) {
@@ -298,10 +290,10 @@ export default class Game {
 
   isGameMaster(param: string | IUser) {
     if (typeof param === "string") {
-      return param === this.gameMaster;
+      return param === this.gameMasterUUID;
     }
 
-    return param.uuid === this.gameMaster;
+    return param.uuid === this.gameMasterUUID;
   }
 
   isSpy(param: string | IUser) {
@@ -338,7 +330,7 @@ export default class Game {
       if (deletedPlayer.isAdmin) {
         const found = Object.entries(this.players)[0];
         if (found) {
-          this.gameMaster = found[0];
+          this.gameMasterUUID = found[0];
           //@ts-ignore
           let newAdmin: IPlayer = found[1];
           //@ts-ignore

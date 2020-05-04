@@ -1,31 +1,42 @@
+import { Button } from "@material-ui/core";
 import * as React from "react";
 import { SocketConnectedProps } from "../../../shared/interfaces";
-import { Button } from "@material-ui/core";
 import { Store } from "../../Store";
-
-
+import PlayerChip from "./PlayerChip";
 
 const GameLobby = ({ socket }: SocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
-  // React.useEffect(() => {
-  //   if (socket) {
-  //     socket.on("historyMessage", (historyMessage) => {
-  //       console.log(historyMessage);
-  //       setHistoryValue((prevHistory) => [historyMessage, ...prevHistory]);
-  //     });
+  const [players, setPLayers] = React.useState({});
 
-  //     socket.on("historyInit", (historyObject) => {
-  //       setHistoryValue(historyObject);
-  //     });
-  //   }
-  // }, [socket]);
+  React.useEffect(() => {
+    if (socket) {
+      socket.on("playersUpdate", (playersObject) => {
+        console.debug("lol");
+        setPLayers(playersObject);
+      });
 
+      socket.emit("requestPlayers");
+    }
+  }, [socket]);
 
   return (
-    <Button color="primary" variant="contained" onClick={() => socket.emit("tryStartGame")}>
-            {state.langRes.game.startGame}
-          </Button>
+    <>
+      <div style={{ display: "flex", height: "100%", padding: "5px" }}>
+        {Object.entries(players).map((e, i) => {
+          console.log(e);
+          //@ts-ignore
+          return <PlayerChip key={i} player={e[1]} />;
+        })}
+      </div>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => socket.emit("tryStartGame")}
+      >
+        {state.langRes.game.startGame}
+      </Button>
+    </>
   );
 };
 

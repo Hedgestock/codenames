@@ -58,6 +58,11 @@ io.on("connection", function (socket) {
 
   game.eventEmitter.on("boardUpdate", boardUpdate);
 
+  socket.on("requestPlayers", () => {
+    console.debug("requestPlayers")
+    socket.emit("playersUpdate", game.getPlayers());
+  });
+
   socket.on("message", function (message: any) {
     console.log(name, message);
     game.pushMessage({ message, author: name });

@@ -18,8 +18,6 @@ export default class Game {
     this.gameMaster = gameMaster.uuid;
     this.history = [];
     this.chat = [];
-    this.spyMasterBlue = undefined;
-    this.spyMasterRed = undefined;
     this.players = {};
     this.board = this.initBoard();
     this.eventEmitter = new EventEmitter();
@@ -32,8 +30,6 @@ export default class Game {
   private history: any[];
   private chat: IChatMessage[];
   private gameMaster: string;
-  private spyMasterBlue: string;
-  private spyMasterRed: string;
   private players;
   private board: ICard[];
   private state: GameState;
@@ -66,6 +62,33 @@ export default class Game {
 
   getGameState() {
     return this.state;
+  }
+
+  getBlueSpyMaster() {
+    //: IPlayer {
+    const playerPair = Object.entries(this.players).find(
+      //@ts-ignore
+      (e) => e[1].isSpyMaster && e[1].team === "blue"
+    );
+    return playerPair && playerPair[1];
+  }
+
+  getRedspyMaster() {
+    //: IPlayer {
+    const playerPair = Object.entries(this.players).find(
+      //@ts-ignore
+      (e) => e[1].isSpyMaster && e[1].team === "red"
+    );
+    return playerPair && playerPair[1];
+  }
+
+  getGameMaster() {
+    //: IPlayer {
+    const playerPair = Object.entries(this.players).find(
+      //@ts-ignore
+      (e) => e[1].isGameMaster
+    );
+    return playerPair && playerPair[1];
   }
 
   private setGameState(newState: GameState) {
@@ -140,19 +163,28 @@ export default class Game {
   }
 
   makePlayerRed(playerUUID: string) {
-    throw "Not Implemented";
+    this.players[playerUUID] && (this.players[playerUUID].team = "red");
   }
 
   makePlayerBlue(playerUUID: string) {
-    throw "Not Implemented";
+    this.players[playerUUID] && (this.players[playerUUID].team = "blue");
   }
 
-  makePlayerGameMaster(user: IUser) {
-    throw "Not Implemented";
+  makePlayerGameMaster(playerUUID: string) {
+    this.players[playerUUID] && (this.players[playerUUID].team = "blue");
   }
 
-  makePlayerSpy(player: IUser) {
-    throw "Not Implemented";
+  makePlayerSpy(playerUUID: string) {
+    const player = this.players[playerUUID];
+    if (player.team == "red") {
+      const redSpy = this.getRedspyMaster();
+      //@ts-ignore
+      redSpy && (redSpy.isSpyMaster = false);
+    } else {
+      const blueSpy = this.getBlueSpyMaster();
+      //@ts-ignore
+      blueSpy && (blueSpy.isSpyMaster = false);
+    }
   }
 
   pushHistory(historyItem: IHistoryItem) {
@@ -225,14 +257,12 @@ export default class Game {
     let isSpyMaster = false;
 
     if (this.playersBlue() > this.playersRed()) {
-      if (!this.spyMasterRed) {
-        this.spyMasterRed = user.uuid;
+      if (!this.getRedspyMaster()) {
         isSpyMaster = true;
       }
       team = "red";
     } else {
-      if (!this.spyMasterBlue) {
-        this.spyMasterBlue = user.uuid;
+      if (!this.getBlueSpyMaster()) {
         isSpyMaster = true;
       }
       team = "blue";
@@ -262,6 +292,8 @@ export default class Game {
     }
 
     this.players[user.uuid] = player;
+
+    this.io.to(this.uuid).emit("playersUpdate", this.getPlayers());
   }
 
   isGameMaster(param: string | IUser) {
@@ -270,22 +302,6 @@ export default class Game {
     }
 
     return param.uuid === this.gameMaster;
-  }
-
-  isBlueSpy(param: string | IUser) {
-    if (typeof param === "string") {
-      return param === this.spyMasterBlue;
-    }
-
-    return param.uuid === this.spyMasterBlue;
-  }
-
-  isRedSpy(param: string | IUser) {
-    if (typeof param === "string") {
-      return param === this.spyMasterRed;
-    }
-
-    return param.uuid === this.spyMasterRed;
   }
 
   isSpy(param: string | IUser) {
@@ -322,6 +338,7 @@ export default class Game {
       if (deletedPlayer.isAdmin) {
         const found = Object.entries(this.players)[0];
         if (found) {
+          this.gameMaster = found[0];
           //@ts-ignore
           let newAdmin: IPlayer = found[1];
           //@ts-ignore
@@ -349,13 +366,9 @@ export default class Game {
             action: "isSpyMaster",
           });
         }
-        if (deletedPlayer.team === "red") {
-          this.spyMasterRed = newSpyMasterId;
-        }
-        if (deletedPlayer.team === "blue") {
-          this.spyMasterBlue = newSpyMasterId;
-        }
       }
+
+      this.io.to(this.uuid).emit("playersUpdate", this.getPlayers());
     }
   }
 }

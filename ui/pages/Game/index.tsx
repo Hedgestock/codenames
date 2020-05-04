@@ -18,7 +18,7 @@ interface GameProps {
   guid: string;
 }
 
-const Test = ({ guid }: GameProps) => {
+const Game = ({ guid }: GameProps) => {
   const { state } = React.useContext(Store);
 
   const [socket, setSocket] = React.useState(null);
@@ -114,4 +114,4 @@ const Test = ({ guid }: GameProps) => {
   );
 };
 
-export default Test;
+export default Game;

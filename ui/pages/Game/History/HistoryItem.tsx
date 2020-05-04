@@ -3,13 +3,12 @@ import * as React from "react";
 import { IHistoryItem } from "../../../../shared/interfaces";
 import { Store } from "../../../Store";
 import { blueTeamColor, redTeamColor } from "../../../theme";
+import PlayerChip from "../PlayerChip";
 
 const HistoryItem = ({ player, action, card }: IHistoryItem) => {
   const { state } = React.useContext(Store);
 
-  if (player) {
-  }
-
+  console.log("player", player);
   return (
     <div
       style={{
@@ -19,24 +18,11 @@ const HistoryItem = ({ player, action, card }: IHistoryItem) => {
         alignItems: "baseline",
       }}
     >
-      {player ? (
-        <Chip
-          label={player.name}
-          style={{
-            backgroundColor:
-              player.team === "red"
-                ? redTeamColor
-                : player.team === "blue"
-                ? blueTeamColor
-                : "",
-            color: "#fff",
-            marginRight: "5px",
-          }}
-        />
-      ) : null}
+      {player ? <PlayerChip player={player} /> : null}
       <Typography>{state.langRes.history[action]}</Typography>
       {card ? (
         <Chip
+          size="small"
           label={card.word}
           style={{
             color:

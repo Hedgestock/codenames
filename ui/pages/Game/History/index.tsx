@@ -9,7 +9,6 @@ const GameHistory = ({ socket }: SocketConnectedProps) => {
   React.useEffect(() => {
     if (socket) {
       socket.on("historyMessage", (historyMessage) => {
-        console.log(historyMessage);
         setHistoryValue((prevHistory) => [historyMessage, ...prevHistory]);
       });
 

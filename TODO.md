@@ -3,14 +3,12 @@
 ## Game
 
 - [ ] Game loop
-- [ ] Add spymaster interface
+- [x] Add spymaster interface
 - [x] Fix chat size
 - [ ] Delete game on last quit
-- [ ] Get rid of spymaster red and blue properties
-- [ ] use maps to get rid of @ts-ignore
 - [ ] Fix goback with websocket ??
 - [ ] Add word picking/board generation
-- [ ] sort Game.ts methods
+- [ ] implement win condition
 
 ### Lobby
 
@@ -36,3 +34,8 @@
 ## Cleanup
 
 - [ ] `this.player[playerUUID] -> player`
+- [x] Get rid of spymaster red and blue properties
+- [ ] use maps to get rid of @ts-ignore
+- [ ] sort Game.ts methods
+- [ ] fix get spies and admins
+- [ ] unify admin and GameMaster

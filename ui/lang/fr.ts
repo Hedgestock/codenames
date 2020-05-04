@@ -46,7 +46,7 @@ export const fr = {
     language: "Langue",
     languageName: {
       english: "Anglais",
-      french: "Fançais",
+      french: "Français",
     },
     profile: "Page de profil",
   },

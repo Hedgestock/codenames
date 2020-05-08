@@ -3,6 +3,7 @@ import {
   Checkbox,
   FormControlLabel,
   Switch,
+  Typography,
 } from "@material-ui/core";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
@@ -46,10 +47,10 @@ const Profile = () => {
           justifyContent: "center",
         }}
       >
+        <Typography>{state.langRes.profile.name} {state.cookie.name} </Typography>
         <Button variant="contained" onClick={resetName}>
           {state.langRes.nameChange}
         </Button>
-        <br />
         <FormControlLabel
           control={
             <Switch

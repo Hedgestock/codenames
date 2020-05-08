@@ -35,6 +35,7 @@ export const fr = {
     message: "Désolé, la page n'a pas été trouvée...",
   },
   profile: {
+    name: "Nom :",
     cookieErase: "Plus de cookies, je n'ai plus faim...",
     cookieEraseWarnig: "En refusant mes cookies vous vous ferez jeter du site.",
     cookieStatus: "Miam, j'adore les cookies !",

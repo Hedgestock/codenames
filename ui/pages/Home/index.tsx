@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Store } from "../../Store";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
 

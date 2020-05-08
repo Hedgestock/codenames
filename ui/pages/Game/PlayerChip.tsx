@@ -1,8 +1,8 @@
+import { Chip, useTheme } from "@material-ui/core";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 import * as React from "react";
 import { IPlayer } from "../../../shared/interfaces";
-import { Chip } from "@material-ui/core";
-import { Visibility, VisibilityOff, NoEncryption } from "@material-ui/icons";
-import { redTeamColor, blueTeamColor } from "../../theme";
+import { blueTeamColor, redTeamColor } from "../../theme";
 
 interface PlayerChipProps {
   player: IPlayer;
@@ -10,24 +10,36 @@ interface PlayerChipProps {
   makeGameMaster?: () => void;
 }
 
-const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => (
-  <Chip
-    label={player.name}
-    style={{
-      backgroundColor:
-        player.team === "red"
-          ? redTeamColor
-          : player.team === "blue"
-          ? blueTeamColor
-          : "",
-      color: "#fff",
-      marginRight: "5px",
-      border: player.isAdmin ? "1px solid #FFF" : "none",
-    }}
-    size="small"
-    onDelete={makeSpyMaster ?? (() => null)}
-    deleteIcon={player.isSpyMaster ? <Visibility /> : <VisibilityOff />}
-  />
-);
+const iconStyle = { color: "#FFF" };
+
+const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
+  const theme = useTheme();
+
+  return (
+    <Chip
+      label={player.name}
+      style={{
+        backgroundColor:
+          player.team === "red"
+            ? redTeamColor
+            : player.team === "blue"
+            ? blueTeamColor
+            : "",
+        color: "#FFF",
+        marginRight: "5px",
+        border: player.isAdmin ? "2px solid " + theme.palette.text.primary : "none",
+      }}
+      size="small"
+      onDelete={makeSpyMaster ?? (() => null)}
+      deleteIcon={
+        player.isSpyMaster ? (
+          <Visibility style={iconStyle} />
+        ) : (
+          <VisibilityOff style={iconStyle} />
+        )
+      }
+    />
+  );
+};
 
 export default PlayerChip;

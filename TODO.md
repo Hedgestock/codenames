@@ -34,7 +34,7 @@
 - [x] Handle set spy master
 - [x] Handle set game master
 - [x] Fix all of the above
-- [ ] make playerchip white theme friendly 
+- [x] make playerchip white theme friendly
 
 
 ## Tests
@@ -54,6 +54,12 @@
 - [ ] make setter to dispatch players changed event
 - [ ] Reduce bundle size (webpack as external ?)
 - [x] Fixed HUMONGOUS bundle size
+
+
+## Style
+
+- [ ] Put everything in theme
+- [ ] Make playerChip extend Chip to add icons
 
 ## Features
 

@@ -8,17 +8,22 @@
 - [ ] Delete game on last quit
 - [ ] Fix goback with websocket ??
 - [ ] Add word picking/board generation
+- [ ] Add turn handling
 - [ ] implement win condition
 - [ ] Add english board generation
 - [ ] Update board on role change
 - [ ] Better wordlist
 - [ ] Timeout on disconnect/or maybe give gamemaster option to change role during a game only if spymaster gets diconnected.
+- [ ] Pass your turn
 
 ### Lobby
 
 - [x] Lobby
 - [x] Add room overview
 - [ ] Add gamemaster commands
+- [ ] Add change team option
+- [ ] Add possibility for game master to lock team picking
+- [ ] Add player contextual menu for game master
 - [ ] Disable startGame for nonGameMaster
 
 ### History
@@ -27,9 +32,9 @@
 - [x] Handle disconnect
 - [x] Fix text alignment
 - [x] Handle set spy master
-- [x] Hanldle set game master
+- [x] Handle set game master
 - [x] Fix all of the above
-- [ ] make playerchip 
+- [ ] make playerchip white theme friendly 
 
 
 ## Tests
@@ -59,3 +64,7 @@
 - [ ] Going to profile
 - [ ] Possibility to kick a player
 - [ ] Possibility to make password protected games
+- [ ] Team chats
+
+
+- [ ] voting system ?

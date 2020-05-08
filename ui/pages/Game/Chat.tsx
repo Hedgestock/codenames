@@ -1,16 +1,10 @@
-// import {
-//   IconButton,
-//   TextField,
-//   InputAdornment,
-//   Typography,
-// } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Typography from "@material-ui/core/Typography";
-
-// import { Send } from "@material-ui/icons";
-import Send from "@material-ui/icons/Send";
+import {
+  IconButton,
+  TextField,
+  InputAdornment,
+  Typography,
+} from "@material-ui/core";
+import { Send } from "@material-ui/icons";
 import * as React from "react";
 import { Store } from "../../Store";
 import { SocketConnectedProps } from "../../../shared/interfaces";

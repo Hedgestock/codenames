@@ -1,6 +1,4 @@
-// import { Chip, Typography } from "@material-ui/core";
-import Chip from "@material-ui/core/Chip";
-import Typography from "@material-ui/core/Typography";
+import { Chip, Typography } from "@material-ui/core";
 import * as React from "react";
 import { IHistoryItem } from "../../../../shared/interfaces";
 import { Store } from "../../../Store";

@@ -1,22 +1,13 @@
-// import {
-//   AppBar,
-//   Button,
-//   IconButton,
-//   Menu,
-//   MenuItem,
-//   Toolbar,
-//   Typography,
-// } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-
-// import { Menu as MenuIcon } from "@material-ui/icons";
-import MenuIcon from "@material-ui/icons/Menu";
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import { Menu as MenuIcon } from "@material-ui/icons";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Store } from "./Store";

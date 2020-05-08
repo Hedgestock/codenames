@@ -1,5 +1,4 @@
-// import { Button } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import * as React from "react";
 import { SocketConnectedProps } from "../../../shared/interfaces";
 import { Store } from "../../Store";

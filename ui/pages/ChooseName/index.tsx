@@ -1,10 +1,8 @@
-// import { Button, TextField, Typography, useTheme } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { Button, TextField, Typography, useTheme } from "@material-ui/core";
 import * as React from "react";
 import { Store } from "../../Store";
 import { setCookie } from "../../tools/helpers";
+import { useHistory } from "react-router-dom";
 
 const ChooseNameModal = () => {
   const { state, dispatch } = React.useContext(Store);
@@ -16,10 +14,10 @@ const ChooseNameModal = () => {
     "choose-name--cell"
   );
 
-  // const theme = useTheme();
+  const theme = useTheme();
 
   const containerStyle = {
-    backgroundColor: "#FFFFFF"//theme.palette.background.default,
+    backgroundColor: theme.palette.background.default,
   };
 
   function onNameChoose() {

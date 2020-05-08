@@ -5,16 +5,13 @@ import GameChat from "./Chat";
 import GameHistory from "./History";
 import io from "socket.io-client";
 import { GameState } from "../../../shared/interfaces";
-// import {
-//   TextField,
-//   InputAdornment,
-//   IconButton,
-// } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
-// import { FileCopy } from "@material-ui/icons";
-import FileCopy from "@material-ui/icons/FileCopy";
+import {
+  Button,
+  TextField,
+  InputAdornment,
+  IconButton,
+} from "@material-ui/core";
+import { FileCopy } from "@material-ui/icons";
 import GameLobby from "./Lobby";
 
 interface GameProps {
@@ -100,17 +97,13 @@ const Game = ({ guid }: GameProps) => {
         width: "100%",
       }}
     >
-      <GameChat guid={guid} socket={socket} />
-      <div
-        style={{
-          display: "flex",
-          flexFlow: "column",
-          flexGrow: 2,
-          height: "100%",
-        }}
-      >
+      <GameChat
+        guid={guid}
+        socket={socket}
+      />
+      <div style={{ display: "flex", flexFlow: "column", flexGrow: 2 , height: "100%"}}>
         {gameState === GameState.beforeStart ? (
-          <GameLobby socket={socket} />
+          <GameLobby socket={socket}/>
         ) : (
           <Board socket={socket} />
         )}

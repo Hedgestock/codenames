@@ -1,4 +1,5 @@
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import  CssBaseline  from "@material-ui/core/CssBaseline";
+// import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -14,7 +15,8 @@ import Game from "./pages/Game";
 const App = () => {
   const { state } = React.useContext(Store);
   return (
-    <ThemeProvider theme={theme(state.cookie.darkTheme)}>
+    <>
+     {/* <ThemeProvider theme={theme(state.cookie.darkTheme)}> */}
       <CssBaseline />
       <BrowserRouter>
         <>
@@ -31,7 +33,8 @@ const App = () => {
           </Switch>
         </>
       </BrowserRouter>
-    </ThemeProvider>
+     {/* </ThemeProvider> */}
+      </>
   );
 };
 

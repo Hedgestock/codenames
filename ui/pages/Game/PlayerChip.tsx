@@ -1,7 +1,10 @@
 import * as React from "react";
 import { IPlayer } from "../../../shared/interfaces";
-import { Chip } from "@material-ui/core";
-import { Visibility, VisibilityOff, NoEncryption } from "@material-ui/icons";
+// import { Chip } from "@material-ui/core";
+import Chip from "@material-ui/core/Chip";
+// import { Visibility, VisibilityOff } from "@material-ui/icons";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { redTeamColor, blueTeamColor } from "../../theme";
 
 interface PlayerChipProps {

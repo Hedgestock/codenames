@@ -1,10 +1,13 @@
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Divider,
-  Switch,
-} from "@material-ui/core";
+// import {
+//   Button,
+//   Checkbox,
+//   FormControlLabel,
+//   Switch,
+// } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Store } from "../../Store";

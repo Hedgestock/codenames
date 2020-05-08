@@ -6,11 +6,13 @@ module.exports = {
   module: {
     rules: [
       {
-        exclude: ["/node_modules/", "/ui/"],
-        loader: "ts-loader",
-        test: /\.ts(x?)$/,
-        options: {
-          configFile: "server.tsconfig.json",
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-typescript"],
+          },
         },
       },
     ],

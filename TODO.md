@@ -53,6 +53,7 @@
 - [ ] get rid of GameMasterUUID
 - [ ] make setter to dispatch players changed event
 - [ ] Reduce bundle size (webpack as external ?)
+- [x] Fixed HUMONGOUS bundle size
 
 ## Features
 

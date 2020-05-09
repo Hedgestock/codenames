@@ -11,7 +11,7 @@ import { Menu as MenuIcon } from "@material-ui/icons";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Store } from "./Store";
-import { setCookie, setLang } from "./tools/helpers";
+import { setLang } from "./tools/helpers";
 
 const TopBar = () => {
   const { state, dispatch } = React.useContext(Store);
@@ -41,14 +41,11 @@ const TopBar = () => {
     setLang(state.cookieName, { ...state.cookie, lang: lang }, dispatch);
   }
 
-  function resetName() {
-    setCookie(state.cookieName, { ...state.cookie, name: undefined }, dispatch);
-    handleMenuClose();
-  }
-
   function navigate(location) {
-    history.push(location);
-    handleMenuClose();
+    return () => {
+      history.push(location);
+      handleMenuClose();
+    };
   }
 
   const renderLangMenu = (
@@ -80,10 +77,10 @@ const TopBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => navigate("/")}>
+      <MenuItem onClick={navigate("/")}>
         {state.langRes.topBar.home}
       </MenuItem>
-      <MenuItem onClick={() => navigate("/profile")}>
+      <MenuItem onClick={navigate("/profile")}>
         {state.langRes.topBar.profile}
       </MenuItem>
     </Menu>

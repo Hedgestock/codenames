@@ -46,17 +46,6 @@ export default class {
     return this._gameMasterUUID;
   }
 
-  private makeGameMaster(uuid: string): boolean {
-    const player = this._players.get(uuid);
-    if (player) {
-      this._players.get(this._gameMasterUUID).isGameMaster = false;
-      player.isGameMaster = true;
-      this._gameMasterUUID = uuid;
-      return true;
-    }
-    return false;
-  }
-
   get board() {
     return this._boardManager;
   }
@@ -66,7 +55,9 @@ export default class {
   }
 
   get connectedPlayers() {
-    return Array.from(this._players.entries()).filter(([uuid, player]) => player.status === EPlayerStatus.CONNECTED);
+    return Array.from(this._players.entries()).filter(
+      ([uuid, player]) => player.status === EPlayerStatus.CONNECTED
+    );
   }
 
   get chat() {
@@ -122,26 +113,32 @@ export default class {
     ).length;
   }
 
-  makePlayerRed(playerUUID: string) {
-    throw "Not implemented";
-    const player: IPlayer = this._players.get(playerUUID);
-    player && (player.team = "red");
-    this.emitPlayersUpdate();
+  changePlayerTeam(uuid: string): boolean {
+    const player: IPlayer = this._players.get(uuid);
+    if (player) {
+      player.team = player.team === "blue" ? "red" : "blue";
+      this.emitPlayersUpdate();
+      this.pushHistory({
+        player,
+        action: ("is" + this.capitalize(player.team)) as HistoryAction,
+      });
+      return true;
+    }
+    return false;
   }
 
-  makePlayerBlue(playerUUID: string) {
-    throw "Not implemented";
-    const player: IPlayer = this._players.get(playerUUID);
-    player && (player.team = "blue");
-    this.emitPlayersUpdate();
+  makePlayerGameMaster(playerUUID: string): boolean {
+    const player = this._players.get(playerUUID);
+    if (player) {
+      this._players.get(this._gameMasterUUID).isGameMaster = false;
+      player.isGameMaster = true;
+      this._gameMasterUUID = playerUUID;
+      return true;
+    }
+    return false;
   }
 
-  makePlayerGameMaster(playerUUID: string) {
-    throw "Not implemented";
-    this.emitPlayersUpdate();
-  }
-
-  makeSpyMaster(playerUUID: string) {
+  makePlayerSpyMaster(playerUUID: string) {
     const player: IPlayer = this._players.get(playerUUID);
     if (!player || player.isSpyMaster) return;
     if (player.team == "red") {
@@ -319,7 +316,7 @@ export default class {
       if (disconectedPlayer.isGameMaster) {
         const found = this.connectedPlayers[0];
         if (found) {
-          this.makeGameMaster(found[0]);
+          this.makePlayerGameMaster(found[0]);
         }
       }
 
@@ -329,7 +326,7 @@ export default class {
         );
 
         if (found) {
-          this.makeSpyMaster(found[0]);
+          this.makePlayerSpyMaster(found[0]);
         }
       }
 

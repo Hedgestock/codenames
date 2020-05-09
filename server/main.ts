@@ -34,7 +34,10 @@ io.on("connection", function (socket) {
   socket.join(gameUUID);
 
   if (!games.get(gameUUID)) {
-    games.set(gameUUID, new GameManager({ name, uuid: userUUID }, gameUUID, io));
+    games.set(
+      gameUUID,
+      new GameManager({ name, uuid: userUUID }, gameUUID, io)
+    );
     // setInterval(() => console.debug(games[gameUUID]), 10000);
   }
 
@@ -77,21 +80,21 @@ io.on("connection", function (socket) {
 
   socket.on("tryMakePlayerSpyMaster", (playerUUID) => {
     if (game.gameMasterUUID === userUUID) {
-      game.makeSpyMaster(playerUUID);
+      game.makePlayerSpyMaster(playerUUID);
+    }
+  });
+
+  socket.on("tryChangePlayerTeam", ({ playerUUID }) => {
+    if (game.gameMasterUUID === userUUID) {
+      game.changePlayerTeam(playerUUID);
     }
   });
 
   socket.on("disconnect", () => {
     game.disconnectPlayer(userUUID);
-    console.log("deco");
+    console.log(name + " disconnected from " + gameUUID);
   });
 });
-
-// let testMap: Map<string, any> = new Map();
-// testMap.set("1", { name: "p1", team: "blue", isAdmin: true, isSpyMaster: true });
-// testMap.set("2", { name: "p2", team: "red", isAdmin: false, isSpyMaster: true });
-// testMap.set("3", { name: "p3", team: "blue", isAdmin: false, isSpyMaster: false });
-// console.log(Array.from(testMap.values()).filter(v => v.team == "blue").length);
 
 httpServer.listen(port, () =>
   console.info(`Server is listening at port ${port}`)

@@ -27,6 +27,12 @@ export const fr = {
     revealed: "a révélé",
     startedGame: "a lancé une partie.",
   },
+  playerChip: {
+    changeTeam: "Changer d'équipe",
+    makeSpyMaster: "Rendre maître espion",
+    makeGameMaster: "Rendre maître du jeu",
+    close: "Fermer",
+  },
   home: {
     createGame: "Créer une partie.",
   },

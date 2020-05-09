@@ -87,7 +87,7 @@ export default class {
 
   get gameMaster(): IPlayer {
     for (const [uuid, player] of this._players.entries()) {
-      if (player.isAdmin) return player;
+      if (player.isGameMaster) return player;
     }
     return null;
   }
@@ -166,7 +166,7 @@ export default class {
     if (
       this._state === GameState.beforeStart &&
       this._players.get(playerUUID) &&
-      this._players.get(playerUUID).isAdmin
+      this._players.get(playerUUID).isGameMaster
     ) {
       this.setGameState(GameState.blueSpyTalking);
       this.pushHistory({
@@ -234,13 +234,13 @@ export default class {
     }
 
     const player: IPlayer = {
-      isAdmin: this.isGameMaster(user),
+      isGameMaster: this.isGameMaster(user),
       team,
       isSpyMaster,
       name: user.name,
     };
 
-    if (player.isAdmin) {
+    if (player.isGameMaster) {
       this.pushHistory({
         player,
         action: "isGameMaster",
@@ -299,13 +299,13 @@ export default class {
       this._players.delete(param);
       this.pushHistory({ player: deletedPlayer, action: "disconnected" });
 
-      if (deletedPlayer.isAdmin) {
+      if (deletedPlayer.isGameMaster) {
         const found = this._players.entries().next().value;
         console.log(found);
         if (found) {
           this._gameMasterUUID = found[0];
           let newAdmin: IPlayer = found[1];
-          newAdmin.isAdmin = true;
+          newAdmin.isGameMaster = true;
           this.pushHistory({
             player: newAdmin,
             action: "isGameMaster",

@@ -37,7 +37,7 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
           <VisibilityOff style={iconStyle} />
         )
       }
-      icon={player.isAdmin ? <Settings style={iconStyle} /> : null}
+      icon={player.isGameMaster ? <Settings style={iconStyle} /> : null}
     />
   );
 };

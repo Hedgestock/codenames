@@ -26,7 +26,7 @@ export interface ICard {
 export interface IPlayer {
   team: Team
   isSpyMaster: boolean;
-  isAdmin: boolean;
+  isGameMaster: boolean;
   name: string;
 }
 

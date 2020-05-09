@@ -7,16 +7,16 @@
 - [ ] Add word picking/board generation
 - [ ] Better wordlist
 - [ ] Delete game on last quit
-- [x] Fix goback with websocket
 - [ ] Game loop
+- [ ] Make player afk on disconnect
 - [ ] Pass your turn
 - [ ] Timeout on disconnect/or maybe give gamemaster option to change role during a game only if spymaster gets diconnected.
 - [ ] Update board on role change
 - [ ] Use state machine pattern for game
 - [ ] implement win condition
-- [ ] Make player afk on disconnect
 - [x] Add spymaster interface
 - [x] Fix chat size
+- [x] Fix goback with websocket
 
 ### Lobby
 
@@ -52,15 +52,15 @@
 - [ ] Sort Game.ts methods
 - [ ] Split Game.ts
 - [ ] Split shared/interfaces into single files
-- [x] Transform getXXX into real getter
-- [ ] Unify admin and GameMaster
 - [ ] Use enums instead of types for Team and HistoryAction
-- [x] Use maps to get rid of @ts-ignore
+- [ ] try to not use Array.form() in removePlayer for spyMaster
 - [x] Fix HUMONGOUS bundle size
 - [x] Fix get spies and admins
 - [x] Get rid of spymaster red and blue properties
+- [x] Transform getXXX into real getter
+- [x] Unify admin and GameMaster
+- [x] Use maps to get rid of @ts-ignore
 - [x] `this.player[playerUUID] -> player` vv
-- [ ] try to not use Array.form() in removePlayer for spyMaster
 
 
 ## Style
@@ -72,13 +72,13 @@
 
 - [ ] Add possibility of custom board
 - [ ] Add possibility of custom wordlist
-- [x] Display name on profile page
-- [x] Fix typos
 - [ ] Going to profile
 - [ ] New game after game finish
 - [ ] Possibility to kick a player
 - [ ] Possibility to make password protected games
 - [ ] Team chats
 - [ ] voting system ?
+- [x] Display name on profile page
+- [x] Fix typos
 
 ## One step-er

@@ -34,7 +34,6 @@ const GameLobby = ({ socket }: SocketConnectedProps) => {
     <>
       <div style={{ display: "flex", height: "100%", padding: "5px" }}>
         {Object.entries(players).map((e, i) => {
-          console.log(e);
           return (
             <PlayerChip
               key={i}

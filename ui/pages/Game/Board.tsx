@@ -53,12 +53,10 @@ const Board = ({ socket }: SocketConnectedProps) => {
   React.useEffect(() => {
     if (socket) {
       socket.on("boardUpdate", (boardObject) => {
-        console.log(boardObject);
         setBoard(boardObject);
       });
 
       socket.on("boardUpdate", (boardObject) => {
-        console.log(boardObject);
         setBoard(boardObject);
       });
     }

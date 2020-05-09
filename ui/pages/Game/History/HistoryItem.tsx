@@ -2,7 +2,12 @@ import { Chip, Typography } from "@material-ui/core";
 import * as React from "react";
 import { IHistoryItem } from "../../../../shared/interfaces";
 import { Store } from "../../../Store";
-import { blueTeamColor, redTeamColor } from "../../../theme";
+import {
+  blueTeamColor,
+  redTeamColor,
+  blackCardColor,
+  whiteCardColor,
+} from "../../../theme";
 import PlayerChip from "../PlayerChip";
 
 const HistoryItem = ({ player, action, card }: IHistoryItem) => {
@@ -30,7 +35,9 @@ const HistoryItem = ({ player, action, card }: IHistoryItem) => {
                 ? redTeamColor
                 : card.color === "blue"
                 ? blueTeamColor
-                : "",
+                : card.color === "black"
+                ? blackCardColor
+                : whiteCardColor,
             marginLeft: "5px",
           }}
         />

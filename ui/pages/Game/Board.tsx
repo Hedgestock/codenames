@@ -1,21 +1,52 @@
 import * as React from "react";
 import { ICard, SocketConnectedProps } from "../../../shared/interfaces";
 import { Store } from "../../Store";
-import { blueTeamColor, redTeamColor } from "../../theme";
+import {
+  blueTeamColor,
+  redTeamColor,
+  whiteCardColor,
+  blackCardColor,
+  unrevealedCardBackgroundColor,
+  revealedCardColor,
+} from "../../theme";
 import GameCard from "./GameCard";
 
 const Board = ({ socket }: SocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
-  const blackRevealed = { backgroundColor: "#000", color: "#DDD" };
-  const blueRevealed = { backgroundColor: blueTeamColor, color: "#DDD" };
-  const redRevealed = { backgroundColor: redTeamColor, color: "#DDD" };
-  const whiteRevealed = { backgroundColor: "#FFF", color: "#000" };
-  const blackUnrevealedSpy = { backgroundColor: "#333", color: "#DDD" };
-  const blueUnrevealedSpy = { backgroundColor: "#888", color: blueTeamColor };
-  const redUnrevealedSpy = { backgroundColor: "#888", color: redTeamColor };
-  const whiteUnrevealedSpy = { backgroundColor: "#888", color: "#FFF" };
-  const UnrevealedPlayer = { backgroundColor: "#888", color: "#000" };
+  const blackRevealed = {
+    backgroundColor: blackCardColor,
+    color: revealedCardColor,
+  };
+  const blueRevealed = {
+    backgroundColor: blueTeamColor,
+    color: revealedCardColor,
+  };
+  const redRevealed = {
+    backgroundColor: redTeamColor,
+    color: revealedCardColor,
+  };
+  const whiteRevealed = { backgroundColor: whiteCardColor, color: "#000" };
+  const blackUnrevealedSpy = {
+    backgroundColor: "#333",
+    color: revealedCardColor,
+  };
+  const blueUnrevealedSpy = {
+    backgroundColor: unrevealedCardBackgroundColor,
+    color: blueTeamColor,
+  };
+  const redUnrevealedSpy = {
+    backgroundColor: unrevealedCardBackgroundColor,
+    color: redTeamColor,
+  };
+  const whiteUnrevealedSpy = {
+    backgroundColor: unrevealedCardBackgroundColor,
+    color: whiteCardColor,
+  };
+  const UnrevealedPlayer = {
+    backgroundColor: unrevealedCardBackgroundColor,
+    color: "#000",
+  };
 
   const [board, setBoard] = React.useState([]);
 

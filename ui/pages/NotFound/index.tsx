@@ -1,12 +1,12 @@
 import { Button, Typography } from "@material-ui/core";
 import * as React from "react";
-import { useHistory } from "react-router-dom";
 import { Store } from "../../Store";
 
 const NotFound = () => {
   const { state } = React.useContext(Store);
   function find() {
-    window.location.href = "https://www.google.com/search?q=" + window.location.href;
+    window.location.href =
+      "https://www.google.com/search?q=" + window.location.href;
   }
 
   return (

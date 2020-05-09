@@ -1,5 +1,5 @@
 import { Chip, useTheme } from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { Visibility, VisibilityOff, Settings } from "@material-ui/icons";
 import * as React from "react";
 import { IPlayer } from "../../../shared/interfaces";
 import { blueTeamColor, redTeamColor } from "../../theme";
@@ -27,7 +27,6 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
             : "",
         color: "#FFF",
         marginRight: "5px",
-        border: player.isAdmin ? "2px solid " + theme.palette.text.primary : "none",
       }}
       size="small"
       onDelete={makeSpyMaster ?? (() => null)}
@@ -38,6 +37,7 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
           <VisibilityOff style={iconStyle} />
         )
       }
+      icon={player.isAdmin ? <Settings style={iconStyle} /> : null}
     />
   );
 };

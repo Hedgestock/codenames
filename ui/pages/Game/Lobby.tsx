@@ -12,7 +12,6 @@ const GameLobby = ({ socket }: SocketConnectedProps) => {
   React.useEffect(() => {
     if (socket) {
       socket.on("playersUpdate", (playersObject) => {
-        console.debug("lol");
         setPLayers(playersObject);
       });
 

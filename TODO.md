@@ -51,7 +51,7 @@
 - [ ] Sort Game.ts methods
 - [ ] Split Game.ts
 - [ ] Split shared/interfaces into single files
-- [ ] Transform getXXX into real getter
+- [x] Transform getXXX into real getter
 - [ ] Unify admin and GameMaster
 - [ ] Use enums instead of types for Team and HistoryAction
 - [ ] Use maps to get rid of @ts-ignore
@@ -70,8 +70,8 @@
 
 - [ ] Add possibility of custom board
 - [ ] Add possibility of custom wordlist
-- [ ] Display name on profile page
-- [ ] Fix typos
+- [x] Display name on profile page
+- [x] Fix typos
 - [ ] Going to profile
 - [ ] New game after game finish
 - [ ] Possibility to kick a player

@@ -42,15 +42,15 @@ io.on("connection", function (socket) {
 
   game.addPlayer({ name, uuid: userUUID });
 
-  socket.emit("chatInit", game.getChat());
-  socket.emit("historyInit", game.getHistory());
-  socket.emit("gameStateChanged", game.getGameState());
+  socket.emit("chatInit", game.chat);
+  socket.emit("historyInit", game.history);
+  socket.emit("gameStateChanged", game.state);
 
   function boardUpdate() {
     if (game.isSpy(userUUID)) {
       socket.emit("boardUpdate", game.board.spyBoard);
     } else {
-      socket.emit("boardUpdate", game.board.getPlayerBoard);
+      socket.emit("boardUpdate", game.board.playerBoard);
     }
   }
 
@@ -60,7 +60,7 @@ io.on("connection", function (socket) {
 
   socket.on("requestPlayers", () => {
     console.debug("requestPlayers");
-    socket.emit("playersUpdate", game.getPlayers());
+    socket.emit("playersUpdate", game.players);
   });
 
   socket.on("message", function (message: any) {

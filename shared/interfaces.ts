@@ -28,6 +28,12 @@ export interface IPlayer {
   isSpyMaster: boolean;
   isGameMaster: boolean;
   name: string;
+  status: EPlayerStatus;
+}
+
+export enum EPlayerStatus {
+  CONNECTED,
+  DISCONNECTED
 }
 
 export interface IHistoryItem {
@@ -43,6 +49,7 @@ export type HistoryAction =
   | "isSpyMaster"
   | "isGameMaster"
   | "disconnected"
+  | "reconnected"
   | "revealed"
   | "startedGame";
 

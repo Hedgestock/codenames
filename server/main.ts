@@ -77,12 +77,12 @@ io.on("connection", function (socket) {
 
   socket.on("tryMakePlayerSpyMaster", (playerUUID) => {
     if (game.gameMasterUUID === userUUID) {
-      game.makePlayerSpy(playerUUID);
+      game.makeSpyMaster(playerUUID);
     }
   });
 
   socket.on("disconnect", () => {
-    game.removePlayer(userUUID);
+    game.disconnectPlayer(userUUID);
     console.log("deco");
   });
 });

@@ -9,6 +9,7 @@ import {
   IHistoryItem,
   HistoryAction,
   Team,
+  EPlayerStatus,
 } from "../shared/interfaces";
 import BoardManager from "./BoardManager";
 
@@ -45,10 +46,16 @@ export default class {
     return this._gameMasterUUID;
   }
 
-  // private setGameMasterUUID(uuid: string) {
-  //   const player = this._players.get
-
-  // }
+  private makeGameMaster(uuid: string): boolean {
+    const player = this._players.get(uuid);
+    if (player) {
+      this._players.get(this._gameMasterUUID).isGameMaster = false;
+      player.isGameMaster = true;
+      this._gameMasterUUID = uuid;
+      return true;
+    }
+    return false;
+  }
 
   get board() {
     return this._boardManager;
@@ -56,6 +63,10 @@ export default class {
 
   get players() {
     return this._players;
+  }
+
+  get connectedPlayers() {
+    return Array.from(this._players.entries()).filter(([uuid, player]) => player.status === EPlayerStatus.CONNECTED);
   }
 
   get chat() {
@@ -112,15 +123,16 @@ export default class {
   }
 
   makePlayerRed(playerUUID: string) {
+    throw "Not implemented";
     const player: IPlayer = this._players.get(playerUUID);
     player && (player.team = "red");
     this.emitPlayersUpdate();
   }
 
   makePlayerBlue(playerUUID: string) {
+    throw "Not implemented";
     const player: IPlayer = this._players.get(playerUUID);
     player && (player.team = "blue");
-    this.pushHistory({ player, action: "isSpyMaster" });
     this.emitPlayersUpdate();
   }
 
@@ -129,16 +141,14 @@ export default class {
     this.emitPlayersUpdate();
   }
 
-  makePlayerSpy(playerUUID: string) {
+  makeSpyMaster(playerUUID: string) {
     const player: IPlayer = this._players.get(playerUUID);
-    if (player.isSpyMaster) return;
+    if (!player || player.isSpyMaster) return;
     if (player.team == "red") {
       const redSpy = this.redspyMaster;
-      //@ts-ignore
       redSpy && (redSpy.isSpyMaster = false);
     } else {
       const blueSpy = this.blueSpyMaster;
-      //@ts-ignore
       blueSpy && (blueSpy.isSpyMaster = false);
     }
     player.isSpyMaster = true;
@@ -215,48 +225,55 @@ export default class {
 
   addPlayer(user: IUser) {
     if (this._players.get(user.uuid)) {
-      return;
-    }
-
-    let team: "blue" | "red";
-    let isSpyMaster = false;
-
-    if (this.playersBlue() > this.playersRed()) {
-      if (!this.redspyMaster) {
-        isSpyMaster = true;
-      }
-      team = "red";
-    } else {
-      if (!this.blueSpyMaster) {
-        isSpyMaster = true;
-      }
-      team = "blue";
-    }
-
-    const player: IPlayer = {
-      isGameMaster: this.isGameMaster(user),
-      team,
-      isSpyMaster,
-      name: user.name,
-    };
-
-    if (player.isGameMaster) {
+      const player = this._players.get(user.uuid);
+      player.name = user.name;
+      player.status = EPlayerStatus.CONNECTED;
       this.pushHistory({
         player,
-        action: "isGameMaster",
+        action: "reconnected",
       });
+    } else {
+      let team: "blue" | "red";
+      let isSpyMaster = false;
+
+      if (this.playersBlue() > this.playersRed()) {
+        if (!this.redspyMaster) {
+          isSpyMaster = true;
+        }
+        team = "red";
+      } else {
+        if (!this.blueSpyMaster) {
+          isSpyMaster = true;
+        }
+        team = "blue";
+      }
+
+      const player: IPlayer = {
+        isGameMaster: this.isGameMaster(user),
+        team,
+        isSpyMaster,
+        name: user.name,
+        status: EPlayerStatus.CONNECTED,
+      };
+
+      if (player.isGameMaster) {
+        this.pushHistory({
+          player,
+          action: "isGameMaster",
+        });
+      }
+
+      this.pushHistory({
+        player,
+        action: ("is" + this.capitalize(player.team)) as HistoryAction,
+      });
+
+      if (isSpyMaster) {
+        this.pushHistory({ player, action: "isSpyMaster" });
+      }
+
+      this._players.set(user.uuid, player);
     }
-
-    this.pushHistory({
-      player,
-      action: ("is" + this.capitalize(player.team)) as HistoryAction,
-    });
-
-    if (isSpyMaster) {
-      this.pushHistory({ player, action: "isSpyMaster" });
-    }
-
-    this._players.set(user.uuid, player);
     this.emitPlayersUpdate();
   }
 
@@ -290,42 +307,29 @@ export default class {
     }
   }
 
-  removePlayer(param: string | IUser) {
+  disconnectPlayer(param: string | IUser) {
     if (typeof param !== "string") {
       param = param.uuid;
     }
     if (this._players.get(param)) {
-      const deletedPlayer = this._players.get(param);
-      this._players.delete(param);
-      this.pushHistory({ player: deletedPlayer, action: "disconnected" });
+      const disconectedPlayer = this._players.get(param);
+      disconectedPlayer.status = EPlayerStatus.DISCONNECTED;
+      this.pushHistory({ player: disconectedPlayer, action: "disconnected" });
 
-      if (deletedPlayer.isGameMaster) {
-        const found = this._players.entries().next().value;
-        console.log(found);
+      if (disconectedPlayer.isGameMaster) {
+        const found = this.connectedPlayers[0];
         if (found) {
-          this._gameMasterUUID = found[0];
-          let newAdmin: IPlayer = found[1];
-          newAdmin.isGameMaster = true;
-          this.pushHistory({
-            player: newAdmin,
-            action: "isGameMaster",
-          });
+          this.makeGameMaster(found[0]);
         }
       }
 
-      if (deletedPlayer.isSpyMaster) {
-        const found = Array.from(this._players.entries()).find(
-          (pair) => pair[1].team === deletedPlayer.team
+      if (disconectedPlayer.isSpyMaster) {
+        const found = this.connectedPlayers.find(
+          ([uuid, player]) => player.team === disconectedPlayer.team
         );
 
-        let newSpyMasterId = undefined;
         if (found) {
-          newSpyMasterId = found[0];
-          found[1].isSpyMaster = true;
-          this.pushHistory({
-            player: found[1],
-            action: "isSpyMaster",
-          });
+          this.makeSpyMaster(found[0]);
         }
       }
 

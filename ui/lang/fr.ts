@@ -18,6 +18,7 @@ export const fr = {
     title: "Choisissez un nom",
   },
   history: {
+    reconnected: "s'est reconnecté.",
     disconnected: "a quitté la partie.",
     isBlue: "rejoint l'équipe bleue.",
     isGameMaster: "est le maître du jeu.",

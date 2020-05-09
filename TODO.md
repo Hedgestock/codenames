@@ -8,15 +8,15 @@
 - [ ] Better wordlist
 - [ ] Delete game on last quit
 - [ ] Game loop
-- [ ] Make player afk on disconnect
+- [ ] Give gamemaster option to change role during a game only if spymaster gets diconnected.
 - [ ] Pass your turn
-- [ ] Timeout on disconnect/or maybe give gamemaster option to change role during a game only if spymaster gets diconnected.
 - [ ] Update board on role change
 - [ ] Use state machine pattern for game
 - [ ] implement win condition
 - [x] Add spymaster interface
 - [x] Fix chat size
 - [x] Fix goback with websocket
+- [x] Make player afk on disconnect
 
 ### Lobby
 
@@ -24,7 +24,6 @@
 - [ ] Add gamemaster commands
 - [ ] Add player contextual menu for game master
 - [ ] Add possibility for game master to lock team picking
-- [ ] Disable startGame for nonGameMaster
 - [x] Add room overview
 - [x] Lobby
 
@@ -47,15 +46,16 @@
 
 ## Cleanup
 
-- [ ] Get rid of GameMasterUUID or use a unique setter
 - [ ] Make setter to dispatch players changed event
 - [ ] Sort Game.ts methods
 - [ ] Split Game.ts
 - [ ] Split shared/interfaces into single files
 - [ ] Use enums instead of types for Team and HistoryAction
+- [ ] find a method to bundle 'playersUpdate'
 - [ ] try to not use Array.form() in removePlayer for spyMaster
 - [x] Fix HUMONGOUS bundle size
 - [x] Fix get spies and admins
+- [x] Get rid of GameMasterUUID or use a unique setter
 - [x] Get rid of spymaster red and blue properties
 - [x] Transform getXXX into real getter
 - [x] Unify admin and GameMaster
@@ -65,8 +65,10 @@
 
 ## Style
 
-- [ ] Make playerChip extend Chip to add icons
+- [x] Make playerChip extend Chip to add icons
 - [ ] Put everything in theme
+- [ ] Disable startGame for nonGameMaster
+
 
 ## Features
 

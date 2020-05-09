@@ -18,6 +18,7 @@ export const en = {
     title: "Choose a user name",
   },
   history: {
+    reconnected: "reconnected.",
     disconnected: "disconnected.",
     isBlue: " joins blue team.",
     isGameMaster: "is the game master.",

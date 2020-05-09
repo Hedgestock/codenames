@@ -3,7 +3,7 @@ import express from "express";
 import path from "path";
 import socketio from "socket.io";
 import { cookieMiddleWare } from "./tools/helpers";
-import Game from "./Game";
+import GameManager from "./GameManager";
 
 let games = {};
 
@@ -34,11 +34,11 @@ io.on("connection", function (socket) {
   socket.join(gameUUID);
 
   if (!games[gameUUID]) {
-    games[gameUUID] = new Game({ name, uuid: userUUID }, gameUUID, io);
+    games[gameUUID] = new GameManager({ name, uuid: userUUID }, gameUUID, io);
     // setInterval(() => console.debug(games[gameUUID]), 10000);
   }
 
-  const game: Game = games[gameUUID];
+  const game: GameManager = games[gameUUID];
 
   game.addPlayer({ name, uuid: userUUID });
 
@@ -48,9 +48,9 @@ io.on("connection", function (socket) {
 
   function boardUpdate() {
     if (game.isSpy(userUUID)) {
-      socket.emit("boardUpdate", game.getSpyBoard());
+      socket.emit("boardUpdate", game.board.getSpyBoard());
     } else {
-      socket.emit("boardUpdate", game.getPlayerBoard());
+      socket.emit("boardUpdate", game.board.getPlayerBoard());
     }
   }
 

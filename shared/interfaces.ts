@@ -19,12 +19,12 @@ export interface IUser {
 
 export interface ICard {
   word: string;
-  color: undefined | "blue" | "red" | "white" | "black";
+  color: undefined | Team | "white" | "black";
   revealed: boolean;
 }
 
 export interface IPlayer {
-  team: "blue" | "red";
+  team: Team
   isSpyMaster: boolean;
   isAdmin: boolean;
   name: string;
@@ -49,3 +49,5 @@ export type HistoryAction =
 export interface SocketConnectedProps {
     socket: SocketIOClient.Socket;
   }
+
+  export type Team = "blue" | "red";

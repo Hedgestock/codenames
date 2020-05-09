@@ -1,5 +1,4 @@
 import socketio from "socket.io";
-import words_list from "./tools/words_list";
 import { EventEmitter } from "events";
 import {
   IUser,
@@ -9,48 +8,49 @@ import {
   IPlayer,
   IHistoryItem,
   HistoryAction,
+  Team,
 } from "../shared/interfaces";
+import BoardManager from "./BoardManager";
 
-export default class Game {
+export default class {
   constructor(gameMaster: IUser, uuid: string, io: socketio.Server) {
     this.first = "blue";
     this.io = io;
     this.uuid = uuid;
-    this.gameMasterUUID = gameMaster.uuid;
+    this._gameMasterUUID = gameMaster.uuid;
     this.history = [];
     this.chat = [];
     this.players = {};
-    this.board = this.initBoard();
-    this.eventEmitter = new EventEmitter();
+    this._boardManager = new BoardManager();
+    this._eventEmitter = new EventEmitter();
     this.state = GameState.beforeStart;
   }
 
-  eventEmitter: EventEmitter;
+  private _eventEmitter: EventEmitter;
+  private _gameMasterUUID: string;
   private io: socketio.Server;
   private uuid: string;
   private history: any[];
   private chat: IChatMessage[];
-  gameMasterUUID: string;
   private players;
-  private board: ICard[];
+  private _boardManager: BoardManager;
   private state: GameState;
-  private first: "blue" | "red";
+  private first: Team;
+
+  get eventEmitter() {
+    return this._eventEmitter;
+  }
+
+  get gameMasterUUID() {
+    return this._gameMasterUUID;
+  }
+
+  get board() {
+    return this._boardManager;
+  }
 
   getPlayers() {
     return this.players;
-  }
-
-  getSpyBoard(): ICard[] {
-    return this.board;
-  }
-
-  getPlayerBoard(): ICard[] {
-    return this.board.map((c) => {
-      if (!c.revealed) {
-        return { ...c, color: undefined };
-      }
-      return c;
-    });
   }
 
   getChat() {
@@ -95,39 +95,6 @@ export default class Game {
   private setGameState(newState: GameState) {
     this.state = newState;
     this.io.to(this.uuid).emit("gameStateChanged", this.state);
-  }
-
-  private initBoard(remainingFirst = 9, remainingSecond = 8): ICard[] {
-    const second: "blue" | "red" = this.first === "blue" ? "red" : "blue";
-    let board: ICard[] = [];
-    for (let i = 0; i < 25; i++) {
-      board.push({
-        word: words_list[Math.floor(Math.random() * words_list.length)],
-        revealed: false,
-        color: "white",
-      });
-    }
-
-    let index = Math.floor(Math.random() * board.length);
-    board[index].color = "black";
-
-    while (remainingFirst) {
-      index = Math.floor(Math.random() * board.length);
-      if (board[index].color === "white") {
-        board[index].color = this.first;
-        remainingFirst--;
-      }
-    }
-
-    while (remainingSecond) {
-      index = Math.floor(Math.random() * board.length);
-      if (board[index].color === "white") {
-        board[index].color = second;
-        remainingSecond--;
-      }
-    }
-
-    return board;
   }
 
   playersBlue(): number {
@@ -201,24 +168,21 @@ export default class Game {
         action: "startedGame",
       });
 
-      this.eventEmitter.emit("boardUpdate");
+      this._eventEmitter.emit("boardUpdate");
     }
   }
 
   tryReveal(playerUUID: string, pos: number) {
-    if (
-      this.players[playerUUID] &&
-      this.board[pos] &&
-      !this.players[playerUUID].isSpyMaster &&
-      !this.board[pos].revealed
-    ) {
-      this.board[pos].revealed = true;
-      this.pushHistory({
-        player: this.players[playerUUID],
-        action: "revealed",
-        card: this.board[pos],
-      });
-      this.eventEmitter.emit("boardUpdate");
+    if (this.players[playerUUID] && !this.players[playerUUID].isSpyMaster) {
+      const cardRevealed = this._boardManager.revealCard(pos);
+      if (cardRevealed) {
+        this.pushHistory({
+          player: this.players[playerUUID],
+          action: "revealed",
+          card: cardRevealed,
+        });
+        this._eventEmitter.emit("boardUpdate");
+      }
       // this.sendBoard();
       // if (this.state === GameState.blueGuess &&  this.playersBlue[playerUUID])
       // {
@@ -290,10 +254,10 @@ export default class Game {
 
   isGameMaster(param: string | IUser) {
     if (typeof param === "string") {
-      return param === this.gameMasterUUID;
+      return param === this._gameMasterUUID;
     }
 
-    return param.uuid === this.gameMasterUUID;
+    return param.uuid === this._gameMasterUUID;
   }
 
   isSpy(param: string | IUser) {
@@ -330,7 +294,7 @@ export default class Game {
       if (deletedPlayer.isAdmin) {
         const found = Object.entries(this.players)[0];
         if (found) {
-          this.gameMasterUUID = found[0];
+          this._gameMasterUUID = found[0];
           //@ts-ignore
           let newAdmin: IPlayer = found[1];
           //@ts-ignore

@@ -5,7 +5,7 @@ import socketio from "socket.io";
 import { cookieMiddleWare } from "./tools/helpers";
 import GameManager from "./GameManager";
 
-let games = {};
+let games = new Map<string, GameManager>();
 
 const port = process.argv[2] ?? 8080;
 
@@ -33,12 +33,12 @@ io.on("connection", function (socket) {
 
   socket.join(gameUUID);
 
-  if (!games[gameUUID]) {
-    games[gameUUID] = new GameManager({ name, uuid: userUUID }, gameUUID, io);
+  if (!games.get(gameUUID)) {
+    games.set(gameUUID, new GameManager({ name, uuid: userUUID }, gameUUID, io));
     // setInterval(() => console.debug(games[gameUUID]), 10000);
   }
 
-  const game: GameManager = games[gameUUID];
+  const game: GameManager = games.get(gameUUID);
 
   game.addPlayer({ name, uuid: userUUID });
 

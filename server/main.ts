@@ -48,9 +48,9 @@ io.on("connection", function (socket) {
 
   function boardUpdate() {
     if (game.isSpy(userUUID)) {
-      socket.emit("boardUpdate", game.board.getSpyBoard());
+      socket.emit("boardUpdate", game.board.spyBoard);
     } else {
-      socket.emit("boardUpdate", game.board.getPlayerBoard());
+      socket.emit("boardUpdate", game.board.getPlayerBoard);
     }
   }
 

@@ -43,24 +43,24 @@ export default class {
     return board;
   }
 
-  revealCard(pos: number): ICard {
-    if (this.board[pos] && !this.board[pos].revealed) {
-      this.board[pos].revealed = true
-      return this.board[pos];
-    }
-    return null;
-  }
-
-  getSpyBoard(): ICard[] {
+  get spyBoard(): ICard[] {
     return this.board;
   }
 
-  getPlayerBoard(): ICard[] {
+  get playerBoard(): ICard[] {
     return this.board.map((c) => {
       if (!c.revealed) {
         return { ...c, color: undefined };
       }
       return c;
     });
+  }
+
+  revealCard(pos: number): ICard {
+    if (this.board[pos] && !this.board[pos].revealed) {
+      this.board[pos].revealed = true;
+      return this.board[pos];
+    }
+    return null;
   }
 }

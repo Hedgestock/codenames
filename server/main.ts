@@ -58,10 +58,9 @@ io.on("connection", function (socket) {
 
   game.eventEmitter.on("boardUpdate", boardUpdate);
 
-  socket.on("requestPlayers", () => {
-    console.debug("requestPlayers");
-    socket.emit("playersUpdate", game.players);
-  });
+  // socket.on("requestPlayers", () => {
+  //   socket.emit("playersUpdate", Array.from(game.players.entries()));
+  // });
 
   socket.on("message", function (message: any) {
     console.log(name, message);
@@ -87,6 +86,12 @@ io.on("connection", function (socket) {
     console.log("deco");
   });
 });
+
+// let testMap: Map<string, any> = new Map();
+// testMap.set("1", { name: "p1", team: "blue", isAdmin: true, isSpyMaster: true });
+// testMap.set("2", { name: "p2", team: "red", isAdmin: false, isSpyMaster: true });
+// testMap.set("3", { name: "p3", team: "blue", isAdmin: false, isSpyMaster: false });
+// console.log(Array.from(testMap.values()).filter(v => v.team == "blue").length);
 
 httpServer.listen(port, () =>
   console.info(`Server is listening at port ${port}`)

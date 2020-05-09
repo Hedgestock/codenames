@@ -20,7 +20,7 @@ export default class {
     this._gameMasterUUID = gameMaster.uuid;
     this._history = [];
     this._chat = [];
-    this._players = {};
+    this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
     this._state = GameState.beforeStart;
@@ -32,7 +32,7 @@ export default class {
   private _uuid: string;
   private _history: any[];
   private _chat: IChatMessage[];
-  private _players;
+  private _players: Map<string, IPlayer>;
   private _boardManager: BoardManager;
   private _state: GameState;
   private _first: Team;
@@ -44,6 +44,11 @@ export default class {
   get gameMasterUUID() {
     return this._gameMasterUUID;
   }
+
+  // private setGameMasterUUID(uuid: string) {
+  //   const player = this._players.get
+
+  // }
 
   get board() {
     return this._boardManager;
@@ -65,31 +70,26 @@ export default class {
     return this._state;
   }
 
-  get blueSpyMaster() {
-    //: IPlayer {
-    const playerPair = Object.entries(this._players).find(
-      //@ts-ignore
-      (e) => e[1].isSpyMaster && e[1].team === "blue"
-    );
-    return playerPair && playerPair[1];
+  get blueSpyMaster(): IPlayer {
+    return this.getSpyMaster("blue");
   }
 
-  get redspyMaster() {
-    //: IPlayer {
-    const playerPair = Object.entries(this._players).find(
-      //@ts-ignore
-      (e) => e[1].isSpyMaster && e[1].team === "red"
-    );
-    return playerPair && playerPair[1];
+  get redspyMaster(): IPlayer {
+    return this.getSpyMaster("red");
   }
 
-  get gameMaster() {
-    //: IPlayer {
-    const playerPair = Object.entries(this._players).find(
-      //@ts-ignore
-      (e) => e[1].isGameMaster
-    );
-    return playerPair && playerPair[1];
+  private getSpyMaster(team: Team): IPlayer {
+    for (const [uuid, player] of this._players.entries()) {
+      if (player.isSpyMaster && player.team === team) return player;
+    }
+    return null;
+  }
+
+  get gameMaster(): IPlayer {
+    for (const [uuid, player] of this._players.entries()) {
+      if (player.isAdmin) return player;
+    }
+    return null;
   }
 
   private setGameState(newState: GameState) {
@@ -98,39 +98,39 @@ export default class {
   }
 
   playersBlue(): number {
-    return Object.entries(this._players).filter(
-      //@ts-ignore
-      (e) => e[1].team === "blue"
-    ).length;
+    return this.countPlayers("team", "blue");
   }
 
   playersRed(): number {
-    return Object.entries(this._players).filter(
-      //@ts-ignore
-      (e) => e[1].team === "red"
+    return this.countPlayers("team", "red");
+  }
+
+  private countPlayers(property: string, value: any) {
+    return Array.from(this._players.values()).filter(
+      (player) => player[property] === value
     ).length;
   }
 
   makePlayerRed(playerUUID: string) {
-    const player: IPlayer = this._players[playerUUID];
+    const player: IPlayer = this._players.get(playerUUID);
     player && (player.team = "red");
-    this._io.to(this._uuid).emit("playersUpdate", this.players);
+    this.emitPlayersUpdate();
   }
 
   makePlayerBlue(playerUUID: string) {
-    const player: IPlayer = this._players[playerUUID];
+    const player: IPlayer = this._players.get(playerUUID);
     player && (player.team = "blue");
     this.pushHistory({ player, action: "isSpyMaster" });
-    this._io.to(this._uuid).emit("playersUpdate", this.players);
+    this.emitPlayersUpdate();
   }
 
   makePlayerGameMaster(playerUUID: string) {
     throw "Not implemented";
-    this._io.to(this._uuid).emit("playersUpdate", this.players);
+    this.emitPlayersUpdate();
   }
 
   makePlayerSpy(playerUUID: string) {
-    const player: IPlayer = this._players[playerUUID];
+    const player: IPlayer = this._players.get(playerUUID);
     if (player.isSpyMaster) return;
     if (player.team == "red") {
       const redSpy = this.redspyMaster;
@@ -143,7 +143,13 @@ export default class {
     }
     player.isSpyMaster = true;
     this.pushHistory({ player, action: "isSpyMaster" });
-    this._io.to(this._uuid).emit("playersUpdate", this.players);
+    this.emitPlayersUpdate();
+  }
+
+  private emitPlayersUpdate() {
+    this._io
+      .to(this._uuid)
+      .emit("playersUpdate", Array.from(this._players.entries()));
   }
 
   pushHistory(historyItem: IHistoryItem) {
@@ -159,12 +165,12 @@ export default class {
   tryStartGame(playerUUID: string) {
     if (
       this._state === GameState.beforeStart &&
-      this._players[playerUUID] &&
-      this._players[playerUUID].isAdmin
+      this._players.get(playerUUID) &&
+      this._players.get(playerUUID).isAdmin
     ) {
       this.setGameState(GameState.blueSpyTalking);
       this.pushHistory({
-        player: this._players[playerUUID],
+        player: this._players.get(playerUUID),
         action: "startedGame",
       });
 
@@ -173,11 +179,14 @@ export default class {
   }
 
   tryReveal(playerUUID: string, pos: number) {
-    if (this._players[playerUUID] && !this._players[playerUUID].isSpyMaster) {
+    if (
+      this._players.get(playerUUID) &&
+      !this._players.get(playerUUID).isSpyMaster
+    ) {
       const cardRevealed = this._boardManager.revealCard(pos);
       if (cardRevealed) {
         this.pushHistory({
-          player: this._players[playerUUID],
+          player: this._players.get(playerUUID),
           action: "revealed",
           card: cardRevealed,
         });
@@ -205,7 +214,7 @@ export default class {
   }
 
   addPlayer(user: IUser) {
-    if (this._players[user.uuid]) {
+    if (this._players.get(user.uuid)) {
       return;
     }
 
@@ -247,9 +256,8 @@ export default class {
       this.pushHistory({ player, action: "isSpyMaster" });
     }
 
-    this._players[user.uuid] = player;
-
-    this._io.to(this._uuid).emit("playersUpdate", this.players);
+    this._players.set(user.uuid, player);
+    this.emitPlayersUpdate();
   }
 
   isGameMaster(param: string | IUser) {
@@ -265,7 +273,7 @@ export default class {
       return (param = param.uuid);
     }
 
-    return this._players[param].isSpyMaster;
+    return this._players.get(param).isSpyMaster;
   }
 
   startGame() {
@@ -286,18 +294,17 @@ export default class {
     if (typeof param !== "string") {
       param = param.uuid;
     }
-    if (this._players[param]) {
-      const deletedPlayer = this._players[param];
-      delete this._players[param];
+    if (this._players.get(param)) {
+      const deletedPlayer = this._players.get(param);
+      this._players.delete(param);
       this.pushHistory({ player: deletedPlayer, action: "disconnected" });
 
       if (deletedPlayer.isAdmin) {
-        const found = Object.entries(this._players)[0];
+        const found = this._players.entries().next().value;
+        console.log(found);
         if (found) {
           this._gameMasterUUID = found[0];
-          //@ts-ignore
           let newAdmin: IPlayer = found[1];
-          //@ts-ignore
           newAdmin.isAdmin = true;
           this.pushHistory({
             player: newAdmin,
@@ -307,15 +314,13 @@ export default class {
       }
 
       if (deletedPlayer.isSpyMaster) {
-        //@ts-ignore
-        const found: [string, IPlayer] = Object.entries(this._players).find(
-          //@ts-ignore
+        const found = Array.from(this._players.entries()).find(
           (pair) => pair[1].team === deletedPlayer.team
         );
+
         let newSpyMasterId = undefined;
         if (found) {
           newSpyMasterId = found[0];
-          //@ts-ignore
           found[1].isSpyMaster = true;
           this.pushHistory({
             player: found[1],
@@ -324,7 +329,7 @@ export default class {
         }
       }
 
-      this._io.to(this._uuid).emit("playersUpdate", this.players);
+      this.emitPlayersUpdate();
     }
   }
 }

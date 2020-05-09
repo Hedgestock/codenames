@@ -47,7 +47,7 @@
 
 ## Cleanup
 
-- [ ] Get rid of GameMasterUUID
+- [ ] Get rid of GameMasterUUID or use a unique setter
 - [ ] Make setter to dispatch players changed event
 - [ ] Sort Game.ts methods
 - [ ] Split Game.ts
@@ -55,11 +55,12 @@
 - [x] Transform getXXX into real getter
 - [ ] Unify admin and GameMaster
 - [ ] Use enums instead of types for Team and HistoryAction
-- [ ] Use maps to get rid of @ts-ignore
+- [x] Use maps to get rid of @ts-ignore
 - [x] Fix HUMONGOUS bundle size
 - [x] Fix get spies and admins
 - [x] Get rid of spymaster red and blue properties
 - [x] `this.player[playerUUID] -> player` vv
+- [ ] try to not use Array.form() in removePlayer for spyMaster
 
 
 ## Style

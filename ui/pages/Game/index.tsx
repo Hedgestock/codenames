@@ -27,6 +27,7 @@ const Game = ({ guid }: GameProps) => {
 
   React.useEffect(() => {
     if (state.cookie.name) {
+      console.log("setting ssocket");
       const tmpSocket = io({
         query: {
           userUUID: state.cookie.userUUID,
@@ -37,15 +38,10 @@ const Game = ({ guid }: GameProps) => {
       });
 
       setSocket(tmpSocket);
+      return () => tmpSocket.close();
     }
-
-    return () => {
-      if (socket) {
-        console.debug("socket closing");
-        socket.close();
-      }
-    };
-  }, [state.cookie.userUUID, state.cookie.name]);
+    return () => null;
+  }, [state.cookie.name]);
 
   React.useEffect(() => {
     if (socket) {
@@ -55,7 +51,6 @@ const Game = ({ guid }: GameProps) => {
     }
   }, [socket]);
 
-  console.debug("gs", gameState);
   const ShareURL = () => (
     <TextField
       id="shareURL"
@@ -97,13 +92,17 @@ const Game = ({ guid }: GameProps) => {
         width: "100%",
       }}
     >
-      <GameChat
-        guid={guid}
-        socket={socket}
-      />
-      <div style={{ display: "flex", flexFlow: "column", flexGrow: 2 , height: "100%"}}>
+      <GameChat guid={guid} socket={socket} />
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          flexGrow: 2,
+          height: "100%",
+        }}
+      >
         {gameState === GameState.beforeStart ? (
-          <GameLobby socket={socket}/>
+          <GameLobby socket={socket} />
         ) : (
           <Board socket={socket} />
         )}

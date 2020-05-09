@@ -7,13 +7,14 @@
 - [ ] Add word picking/board generation
 - [ ] Better wordlist
 - [ ] Delete game on last quit
-- [ ] Fix goback with websocket ??
+- [x] Fix goback with websocket
 - [ ] Game loop
 - [ ] Pass your turn
 - [ ] Timeout on disconnect/or maybe give gamemaster option to change role during a game only if spymaster gets diconnected.
 - [ ] Update board on role change
 - [ ] Use state machine pattern for game
 - [ ] implement win condition
+- [ ] Make player afk on disconnect
 - [x] Add spymaster interface
 - [x] Fix chat size
 

@@ -13,7 +13,6 @@ import PlayerChip from "../PlayerChip";
 const HistoryItem = ({ player, action, card }: IHistoryItem) => {
   const { state } = React.useContext(Store);
 
-  console.log("player", player);
   return (
     <div
       style={{

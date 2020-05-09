@@ -2,7 +2,6 @@ import { Button, TextField, Typography, useTheme } from "@material-ui/core";
 import * as React from "react";
 import { Store } from "../../Store";
 import { setCookie } from "../../tools/helpers";
-import { useHistory } from "react-router-dom";
 
 const ChooseNameModal = () => {
   const { state, dispatch } = React.useContext(Store);

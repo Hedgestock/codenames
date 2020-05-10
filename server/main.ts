@@ -60,6 +60,7 @@ io.on("connection", function (socket) {
   boardUpdate();
 
   game.eventEmitter.on("boardUpdate", boardUpdate);
+  game.eventEmitter.on("gameIsEmpty", () => games.delete(gameUUID));
 
   // socket.on("requestPlayers", () => {
   //   socket.emit("playersUpdate", Array.from(game.players.entries()));

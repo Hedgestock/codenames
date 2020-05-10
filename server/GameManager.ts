@@ -323,6 +323,10 @@ export default class {
     if (this._players.get(param)) {
       const disconectedPlayer = this._players.get(param);
       disconectedPlayer.status = EPlayerStatus.DISCONNECTED;
+      if (this.connectedPlayers.length == 0) {
+        this.eventEmitter.emit("gameIsEmpty");
+        return;
+      }
       this.pushHistory({ player: disconectedPlayer, action: "disconnected" });
 
       if (disconectedPlayer.isGameMaster) {

@@ -1,86 +1,91 @@
 # TODO
 
+**Legend**
+- [ ] Not done
+- [x] Done
+- [ ] <span style="background-color:yellow">Quality of development</span>
+- [ ] <span style="background-color:darkorange">Better playability</span>
+- [ ] <span style="background-color:lightgreen">Optional (Might never be implemented)</span>
+- [ ] <span style="background-color:lightcoral">Critical (game breaking or crash potential)</span>
+
+
 ## Game
 
-- [ ] Add english board generation
-- [ ] Add turn handling
-- [ ] Add word picking/board generation
-- [ ] Better wordlist
-- [ ] Delete game on last quit
-- [ ] Game loop
-- [ ] Give gamemaster option to change role during a game only if spymaster gets diconnected.
-- [ ] Pass your turn
-- [ ] Update board on role change
-- [ ] Use state machine pattern for game
-- [ ] implement win condition
-- [x] Add spymaster interface
-- [x] Fix chat size
-- [x] Fix goback with websocket
-- [x] Make player afk on disconnect
+- [ ] <span style="background-color:darkorange">Add english board generation</span>
+- [ ] <span style="background-color:darkorange">Better wordlist</span>
+- [ ] <span style="background-color:darkorange">Give gamemaster option to change role during a game only if spymaster gets diconnected.</span>
+- [ ] <span style="background-color:darkorange">Pass your turn</span>
+- [ ] <span style="background-color:lightcoral">Update board on role change</span>
+- [ ] <span style="background-color:lightcoral">implement win condition</span>
+- [ ] <span style="background-color:yellow">Use state machine pattern for game</span>
+- [x] <span style="background-color:darkorange">Add spymaster interface</span>
+- [x] <span style="background-color:darkorange">Fix chat size</span>
+- [x] <span style="background-color:darkorange">Make player afk on disconnect</span>
+- [x] <span style="background-color:lightcoral">Add word picking/board generation</span>
+- [x] <span style="background-color:lightcoral">Fix goback with websocket</span>
+- [x] <span style="background-color:yellow">Delete game on last quit</span>
 
 ### Lobby
 
-- [ ] Add change team option
-- [ ] Add possibility for game master to lock team picking
-- [x] Add gamemaster commands
-- [x] Add player contextual menu for game master
-- [x] Add room overview
-- [x] Lobby
+- [ ] <span style="background-color:darkorange">Add possibility for game master to lock team picking</span>
+- [ ] Add change team option</span>
+- [x] <span style="background-color:darkorange">Add gamemaster commands</span>
+- [x] <span style="background-color:darkorange">Add player contextual menu for game master</span>
+- [x] <span style="background-color:darkorange">Add room overview</span>
 
 ### History
 
-- [x] Fix all of the above
-- [x] Fix text alignment
-- [x] Handle card reveal
-- [x] Handle disconnect
-- [x] Handle set game master
-- [x] Handle set spy master
-- [x] Make playerchip white theme friendly
+- [x] <span style="background-color:darkorange">Fix text alignment</span>
+- [x] <span style="background-color:darkorange">Make playerchip white theme friendly</span>
+- [x] <span style="background-color:lightcoral">Handle card reveal</span>
+- [x] <span style="background-color:lightcoral">Handle disconnect</span>
+- [x] <span style="background-color:lightcoral">Handle set game master</span>
+- [x] <span style="background-color:lightcoral">Handle set spy master</span>
 
 ## Tests
 
-- [ ] Begin
-- [ ] Install a CI
-- [ ] Server Crash on gamestart ??? isAdmin undefined
-- [ ] Use moccha/nyc ?
+- [ ] <span style="background-color:lightcoral">Join game exactly when it deletes</span>
+- [ ] <span style="background-color:lightcoral">Server Crash on gamestart ??? isAdmin undefined</span>
+- [ ] <span style="background-color:yellow">Begin</span>
+- [ ] <span style="background-color:yellow">Install a CI</span>
+- [ ] <span style="background-color:yellow">Use moccha/nyc ?</span>
 
 ## Cleanup
 
-- [ ] Make setter to dispatch players changed event
-- [ ] Sort Game.ts methods
-- [ ] Split Game.ts
-- [ ] Split shared/interfaces into single files
-- [ ] Use enums instead of types for Team and HistoryAction
-- [ ] find a method to bundle 'playersUpdate'
-- [ ] try to not use Array.form() in removePlayer for spyMaster
-- [x] Fix HUMONGOUS bundle size
-- [x] Fix get spies and admins
-- [x] Get rid of GameMasterUUID or use a unique setter
-- [x] Get rid of spymaster red and blue properties
-- [x] Transform getXXX into real getter
-- [x] Unify admin and GameMaster
-- [x] Use maps to get rid of @ts-ignore
-- [x] `this.player[playerUUID] -> player` vv
-
+- [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>
+- [ ] <span style="background-color:yellow">Sort Game.ts methods</span>
+- [ ] <span style="background-color:yellow">Split Game.ts</span>
+- [ ] <span style="background-color:yellow">Split shared/interfaces into single files</span>
+- [ ] <span style="background-color:yellow">Use enums instead of types for Team and HistoryAction</span>
+- [ ] <span style="background-color:yellow">find a method to bundle 'playersUpdate'</span>
+- [ ] <span style="background-color:yellow">try to not use Array.form() in removePlayer for spyMaster</span>
+- [x] <span style="background-color:darkorange">Fix HUMONGOUS bundle size</span>
+- [x] <span style="background-color:lightcoral">Fix get spies and admins</span>
+- [x] <span style="background-color:yellow">Get rid of GameMasterUUID or use a unique setter</span>
+- [x] <span style="background-color:yellow">Get rid of spymaster red and blue properties</span>
+- [x] <span style="background-color:yellow">Transform getXXX into real getter</span>
+- [x] <span style="background-color:yellow">Unify admin and GameMaster</span>
+- [x] <span style="background-color:yellow">Use maps to get rid of @ts-ignore</span>
+- [x] <span style="background-color:yellow">`this.player[playerUUID] -> player` vv</span>
 
 ## Style
 
-- [x] Make playerChip extend Chip to add icons
-- [ ] Put everything in theme
-- [ ] Disable startGame for nonGameMaster
-
+- [ ] <span style="background-color:darkorange">Disable startGame for nonGameMaster</span>
+- [ ] <span style="background-color:yellow">Put everything in theme</span>
+- [x] <span style="background-color:yellow">Make playerChip extend Chip to add icons</span>
 
 ## Features
 
-- [ ] Add possibility of custom board
-- [ ] Add possibility of custom wordlist
-- [ ] Going to profile
-- [ ] New game after game finish
-- [ ] Possibility to kick a player
-- [ ] Possibility to make password protected games
-- [ ] Team chats
-- [ ] voting system ?
-- [x] Display name on profile page
-- [x] Fix typos
+- [ ] <span style="background-color:darkorange">Add games overview on home page</span>
+- [ ] <span style="background-color:darkorange">Going to profile from a game remembers it ? (also use last page or mouse 4 button you dummy...)</span>
+- [ ] <span style="background-color:darkorange">New game after game finish</span>
+- [ ] <span style="background-color:lightgreen">Add possibility of custom board</span>
+- [ ] <span style="background-color:lightgreen">Add possibility of custom wordlist</span>
+- [ ] <span style="background-color:lightgreen">Possibility to kick a player</span>
+- [ ] <span style="background-color:lightgreen">Possibility to make password protected games</span>
+- [ ] <span style="background-color:lightgreen">Team chats</span>
+- [ ] <span style="background-color:lightgreen">voting system ?</span>
+- [x] <span style="background-color:darkorange">Display name on profile page</span>
+- [x] <span style="background-color:darkorange">Fix typos</span>
 
 ## One step-er

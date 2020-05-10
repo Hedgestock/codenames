@@ -1,4 +1,4 @@
- {
+{
   "author": "Hedgestock",
   "bugs": {
     "url": "https://github.com/Hedgestock/codenames/issues"
@@ -10,6 +10,7 @@
     "cookie": "^0.4.1",
     "express": "^4.17.1",
     "express-sse": "^0.5.3",
+    "forever": "^2.0.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.3",
     "react": "^16.13.1",
@@ -43,7 +44,11 @@
     "webpack-merge": "^4.2.2"
   },
   "homepage": "https://github.com/Hedgestock/codenames#readme",
-  "keywords": ["codenames", "card", "game"],
+  "keywords": [
+    "codenames",
+    "card",
+    "game"
+  ],
   "license": "ISC",
   "name": "codenames",
   "repository": {
@@ -58,7 +63,10 @@
     "clean": "rm -rf ./out",
     "postbuild-ui": "cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/",
     "postbuild-ui-dev": "cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/",
-    "start": "nodemon --watch out out/server.js"
+    "start-dev": "nodemon --watch out out/server.js",
+    "start": "forever start -c node out/server.js",
+    "list": "forever list",
+    "stop": "forever stop"
   },
-  "version": "1.1.1"
+  "version": "1.1.2"
 }

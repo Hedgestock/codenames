@@ -13,9 +13,10 @@
 
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
-- [ ] <span style="background-color:darkorange">Give gamemaster option to change role during a game only if spymaster gets diconnected.</span>
+- [x] <span style="background-color:darkorange">Give gamemaster option to change role during a game</span>
 - [ ] <span style="background-color:darkorange">Pass your turn</span>
-- [x] <span style="background-color:lightcoral">Update board on role change</span>
+- [ ] <span style="background-color:lightcoral">Hitting F5 too much will disconnect beacause of multipple instances</span>
+- [ ] <span style="background-color:lightcoral">connecting from two tabs and then disconnecting disconnect the player</span>
 - [ ] <span style="background-color:lightcoral">implement win condition</span>
 - [ ] <span style="background-color:yellow">Use state machine pattern for game</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>
@@ -23,12 +24,13 @@
 - [x] <span style="background-color:darkorange">Make player afk on disconnect</span>
 - [x] <span style="background-color:lightcoral">Add word picking/board generation</span>
 - [x] <span style="background-color:lightcoral">Fix goback with websocket</span>
+- [x] <span style="background-color:lightcoral">Update board on role change</span>
 - [x] <span style="background-color:yellow">Delete game on last quit</span>
 
 ### Lobby
 
 - [ ] <span style="background-color:darkorange">Add possibility for game master to lock team picking</span>
-- [ ] Add change team option</span>
+- [ ] <span style="background-color:darkorange">Add change team option</span>
 - [x] <span style="background-color:darkorange">Add gamemaster commands</span>
 - [x] <span style="background-color:darkorange">Add player contextual menu for game master</span>
 - [x] <span style="background-color:darkorange">Add room overview</span>
@@ -73,8 +75,10 @@
 
 - [ ] <span style="background-color:darkorange">Disable player context menues for nonGameMaster</span>
 - [ ] <span style="background-color:darkorange">Disable startGame for nonGameMaster</span>
+- [ ] <span style="background-color:darkorange">put border around dinamic elements</span>
+- [ ] <span style="background-color:lightgreen">Extremely long name breaks style</span>
 - [ ] <span style="background-color:yellow">Put everything in theme</span>
-- [x] <span style="background-color:yellow">Make playerChip extend Chip to add icons</span>
+- [x] <span style="background-color:yellow">Add icons to playerchip</span>
 
 ## Features
 

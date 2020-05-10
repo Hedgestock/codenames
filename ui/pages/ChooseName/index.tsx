@@ -47,7 +47,7 @@ const ChooseNameModal = () => {
 
   return (
     <div className="modal--page">
-      <div className="choose-name--container" style={containerStyle}>
+      <div className="modal--container" style={containerStyle}>
         <Typography variant="h4">{state.langRes.chooseName.title}</Typography>
         <div className="choose-name--cell">
           <TextField

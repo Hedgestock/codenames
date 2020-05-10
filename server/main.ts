@@ -62,12 +62,11 @@ io.on("connection", function (socket) {
   game.eventEmitter.on("boardUpdate", boardUpdate);
   game.eventEmitter.on("gameIsEmpty", () => games.delete(gameUUID));
 
-  // socket.on("requestPlayers", () => {
-  //   socket.emit("playersUpdate", Array.from(game.players.entries()));
-  // });
+  socket.on("requestPlayers", () => {
+    socket.emit("playersUpdate", Array.from(game.players.entries()));
+  });
 
   socket.on("message", function (message: any) {
-    console.log(name, message);
     game.pushMessage({ message, author: name });
   });
 

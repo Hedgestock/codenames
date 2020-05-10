@@ -28,7 +28,7 @@ const PlayerChip = ({ player, commands }: PlayerChipProps) => {
 
   function getColor() {
     let color = player.team === "red" ? redTeamColor : blueTeamColor;
-    if (player.status == EPlayerStatus.DISCONNECTED) {
+    if (player.socketsNo <= 0) {
       color += "44";
     }
     console.log(color);

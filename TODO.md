@@ -15,8 +15,8 @@
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
 - [x] <span style="background-color:darkorange">Give gamemaster option to change role during a game</span>
 - [ ] <span style="background-color:darkorange">Pass your turn</span>
-- [ ] <span style="background-color:lightcoral">Hitting F5 too much will disconnect beacause of multipple instances</span>
-- [ ] <span style="background-color:lightcoral">connecting from two tabs and then disconnecting disconnect the player</span>
+- [x] <span style="background-color:lightcoral">Hitting F5 too much will disconnect beacause of multipple instances</span>
+- [x] <span style="background-color:lightcoral">connecting from two tabs and then disconnecting disconnect the player</span>
 - [ ] <span style="background-color:lightcoral">implement win condition</span>
 - [ ] <span style="background-color:yellow">Use state machine pattern for game</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>
@@ -54,6 +54,7 @@
 
 ## Cleanup
 
+- [ ] <span style="background-color:yellow">Use class for player instead of interface</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>
 - [ ] <span style="background-color:yellow">Sort Game.ts methods</span>

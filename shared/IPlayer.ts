@@ -6,5 +6,5 @@ export interface IPlayer {
   isSpyMaster: boolean;
   isGameMaster: boolean;
   name: string;
-  status: EPlayerStatus;
+  socketsNo: number;
 }

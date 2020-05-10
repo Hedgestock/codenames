@@ -55,7 +55,7 @@ export default class {
 
   get connectedPlayers() {
     return Array.from(this._players.entries()).filter(
-      ([uuid, player]) => player.status === EPlayerStatus.CONNECTED
+      ([uuid, player]) => player.socketsNo > 0
     );
   }
 
@@ -205,17 +205,6 @@ export default class {
         });
         this._eventEmitter.emit("boardUpdate");
       }
-      // this.sendBoard();
-      // if (this.state === GameState.blueGuess &&  this.playersBlue[playerUUID])
-      // {
-      //   this.board[pos].revealed = true;
-      //   this.sendBoard();
-      // }
-      // if (this.state === GameState.redGuess &&  this.playersRed[playerUUID])
-      // {
-      //   this.board[pos].revealed = true;
-      //   this.sendBoard();
-      // }
     }
   }
 
@@ -229,12 +218,17 @@ export default class {
   addPlayer(user: IUser) {
     if (this._players.get(user.uuid)) {
       const player = this._players.get(user.uuid);
+
       player.name = user.name;
-      player.status = EPlayerStatus.CONNECTED;
-      this.pushHistory({
-        player,
-        action: "reconnected",
-      });
+      player.socketsNo++;
+
+      if (player.socketsNo == 1) {
+        this.pushHistory({
+          player,
+          action: "reconnected",
+        });
+      }
+
     } else {
       let team: "blue" | "red";
       let isSpyMaster = false;
@@ -243,11 +237,13 @@ export default class {
         if (!this.redspyMaster) {
           isSpyMaster = true;
         }
+
         team = "red";
       } else {
         if (!this.blueSpyMaster) {
           isSpyMaster = true;
         }
+
         team = "blue";
       }
 
@@ -256,7 +252,7 @@ export default class {
         team,
         isSpyMaster,
         name: user.name,
-        status: EPlayerStatus.CONNECTED,
+        socketsNo: 1,
       };
 
       if (player.isGameMaster) {
@@ -316,7 +312,8 @@ export default class {
     }
     if (this._players.get(param)) {
       const disconectedPlayer = this._players.get(param);
-      disconectedPlayer.status = EPlayerStatus.DISCONNECTED;
+      disconectedPlayer.socketsNo--;
+      if (disconectedPlayer.socketsNo > 0) return;
       if (this.connectedPlayers.length == 0) {
         this.eventEmitter.emit("gameIsEmpty");
         return;

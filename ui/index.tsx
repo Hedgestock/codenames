@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import { Store, StoreProvider } from "./Store";
-import theme from "./theme";
+import theme from "./shared/theme";
 import Game from "./pages/Game";
 
 const App = () => {

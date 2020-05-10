@@ -1,9 +1,9 @@
 import { Chip, Menu, MenuItem, useTheme } from "@material-ui/core";
 import { Settings, Visibility, VisibilityOff } from "@material-ui/icons";
 import * as React from "react";
-import { EPlayerStatus, IPlayer } from "../../../shared/interfaces";
+import { EPlayerStatus, IPlayer } from "../../../shared";
 import { Store } from "../../Store";
-import { blueTeamColor, redTeamColor } from "../../theme";
+import { blueTeamColor, redTeamColor } from "../../shared/theme";
 
 interface ICommands {
   makeSpyMaster: () => void;

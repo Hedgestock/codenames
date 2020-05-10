@@ -1,5 +1,5 @@
 import words_list from "./tools/words_list";
-import { ICard, Team } from "../shared/interfaces";
+import { ICard, Team } from "../shared";
 
 export default class {
   constructor(first: Team = "blue") {

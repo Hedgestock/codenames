@@ -1,6 +1,7 @@
 import * as React from "react";
-import { ICard, SocketConnectedProps } from "../../../shared/interfaces";
+import { ICard } from "../../../shared";
 import { Store } from "../../Store";
+import ISocketConnectedProps from "../../shared/ISocketConnectedProps"
 import {
   blueTeamColor,
   redTeamColor,
@@ -8,10 +9,10 @@ import {
   blackCardColor,
   unrevealedCardBackgroundColor,
   revealedCardColor,
-} from "../../theme";
+} from "../../shared/theme";
 import GameCard from "./GameCard";
 
-const Board = ({ socket }: SocketConnectedProps) => {
+const Board = ({ socket }: ISocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
   const blackRevealed = {

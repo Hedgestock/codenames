@@ -4,7 +4,7 @@ import Board from "./Board";
 import GameChat from "./Chat";
 import GameHistory from "./History";
 import io from "socket.io-client";
-import { GameState } from "../../../shared/interfaces";
+import { EGameState } from "../../../shared";
 import {
   Button,
   TextField,
@@ -23,7 +23,7 @@ const Game = ({ guid }: GameProps) => {
 
   const [socket, setSocket] = React.useState(null);
   const [player, setPlayer] = React.useState(null);
-  const [gameState, setGameState] = React.useState(GameState.beforeStart);
+  const [gameState, setGameState] = React.useState(EGameState.beforeStart);
 
   React.useEffect(() => {
     if (state.cookie.name) {
@@ -101,7 +101,7 @@ const Game = ({ guid }: GameProps) => {
           height: "100%",
         }}
       >
-        {gameState === GameState.beforeStart ? (
+        {gameState === EGameState.beforeStart ? (
           <GameLobby socket={socket} />
         ) : (
           <Board socket={socket} />

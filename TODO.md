@@ -55,7 +55,7 @@
 - [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>
 - [ ] <span style="background-color:yellow">Sort Game.ts methods</span>
 - [ ] <span style="background-color:yellow">Split Game.ts</span>
-- [ ] <span style="background-color:yellow">Split shared/interfaces into single files</span>
+- [x] <span style="background-color:yellow">Split shared/interfaces into single files</span>
 - [ ] <span style="background-color:yellow">Use enums instead of types for Team and HistoryAction</span>
 - [ ] <span style="background-color:yellow">find a method to bundle 'playersUpdate'</span>
 - [ ] <span style="background-color:yellow">try to not use Array.form() in removePlayer for spyMaster</span>

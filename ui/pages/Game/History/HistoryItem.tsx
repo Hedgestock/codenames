@@ -1,13 +1,13 @@
 import { Chip, Typography } from "@material-ui/core";
 import * as React from "react";
-import { IHistoryItem } from "../../../../shared/interfaces";
+import { IHistoryItem } from "../../../../shared";
 import { Store } from "../../../Store";
 import {
   blueTeamColor,
   redTeamColor,
   blackCardColor,
   whiteCardColor,
-} from "../../../theme";
+} from "../../../shared/theme";
 import PlayerChip from "../PlayerChip";
 
 const HistoryItem = ({ player, action, card }: IHistoryItem) => {

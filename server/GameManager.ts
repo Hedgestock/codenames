@@ -3,14 +3,13 @@ import { EventEmitter } from "events";
 import {
   IUser,
   IChatMessage,
-  ICard,
-  GameState,
+  EGameState,
   IPlayer,
   IHistoryItem,
   HistoryAction,
   Team,
   EPlayerStatus,
-} from "../shared/interfaces";
+} from "../shared";
 import BoardManager from "./BoardManager";
 
 export default class {
@@ -24,7 +23,7 @@ export default class {
     this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
-    this._state = GameState.beforeStart;
+    this._state = EGameState.beforeStart;
   }
 
   private _eventEmitter: EventEmitter;
@@ -35,7 +34,7 @@ export default class {
   private _chat: IChatMessage[];
   private _players: Map<string, IPlayer>;
   private _boardManager: BoardManager;
-  private _state: GameState;
+  private _state: EGameState;
   private _first: Team;
 
   get eventEmitter() {
@@ -94,7 +93,7 @@ export default class {
     return null;
   }
 
-  private setGameState(newState: GameState) {
+  private setGameState(newState: EGameState) {
     this._state = newState;
     this._io.to(this._uuid).emit("gameStateChanged", this._state);
   }
@@ -184,11 +183,11 @@ export default class {
 
   tryStartGame(playerUUID: string) {
     if (
-      this._state === GameState.beforeStart &&
+      this._state === EGameState.beforeStart &&
       this._players.get(playerUUID) &&
       this._players.get(playerUUID).isGameMaster
     ) {
-      this.setGameState(GameState.blueSpyTalking);
+      this.setGameState(EGameState.blueSpyTalking);
       this.pushHistory({
         player: this._players.get(playerUUID),
         action: "startedGame",
@@ -306,12 +305,12 @@ export default class {
   startGame() {
     if (
       Object.entries(this._players).length >= 4 &&
-      this._state === GameState.beforeStart
+      this._state === EGameState.beforeStart
     ) {
       this._state =
         this._first === "blue"
-          ? GameState.blueSpyTalking
-          : GameState.redSpyTalking;
+          ? EGameState.blueSpyTalking
+          : EGameState.redSpyTalking;
     } else {
       console.error("Couldn't start game.");
     }

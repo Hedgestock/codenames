@@ -38,7 +38,7 @@ io.on("connection", function (socket) {
       gameUUID,
       new GameManager({ name, uuid: userUUID }, gameUUID, io)
     );
-    // setInterval(() => console.debug(games[gameUUID]), 10000);
+    // setInterval(() => console.debug(games.get(gameUUID)), 10000);
   }
 
   const game: GameManager = games.get(gameUUID);
@@ -84,7 +84,13 @@ io.on("connection", function (socket) {
     }
   });
 
-  socket.on("tryChangePlayerTeam", ({ playerUUID }) => {
+  socket.on("tryMakePlayerGameMaster", (playerUUID) => {
+    if (game.gameMasterUUID === userUUID) {
+      game.makePlayerGameMaster(playerUUID);
+    }
+  });
+
+  socket.on("tryChangePlayerTeam", (playerUUID) => {
     if (game.gameMasterUUID === userUUID) {
       game.changePlayerTeam(playerUUID);
     }

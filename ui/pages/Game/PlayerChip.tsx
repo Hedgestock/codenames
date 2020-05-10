@@ -5,16 +5,21 @@ import { EPlayerStatus, IPlayer } from "../../../shared/interfaces";
 import { Store } from "../../Store";
 import { blueTeamColor, redTeamColor } from "../../theme";
 
+interface ICommands {
+  makeSpyMaster: () => void;
+  makeGameMaster: () => void;
+  changeTeam: () => void;
+}
+
 interface PlayerChipProps {
   player: IPlayer;
-  makeSpyMaster?: () => void;
-  makeGameMaster?: () => void;
+  commands?: ICommands;
 }
 
 const iconStyle = { color: "#FFF" };
 
-const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
-  const { state, dispatch } = React.useContext(Store);
+const PlayerChip = ({ player, commands }: PlayerChipProps) => {
+  const { state } = React.useContext(Store);
 
   const theme = useTheme();
 
@@ -37,28 +42,18 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
   function closeMenu() {
     setAnchor(null);
   }
-  const renderMenu = (
-    <Menu
-      anchorEl={anchor}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      id="menu"
-      keepMounted
-      transformOrigin={{ vertical: "bottom", horizontal: "center" }}
-      open={isMenuOpen}
-      onClose={closeMenu}
-    >
-      <MenuItem onClick={makeSpyMaster ?? (() => null)}>
-        {state.langRes.playerChip.makeSpyMaster}
-      </MenuItem>
-      <MenuItem onClick={closeMenu}>
-        {state.langRes.playerChip.makeGameMaster}
-      </MenuItem>
-      <MenuItem onClick={closeMenu}>
-        {state.langRes.playerChip.changeTeam}
-      </MenuItem>
-      <MenuItem onClick={closeMenu}>{state.langRes.playerChip.close}</MenuItem>
-    </Menu>
-  );
+
+  function createMenuCallback(callback) {
+    if (callback) {
+      return () => {
+        callback();
+        closeMenu();
+      };
+    }
+    return closeMenu;
+  }
+
+  function doNothing() {}
 
   return (
     <>
@@ -71,7 +66,9 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
           marginRight: "5px",
         }}
         size="small"
-        onDelete={makeSpyMaster ?? (() => null)}
+        onDelete={
+          commands && !player.isSpyMaster ? commands.makeSpyMaster : doNothing
+        }
         deleteIcon={
           player.isSpyMaster ? (
             <Visibility style={iconStyle} />
@@ -81,7 +78,30 @@ const PlayerChip = ({ player, makeSpyMaster }: PlayerChipProps) => {
         }
         icon={player.isGameMaster ? <Settings style={iconStyle} /> : null}
       />
-      {renderMenu}
+      {commands ? (
+        <Menu
+          anchorEl={anchor}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          id="menu"
+          keepMounted
+          transformOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={isMenuOpen}
+          onClose={closeMenu}
+        >
+          <MenuItem onClick={createMenuCallback(commands.makeSpyMaster)}>
+            {state.langRes.playerChip.makeSpyMaster}
+          </MenuItem>
+          <MenuItem onClick={createMenuCallback(commands.makeGameMaster)}>
+            {state.langRes.playerChip.makeGameMaster}
+          </MenuItem>
+          <MenuItem onClick={createMenuCallback(commands.changeTeam)}>
+            {state.langRes.playerChip.changeTeam}
+          </MenuItem>
+          <MenuItem onClick={closeMenu}>
+            {state.langRes.playerChip.close}
+          </MenuItem>
+        </Menu>
+      ) : null}
     </>
   );
 };

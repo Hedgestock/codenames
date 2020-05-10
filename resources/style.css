@@ -22,7 +22,7 @@ body {
   height: 100%;
 }
 
-.choose-name--page {
+.modal--page {
   position: absolute;
   z-index: 1000;
   top: 0;

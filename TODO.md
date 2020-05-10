@@ -21,9 +21,9 @@
 ### Lobby
 
 - [ ] Add change team option
-- [ ] Add gamemaster commands
-- [ ] Add player contextual menu for game master
 - [ ] Add possibility for game master to lock team picking
+- [x] Add gamemaster commands
+- [x] Add player contextual menu for game master
 - [x] Add room overview
 - [x] Lobby
 

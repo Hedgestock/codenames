@@ -14,7 +14,7 @@ const GameLobby = ({ socket }: SocketConnectedProps) => {
   React.useEffect(() => {
     if (socket) {
       socket.on("playersUpdate", (playersArray) => {
-        console.log("playersObject",playersArray)
+        console.log("playersObject", playersArray);
         setPlayers(new Map(playersArray));
       });
 
@@ -22,11 +22,11 @@ const GameLobby = ({ socket }: SocketConnectedProps) => {
     }
   }, [socket]);
 
-  const tryMakePlayerSpyMaster = React.useCallback(
-    (playerUUID: string) => {
+  const tryModifyPlayer = React.useCallback(
+    (playerUUID: string, eventName: string) => {
       return () => {
         if (socket) {
-          socket.emit("tryMakePlayerSpyMaster", playerUUID);
+          socket.emit(eventName, playerUUID);
         }
       };
     },
@@ -41,7 +41,14 @@ const GameLobby = ({ socket }: SocketConnectedProps) => {
             <PlayerChip
               key={i}
               player={player}
-              makeSpyMaster={tryMakePlayerSpyMaster(uuid)}
+              commands={{
+                makeGameMaster: tryModifyPlayer(
+                  uuid,
+                  "tryMakePlayerGameMaster"
+                ),
+                makeSpyMaster: tryModifyPlayer(uuid, "tryMakePlayerGameMaster"),
+                changeTeam: tryModifyPlayer(uuid, "tryChangePlayerTeam"),
+              }}
             />
           );
         })}

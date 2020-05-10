@@ -60,5 +60,5 @@
     "postbuild-ui-dev": "cp ./ui/index.html ./out/ && cp -r ./resources/ ./out/",
     "start": "nodemon --watch out out/server.js"
   },
-  "version": "1.1.0"
+  "version": "1.1.1"
 }

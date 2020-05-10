@@ -5,7 +5,11 @@ import ISocketConnectedProps from "../../shared/ISocketConnectedProps";
 import { Store } from "../../Store";
 import PlayerChip from "./PlayerChip";
 
-const GameLobby = ({ socket }: ISocketConnectedProps) => {
+interface GameLobbyProps extends ISocketConnectedProps {
+  hasStartGameButton?: boolean;
+}
+
+const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
   const { state } = React.useContext(Store);
 
   const [players, setPlayers] = React.useState(new Map<string, IPlayer>());
@@ -19,7 +23,7 @@ const GameLobby = ({ socket }: ISocketConnectedProps) => {
         setPlayers(new Map(playersArray));
       });
 
-      // socket.emit("requestPlayers");
+      socket.emit("requestPlayers");
     }
   }, [socket]);
 
@@ -36,7 +40,13 @@ const GameLobby = ({ socket }: ISocketConnectedProps) => {
 
   return (
     <>
-      <div style={{ display: "flex", height: "100%", padding: "5px" }}>
+      <div
+        style={{
+          display: "flex",
+          padding: "5px",
+          flexWrap: "wrap",
+        }}
+      >
         {Array.from(players.entries()).map(([uuid, player], i) => {
           return (
             <PlayerChip
@@ -47,20 +57,23 @@ const GameLobby = ({ socket }: ISocketConnectedProps) => {
                   uuid,
                   "tryMakePlayerGameMaster"
                 ),
-                makeSpyMaster: tryModifyPlayer(uuid, "tryMakePlayerGameMaster"),
+                makeSpyMaster: tryModifyPlayer(uuid, "tryMakePlayerSpyMaster"),
                 changeTeam: tryModifyPlayer(uuid, "tryChangePlayerTeam"),
               }}
             />
           );
         })}
       </div>
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={() => socket.emit("tryStartGame")}
-      >
-        {state.langRes.game.startGame}
-      </Button>
+      {hasStartGameButton ? (
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => socket.emit("tryStartGame")}
+          style={{ width: "min-content", alignSelf: "center" }}
+        >
+          {state.langRes.game.startGame}
+        </Button>
+      ) : null}
     </>
   );
 };

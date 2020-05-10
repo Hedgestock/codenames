@@ -9,7 +9,6 @@ import * as React from "react";
 import { Store } from "../../Store";
 import ISocketConnectedProps from "../../shared/ISocketConnectedProps";
 
-
 const Chat = ({ socket }: ISocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
@@ -53,20 +52,11 @@ const Chat = ({ socket }: ISocketConnectedProps) => {
         display: "flex",
         flexFlow: "column",
         margin: "10px",
-        flexGrow: 1,
         height: "100%",
+        maxWidth: "500px",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexFlow: "column-reverse",
-          flexGrow: 1,
-          overflowY: "auto",
-        }}
-      >
-        {chatToText(chat)}
-      </div>
+      <div className="history--window">{chatToText(chat)}</div>
       <br />
       <div style={{ display: "flex" }}>
         <TextField

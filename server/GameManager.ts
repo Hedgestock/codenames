@@ -114,14 +114,8 @@ export default class {
 
   changePlayerTeam(uuid: string): boolean {
     const player: IPlayer = this._players.get(uuid);
-
-    console.log(this._players);
-    console.log("uuid", uuid);
-    console.log("player", player);
     if (player) {
       player.team = player.team === "blue" ? "red" : "blue";
-      console.log(player.team);
-      console.log(this._players.get(uuid).team);
       this.emitPlayersUpdate();
       this.pushHistory({
         player,
@@ -333,16 +327,6 @@ export default class {
         const found = this.connectedPlayers[0];
         if (found) {
           this.makePlayerGameMaster(found[0]);
-        }
-      }
-
-      if (disconectedPlayer.isSpyMaster) {
-        const found = this.connectedPlayers.find(
-          ([uuid, player]) => player.team === disconectedPlayer.team
-        );
-
-        if (found) {
-          this.makePlayerSpyMaster(found[0]);
         }
       }
 

@@ -21,20 +21,7 @@ const GameHistory = ({ socket }: ISocketConnectedProps) => {
     return historyValue.map((item, i) => <HistoryItem key={i} {...item} />);
   }
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexFlow: "column-reverse",
-        flexGrow: 1,
-        overflowY: "auto",
-        overflowX: "hidden",
-        width: "-webkit-fill-available",
-      }}
-    >
-      {renderHistory()}
-    </div>
-  );
+  return <div className="history--window">{renderHistory()}</div>;
 };
 
 export default GameHistory;

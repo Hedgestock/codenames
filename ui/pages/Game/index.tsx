@@ -100,10 +100,11 @@ const Game = ({ guid }: GameProps) => {
           flexFlow: "column",
           flexGrow: 2,
           height: "100%",
+          justifyContent: "space-between",
         }}
       >
         {gameState === EGameState.beforeStart ? (
-          <GameLobby socket={socket} />
+          <GameLobby socket={socket} hasStartGameButton />
         ) : (
           <Board socket={socket} />
         )}
@@ -113,8 +114,10 @@ const Game = ({ guid }: GameProps) => {
         style={{
           display: "flex",
           flexFlow: "column",
-          alignItems: "flex-end",
-          margin: "10px"
+          alignItems: "stretch",
+          margin: "10px",
+          height: "100%",
+          maxWidth: "400px",
         }}
       >
         <SettingsBar socket={socket} />

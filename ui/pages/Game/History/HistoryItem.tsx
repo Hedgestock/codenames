@@ -19,7 +19,7 @@ const HistoryItem = ({ player, action, card }: IHistoryItem) => {
         display: "flex",
         flexFlow: "row",
         marginBottom: "5px",
-        alignItems: "baseline",
+        alignItems: "center",
       }}
     >
       {player ? <PlayerChip player={player} /> : null}

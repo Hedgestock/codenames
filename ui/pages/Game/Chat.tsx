@@ -7,13 +7,10 @@ import {
 import { Send } from "@material-ui/icons";
 import * as React from "react";
 import { Store } from "../../Store";
-import { SocketConnectedProps } from "../../../shared/interfaces";
+import ISocketConnectedProps from "../../shared/ISocketConnectedProps";
 
-interface ChatProps extends SocketConnectedProps {
-  guid: string;
-}
 
-const Chat = ({ guid, socket }: ChatProps) => {
+const Chat = ({ socket }: ISocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
   const [chat, setChat] = React.useState([]);
@@ -64,7 +61,6 @@ const Chat = ({ guid, socket }: ChatProps) => {
         style={{
           display: "flex",
           flexFlow: "column-reverse",
-          margin: "10px",
           flexGrow: 1,
           overflowY: "auto",
         }}

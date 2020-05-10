@@ -92,8 +92,6 @@ const TopBar = () => {
         <Toolbar>
           <IconButton
             edge="start"
-            color="inherit"
-            aria-label="menu"
             onClick={handleMenuOpen}
           >
             <MenuIcon />

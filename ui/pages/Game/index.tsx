@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
 import GameLobby from "./Lobby";
+import SettingsBar from "./SettingsBar";
 
 interface GameProps {
   guid: string;
@@ -92,7 +93,7 @@ const Game = ({ guid }: GameProps) => {
         width: "100%",
       }}
     >
-      <GameChat guid={guid} socket={socket} />
+      <GameChat socket={socket} />
       <div
         style={{
           display: "flex",
@@ -108,7 +109,17 @@ const Game = ({ guid }: GameProps) => {
         )}
         <ShareURL />
       </div>
-      <GameHistory socket={socket} />
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          alignItems: "flex-end",
+          margin: "10px"
+        }}
+      >
+        <SettingsBar socket={socket} />
+        <GameHistory socket={socket} />
+      </div>
     </div>
   );
 };

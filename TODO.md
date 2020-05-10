@@ -52,6 +52,7 @@
 
 ## Cleanup
 
+- [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>
 - [ ] <span style="background-color:yellow">Sort Game.ts methods</span>
 - [ ] <span style="background-color:yellow">Split Game.ts</span>
@@ -70,6 +71,7 @@
 
 ## Style
 
+- [ ] <span style="background-color:darkorange">Disable player context menues for nonGameMaster</span>
 - [ ] <span style="background-color:darkorange">Disable startGame for nonGameMaster</span>
 - [ ] <span style="background-color:yellow">Put everything in theme</span>
 - [x] <span style="background-color:yellow">Make playerChip extend Chip to add icons</span>

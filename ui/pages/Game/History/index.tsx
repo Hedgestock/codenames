@@ -1,9 +1,8 @@
 import * as React from "react";
 import HistoryItem from "./HistoryItem";
-import { SocketConnectedProps } from "../../../../shared/interfaces";
+import ISocketConnectedProps from "../../../shared/ISocketConnectedProps";
 
-
-const GameHistory = ({ socket }: SocketConnectedProps) => {
+const GameHistory = ({ socket }: ISocketConnectedProps) => {
   const [historyValue, setHistoryValue] = React.useState([]);
 
   React.useEffect(() => {
@@ -28,10 +27,9 @@ const GameHistory = ({ socket }: SocketConnectedProps) => {
         display: "flex",
         flexFlow: "column-reverse",
         flexGrow: 1,
-        margin: "10px",
         overflowY: "auto",
         overflowX: "hidden",
-        height: "100%",
+        width: "-webkit-fill-available",
       }}
     >
       {renderHistory()}

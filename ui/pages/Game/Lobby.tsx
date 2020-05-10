@@ -1,10 +1,11 @@
 import { Button } from "@material-ui/core";
 import * as React from "react";
-import { SocketConnectedProps, IPlayer } from "../../../shared/interfaces";
+import { IPlayer } from "../../../shared";
+import ISocketConnectedProps from "../../shared/ISocketConnectedProps";
 import { Store } from "../../Store";
 import PlayerChip from "./PlayerChip";
 
-const GameLobby = ({ socket }: SocketConnectedProps) => {
+const GameLobby = ({ socket }: ISocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
   const [players, setPlayers] = React.useState(new Map<string, IPlayer>());

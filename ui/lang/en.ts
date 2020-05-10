@@ -1,8 +1,4 @@
 export const en = {
-  game: {
-    roomLinkTitle: "Copy this link to share the room.",
-    startGame: "Start the game!",
-  },
   chat: {
     input: "Chat",
   },
@@ -17,35 +13,40 @@ export const en = {
     name: "Name",
     title: "Choose a user name",
   },
+  game: {
+    passTurn: "Pass turn",
+    roomLinkTitle: "Copy this link to share the room.",
+    startGame: "Start the game!",
+  },
   history: {
-    reconnected: "reconnected.",
     disconnected: "disconnected.",
     isBlue: " joins blue team.",
     isGameMaster: "is the game master.",
     isRed: " joins red team.",
     isSpyMaster: " becomes a spy master!",
+    reconnected: "reconnected.",
     revealed: "revealed",
     startedGame: "started a game.",
   },
-  playerChip: {
-    changeTeam: "Changer d'équipe",
-    makeSpyMaster: "Rendre maître espion",
-    makeGameMaster: "Rendre maître du jeu",
-    close: "Fermer",
-  },
   home: {
-    createGame: "Create game.",
+    createGame: "Create game",
   },
   nameChange: "Change name",
   notFound: {
     find: "Find it aniway !",
     message: "Sorry, page not found...",
   },
+  playerChip: {
+    changeTeam: "Changer d'équipe",
+    close: "Fermer",
+    makeGameMaster: "Rendre maître du jeu",
+    makeSpyMaster: "Rendre maître espion",
+  },
   profile: {
-    name: "Name:",
     cookieErase: "No more cookies, I'm full...",
     cookieEraseWarnig: "By refusing my cookies you're getting off this site.",
     cookieStatus: "Hmmm, I love cookies!",
+    name: "Name:",
     useDarkTheme: "Use dark theme.",
   },
   topBar: {

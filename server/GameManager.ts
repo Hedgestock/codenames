@@ -162,6 +162,7 @@ export default class {
     }
     player.isSpyMaster = true;
     this.pushHistory({ player, action: "isSpyMaster" });
+    this._eventEmitter.emit("boardUpdate");
     this.emitPlayersUpdate();
   }
 

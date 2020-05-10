@@ -15,7 +15,7 @@
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
 - [ ] <span style="background-color:darkorange">Give gamemaster option to change role during a game only if spymaster gets diconnected.</span>
 - [ ] <span style="background-color:darkorange">Pass your turn</span>
-- [ ] <span style="background-color:lightcoral">Update board on role change</span>
+- [x] <span style="background-color:lightcoral">Update board on role change</span>
 - [ ] <span style="background-color:lightcoral">implement win condition</span>
 - [ ] <span style="background-color:yellow">Use state machine pattern for game</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>

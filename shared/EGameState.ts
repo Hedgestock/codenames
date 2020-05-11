@@ -1,8 +1,8 @@
 export enum EGameState {
   beforeStart,
   blueSpyTalking,
-  blueGuess,
+  blueTeamGuessing,
   redSpyTalking,
-  redGuess,
+  redTeamGuessing,
   finished,
 }

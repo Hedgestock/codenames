@@ -8,9 +8,9 @@ import {
   IHistoryItem,
   HistoryAction,
   Team,
-  EPlayerStatus,
 } from "../shared";
 import BoardManager from "./BoardManager";
+import { GameContext } from "./GameStateMachine/GameContext";
 
 export default class {
   constructor(gameMaster: IUser, uuid: string, io: socketio.Server) {
@@ -23,7 +23,7 @@ export default class {
     this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
-    this._state = EGameState.beforeStart;
+    this._context = new GameContext(this._eventEmitter);
   }
 
   private _eventEmitter: EventEmitter;
@@ -34,8 +34,12 @@ export default class {
   private _chat: IChatMessage[];
   private _players: Map<string, IPlayer>;
   private _boardManager: BoardManager;
-  private _state: EGameState;
+  private _context: GameContext;
   private _first: Team;
+
+  get context() {
+    return this._context;
+  }
 
   get eventEmitter() {
     return this._eventEmitter;
@@ -67,10 +71,6 @@ export default class {
     return this._history;
   }
 
-  get state() {
-    return this._state;
-  }
-
   get blueSpyMaster(): IPlayer {
     return this.getSpyMaster("blue");
   }
@@ -93,10 +93,10 @@ export default class {
     return null;
   }
 
-  private setGameState(newState: EGameState) {
-    this._state = newState;
-    this._io.to(this._uuid).emit("gameStateChanged", this._state);
-  }
+  // private setGameState(newState: EGameState) {
+  //   this._state = newState;
+  //   this._io.to(this._uuid).emit("gameStateChanged", this._state);
+  // }
 
   playersBlue(): number {
     return this.countPlayers("team", "blue");
@@ -176,25 +176,21 @@ export default class {
   }
 
   tryStartGame(playerUUID: string) {
-    if (
-      this._state === EGameState.beforeStart &&
-      this._players.get(playerUUID) &&
-      this._players.get(playerUUID).isGameMaster
-    ) {
-      this.setGameState(EGameState.blueSpyTalking);
+    const player = this._players.get(playerUUID);
+    if (player && this.context.startGame(player, this._first)) {
       this.pushHistory({
-        player: this._players.get(playerUUID),
+        player: player,
         action: "startedGame",
       });
-
       this._eventEmitter.emit("boardUpdate");
+      return true;
     }
+    return false;
   }
 
   tryReveal(playerUUID: string, pos: number) {
-    if (
-      this._players.get(playerUUID) &&
-      !this._players.get(playerUUID).isSpyMaster
+    const player = this._players.get(playerUUID)
+    if (player && this._context.revealCard(player, this._boardManager, pos)
     ) {
       const cardRevealed = this._boardManager.revealCard(pos);
       if (cardRevealed) {
@@ -228,7 +224,6 @@ export default class {
           action: "reconnected",
         });
       }
-
     } else {
       let team: "blue" | "red";
       let isSpyMaster = false;
@@ -248,7 +243,7 @@ export default class {
       }
 
       const player: IPlayer = {
-        isGameMaster: this.isGameMaster(user),
+        isGameMaster: this._gameMasterUUID === user.uuid,
         team,
         isSpyMaster,
         name: user.name,
@@ -274,36 +269,6 @@ export default class {
       this._players.set(user.uuid, player);
     }
     this.emitPlayersUpdate();
-  }
-
-  isGameMaster(param: string | IUser) {
-    if (typeof param === "string") {
-      return param === this._gameMasterUUID;
-    }
-
-    return param.uuid === this._gameMasterUUID;
-  }
-
-  isSpy(param: string | IUser) {
-    if (typeof param !== "string") {
-      return (param = param.uuid);
-    }
-
-    return this._players.get(param).isSpyMaster;
-  }
-
-  startGame() {
-    if (
-      Object.entries(this._players).length >= 4 &&
-      this._state === EGameState.beforeStart
-    ) {
-      this._state =
-        this._first === "blue"
-          ? EGameState.blueSpyTalking
-          : EGameState.redSpyTalking;
-    } else {
-      console.error("Couldn't start game.");
-    }
   }
 
   disconnectPlayer(param: string | IUser) {

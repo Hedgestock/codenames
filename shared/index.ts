@@ -7,3 +7,4 @@ export * from "./EPlayerStatus";
 export * from "./IPlayer";
 export * from "./IHistoryItem";
 export * from "./HistoryAction";
+export * from "./IGuess";

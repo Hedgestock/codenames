@@ -46,6 +46,7 @@
 
 ## Tests
 
+- [x] <span style="background-color:lightcoral">Call state method without parameters</span>
 - [ ] <span style="background-color:lightcoral">Join game exactly when it deletes</span>
 - [ ] <span style="background-color:lightcoral">Server Crash on gamestart ??? isAdmin undefined</span>
 - [ ] <span style="background-color:yellow">Begin</span>

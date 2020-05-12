@@ -1,7 +1,8 @@
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router";
 import TopBar from "./TopBar";
 import ChooseNameModal from "./pages/ChooseName";
 import Home from "./pages/Home";

@@ -13,13 +13,10 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
   const { state } = React.useContext(Store);
 
   const [players, setPlayers] = React.useState(new Map<string, IPlayer>());
-  console.log(players);
-  console.log(players.entries);
-
+ 
   React.useEffect(() => {
     if (socket) {
       socket.on("playersUpdate", (playersArray) => {
-        console.log("playersObject", playersArray);
         setPlayers(new Map(playersArray));
       });
 

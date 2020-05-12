@@ -23,6 +23,7 @@ export default class {
     this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
+    console.log(this._eventEmitter)
     this._context = new GameContext(this._eventEmitter);
   }
 
@@ -190,9 +191,8 @@ export default class {
 
   tryReveal(playerUUID: string, pos: number) {
     const player = this._players.get(playerUUID)
-    if (player && this._context.revealCard(player, this._boardManager, pos)
-    ) {
-      const cardRevealed = this._boardManager.revealCard(pos);
+    if (player  ) {
+      const cardRevealed = this._context.revealCard(player, this._boardManager, pos);
       if (cardRevealed) {
         this.pushHistory({
           player: this._players.get(playerUUID),
@@ -200,8 +200,26 @@ export default class {
           card: cardRevealed,
         });
         this._eventEmitter.emit("boardUpdate");
+        return true
       }
     }
+    return false
+  }
+
+  tryPassTurn(playerUUID: string) {
+    const player = this._players.get(playerUUID)
+    if (player) {
+      return this._context.passTurn(player);
+    }
+    return false;
+  }
+
+  trySetGuess(playerUUID: string) {
+    const player = this._players.get(playerUUID)
+    if (player) {
+      return this._context.setGuess(player, null);
+    }
+    return false;
   }
 
   private capitalize(str: string): string {

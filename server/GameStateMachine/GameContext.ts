@@ -3,6 +3,7 @@ import BoardManager from "../BoardManager";
 import { IGameState } from "./IGameState";
 import { BeforeStart } from "./BeforeStart";
 import { EventEmitter } from "events";
+import { BlueSpyTalking } from "./BlueSpyTalking";
 
 export class GameContext {
   private _state: IGameState;
@@ -10,28 +11,32 @@ export class GameContext {
   readonly players: Map<string, IPlayer>;
 
   constructor(eventEmitter: EventEmitter) {
-    this.state = new BeforeStart();
     this._eventEmitter = eventEmitter;
+    this.state = new BeforeStart();
   }
 
   set state(newState: IGameState) {
     this._state = newState;
-    this._eventEmitter.emit("gameStateChanged", newState.state)
+    this._eventEmitter.emit("gameStateChanged", newState.state);
+  }
+
+  get state() {
+    return this._state;
   }
 
   revealCard(player: IPlayer, board: BoardManager, pos: number) {
-    return this.state.revealCard(this, player, board, pos);
+    return this._state.revealCard(this, player, board, pos);
   }
 
   startGame(player: IPlayer, first: Team) {
-    return this.state.startGame(this, player, first);
+    return this._state.startGame(this, player, first);
   }
 
-  passTurn(player: IPlayer){
-    return this.state.passTurn(this, player);
+  passTurn(player: IPlayer) {
+    return this._state.passTurn(this, player);
   }
 
   setGuess(player: IPlayer, guess: IGuess) {
-    return this.state.setGuess(this, player, guess);
+    return this._state.setGuess(this, player, guess);
   }
 }

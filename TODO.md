@@ -11,6 +11,7 @@
 
 ## Game
 
+- [ ] <span style="background-color:lightcoral">change color should take care of spymaster</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
 - [x] <span style="background-color:darkorange">Give gamemaster option to change role during a game</span>
@@ -55,6 +56,7 @@
 
 ## Cleanup
 
+- [ ] <span style="background-color:yellow">Look at fork-ts-checker-webpack-plugin</span>
 - [ ] <span style="background-color:yellow">Use class for player instead of interface</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>

@@ -47,10 +47,10 @@ io.on("connection", function (socket) {
 
   socket.emit("chatInit", game.chat);
   socket.emit("historyInit", game.history);
-  socket.emit("gameStateChanged", game.state);
+  socket.emit("gameStateChanged", game.context.state.state);
 
   function boardUpdate() {
-    if (game.isSpy(userUUID)) {
+    if (game.players.get(userUUID).isSpyMaster) {
       socket.emit("boardUpdate", game.board.spyBoard);
     } else {
       socket.emit("boardUpdate", game.board.playerBoard);
@@ -61,6 +61,9 @@ io.on("connection", function (socket) {
 
   game.eventEmitter.on("boardUpdate", boardUpdate);
   game.eventEmitter.on("gameIsEmpty", () => games.delete(gameUUID));
+  game.eventEmitter.on("gameStateChanged", () =>
+    socket.emit("gameStateChanged", game.context.state.state)
+  );
 
   socket.on("requestPlayers", () => {
     socket.emit("playersUpdate", Array.from(game.players.entries()));
@@ -76,6 +79,14 @@ io.on("connection", function (socket) {
 
   socket.on("tryStartGame", () => {
     game.tryStartGame(userUUID);
+  });
+
+  socket.on("tryPassTurn", () => {
+    game.tryPassTurn(userUUID);
+  });
+
+  socket.on("trySetGuess", () => {
+    game.trySetGuess(userUUID);
   });
 
   socket.on("tryMakePlayerSpyMaster", (playerUUID) => {

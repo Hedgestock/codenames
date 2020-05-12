@@ -31,7 +31,6 @@ const PlayerChip = ({ player, commands }: PlayerChipProps) => {
     if (player.socketsNo <= 0) {
       color += "44";
     }
-    console.log(color);
     return color;
   }
 

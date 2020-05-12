@@ -28,7 +28,6 @@ const Game = ({ guid }: GameProps) => {
 
   React.useEffect(() => {
     if (state.cookie.name) {
-      console.log("setting ssocket");
       const tmpSocket = io({
         query: {
           userUUID: state.cookie.userUUID,
@@ -120,7 +119,7 @@ const Game = ({ guid }: GameProps) => {
           maxWidth: "400px",
         }}
       >
-        <SettingsBar socket={socket} />
+        <SettingsBar gameState={gameState} socket={socket} />
         <GameHistory socket={socket} />
       </div>
     </div>

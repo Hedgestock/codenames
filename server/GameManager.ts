@@ -23,7 +23,7 @@ export default class {
     this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
-    console.log(this._eventEmitter)
+    console.log(this._eventEmitter);
     this._context = new GameContext(this._eventEmitter);
   }
 
@@ -116,7 +116,17 @@ export default class {
   changePlayerTeam(uuid: string): boolean {
     const player: IPlayer = this._players.get(uuid);
     if (player) {
+      const prevTeam = player.team;
       player.team = player.team === "blue" ? "red" : "blue";
+      if (player.isSpyMaster) {
+        const found = Array.from(this._players.entries()).find(
+          ([uuid, p]) => prevTeam == p.team
+        );
+        player.isSpyMaster = false;
+        if (found) {
+          this.makePlayerSpyMaster(found[0]);
+        }
+      }
       this.emitPlayersUpdate();
       this.pushHistory({
         player,
@@ -190,9 +200,13 @@ export default class {
   }
 
   tryReveal(playerUUID: string, pos: number) {
-    const player = this._players.get(playerUUID)
-    if (player  ) {
-      const cardRevealed = this._context.revealCard(player, this._boardManager, pos);
+    const player = this._players.get(playerUUID);
+    if (player) {
+      const cardRevealed = this._context.revealCard(
+        player,
+        this._boardManager,
+        pos
+      );
       if (cardRevealed) {
         this.pushHistory({
           player: this._players.get(playerUUID),
@@ -200,14 +214,14 @@ export default class {
           card: cardRevealed,
         });
         this._eventEmitter.emit("boardUpdate");
-        return true
+        return true;
       }
     }
-    return false
+    return false;
   }
 
   tryPassTurn(playerUUID: string) {
-    const player = this._players.get(playerUUID)
+    const player = this._players.get(playerUUID);
     if (player) {
       return this._context.passTurn(player);
     }
@@ -215,7 +229,7 @@ export default class {
   }
 
   trySetGuess(playerUUID: string) {
-    const player = this._players.get(playerUUID)
+    const player = this._players.get(playerUUID);
     if (player) {
       return this._context.setGuess(player, null);
     }

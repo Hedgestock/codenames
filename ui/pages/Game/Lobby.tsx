@@ -49,6 +49,7 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
             <PlayerChip
               key={i}
               player={player}
+              style={{marginTop: "5px", marginLeft: "5px"}}
               commands={{
                 makeGameMaster: tryModifyPlayer(
                   uuid,

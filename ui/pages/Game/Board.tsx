@@ -1,7 +1,7 @@
 import * as React from "react";
-import { ICard } from "../../../shared";
+import { ICard, EGameState } from "../../../shared";
 import { Store } from "../../Store";
-import ISocketConnectedProps from "../../shared/ISocketConnectedProps"
+import ISocketConnectedProps from "../../shared/ISocketConnectedProps";
 import {
   blueTeamColor,
   redTeamColor,
@@ -11,8 +11,13 @@ import {
   revealedCardColor,
 } from "../../shared/theme";
 import GameCard from "./GameCard";
+import { Typography } from "@material-ui/core";
 
-const Board = ({ socket }: ISocketConnectedProps) => {
+interface BoardProps extends ISocketConnectedProps {
+  gameState: EGameState;
+}
+
+const Board = ({ gameState, socket }: BoardProps) => {
   const { state } = React.useContext(Store);
 
   const blackRevealed = {
@@ -92,20 +97,27 @@ const Board = ({ socket }: ISocketConnectedProps) => {
   }
 
   return (
-    <div className="game-board">
-      {board.map((c, i) => (
-        <GameCard
-          key={i}
-          column={(i % 5) + 1}
-          row={Math.floor(i / 5 + 1)}
-          style={getStyle(c)}
-          // votes={Math.floor(Math.random() * 5)}
-          onClick={() => socket.emit("tryReveal", i)}
-        >
-          {c.word}
-        </GameCard>
-      ))}
-    </div>
+    <>
+      {gameState === EGameState.blueTeamWon ? (
+        <Typography variant="h3" style={{color: blueTeamColor}}>{state.langRes.game.blueTeamWon}</Typography>
+      ) : gameState === EGameState.redTeamWon ? (
+        <Typography variant="h3" style={{color: redTeamColor}}>{state.langRes.game.blueTeamWon}</Typography>
+      ) : null}
+      <div className="game-board">
+        {board.map((c, i) => (
+          <GameCard
+            key={i}
+            column={(i % 5) + 1}
+            row={Math.floor(i / 5 + 1)}
+            style={getStyle(c)}
+            // votes={Math.floor(Math.random() * 5)}
+            onClick={() => socket.emit("tryReveal", i)}
+          >
+            {c.word}
+          </GameCard>
+        ))}
+      </div>
+    </>
   );
 };
 

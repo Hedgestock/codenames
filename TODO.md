@@ -12,11 +12,13 @@
 ## Game
 
 - [ ] <span style="background-color:lightcoral">change back color should take care of spymaster</span>
+- [ ] <span style="background-color:lightgreen">Add last card revealed outline</span>
 - [ ] <span style="background-color:darkorange">Add First Team Handling</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
-- [ ] <span style="background-color:darkorange">Pass your turn</span>
-- [ ] <span style="background-color:lightcoral">implement win condition</span>
+- [ ] <span style="background-color:darkorange">Add loading game state</span>
+- [x] <span style="background-color:darkorange">Pass your turn</span>
+- [x] <span style="background-color:lightcoral">implement win condition</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>
 - [x] <span style="background-color:darkorange">Fix chat size</span>
 - [x] <span style="background-color:darkorange">Give gamemaster option to change role during a game</span>

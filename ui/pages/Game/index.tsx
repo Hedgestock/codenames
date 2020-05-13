@@ -105,7 +105,7 @@ const Game = ({ guid }: GameProps) => {
         {gameState === EGameState.beforeStart ? (
           <GameLobby socket={socket} hasStartGameButton />
         ) : (
-          <Board socket={socket} />
+          <Board socket={socket} gameState={gameState}/>
         )}
         <ShareURL />
       </div>

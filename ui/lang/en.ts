@@ -14,9 +14,10 @@ export const en = {
     title: "Choose a user name",
   },
   game: {
-    passTurn: "Pass turn",
     roomLinkTitle: "Copy this link to share the room.",
     startGame: "Start the game!",
+    redTeamWon: "L'équipe rouge remporte la partie !!!",
+    blueTeamWon: "L'équipe bleue remporte la partie !!!",
   },
   history: {
     disconnected: "disconnected.",

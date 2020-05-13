@@ -13,12 +13,13 @@ interface ICommands {
 
 interface PlayerChipProps {
   player: IPlayer;
+  style?: React.CSSProperties;
   commands?: ICommands;
 }
 
 const iconStyle = { color: "#FFF" };
 
-const PlayerChip = ({ player, commands }: PlayerChipProps) => {
+const PlayerChip = ({ player, commands, style = {} }: PlayerChipProps) => {
   const { state } = React.useContext(Store);
 
   const theme = useTheme();
@@ -62,7 +63,7 @@ const PlayerChip = ({ player, commands }: PlayerChipProps) => {
         style={{
           backgroundColor: getColor(),
           color: "#FFF",
-          marginRight: "5px",
+          ...style
         }}
         size="small"
         onDelete={

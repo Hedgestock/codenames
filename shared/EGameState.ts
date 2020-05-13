@@ -4,5 +4,6 @@ export enum EGameState {
   blueTeamGuessing,
   redSpyTalking,
   redTeamGuessing,
-  finished,
+  blueTeamWon,
+  redTeamWon,
 }

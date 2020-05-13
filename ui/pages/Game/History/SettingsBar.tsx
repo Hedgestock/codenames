@@ -44,7 +44,7 @@ const SettingsBar = ({ gameState, socket }: SettingsBarProps) => {
         <Tooltip placement="top" title={state.langRes.settingsBar.passTurn}>
           <Button onClick={passTurn}><Loop/></Button>
         </Tooltip>
-        <Tooltip placement="top" title={state.langRes.settingsBar.lobby}>
+        <Tooltip placement="top" title={state.langRes.settingsBar.setGuess}>
           <Button onClick={setGuess}><Visibility/></Button>
         </Tooltip>
         {console.log(gameState)}

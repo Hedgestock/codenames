@@ -9,8 +9,9 @@ export interface IGameState {
     player: IPlayer,
     board: BoardManager,
     pos: number
-  ): ICard;
+  ): boolean;
   startGame(context: GameContext, player: IPlayer, first: Team): boolean;
+  restartGame(context: GameContext, player: IPlayer): boolean;
   passTurn(context: GameContext, player: IPlayer): boolean;
   setGuess(context: GameContext, player: IPlayer, guess: IGuess): boolean;
 }

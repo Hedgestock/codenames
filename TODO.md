@@ -11,6 +11,8 @@
 
 ## Game
 
+- [ ] <span style="background-color:lightcoral">change back color should take care of spymaster</span>
+- [ ] <span style="background-color:darkorange">Add First Team Handling</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
 - [ ] <span style="background-color:darkorange">Pass your turn</span>
@@ -45,6 +47,10 @@
 - [x] <span style="background-color:lightcoral">Handle set game master</span>
 - [x] <span style="background-color:lightcoral">Handle set spy master</span>
 
+## Profile
+
+- [ ] <span style="background-color:darkorange">Add erase cookie warning</span>
+
 ## Tests
 
 - [ ] <span style="background-color:lightcoral">Join game exactly when it deletes</span>
@@ -56,6 +62,7 @@
 
 ## Cleanup
 
+- [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Look at fork-ts-checker-webpack-plugin</span>
 - [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>

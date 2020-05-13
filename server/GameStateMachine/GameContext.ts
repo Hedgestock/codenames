@@ -1,28 +1,31 @@
-import { IPlayer, Team, IGuess } from "../../shared";
+import { IPlayer, Team, IGuess, IHistoryItem } from "../../shared";
 import BoardManager from "../BoardManager";
 import { IGameState } from "./IGameState";
 import { BeforeStart } from "./BeforeStart";
 import { EventEmitter } from "events";
-import { BlueSpyTalking } from "./BlueSpyTalking";
+import { SpyTalking } from "./SpyTalking";
 
 export class GameContext {
   private _state: IGameState;
-  private _eventEmitter: EventEmitter;
+  readonly eventEmitter: EventEmitter;
   readonly players: Map<string, IPlayer>;
+  readonly pushHistory: (historyItem: IHistoryItem) => void;
 
-  constructor(eventEmitter: EventEmitter) {
-    this._eventEmitter = eventEmitter;
+  constructor(eventEmitter: EventEmitter, ph: (historyItem: IHistoryItem) => void) {
+    this.eventEmitter = eventEmitter;
+    this.pushHistory = ph;
     this.state = new BeforeStart();
   }
 
   set state(newState: IGameState) {
     this._state = newState;
-    this._eventEmitter.emit("gameStateChanged", newState.state);
+    this.eventEmitter.emit("gameStateChanged", newState.state);
   }
 
   get state() {
     return this._state;
   }
+
 
   revealCard(player: IPlayer, board: BoardManager, pos: number) {
     return this._state.revealCard(this, player, board, pos);
@@ -30,6 +33,10 @@ export class GameContext {
 
   startGame(player: IPlayer, first: Team) {
     return this._state.startGame(this, player, first);
+  }
+
+  restartGame(player: IPlayer) {
+    return this._state.restartGame(this, player);
   }
 
   passTurn(player: IPlayer) {

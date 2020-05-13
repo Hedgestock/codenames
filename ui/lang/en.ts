@@ -60,8 +60,8 @@ export const en = {
     profile: "Profile page",
   },
   settingsBar: {
-    passTurn: "Passer le tour",
+    passTurn: "Pass turn",
     lobby: "Lobby",
-    setGuess: "Faire deviner",
+    setGuess: "Set guess",
   },
 };

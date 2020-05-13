@@ -61,6 +61,6 @@ export default class {
       this.board[pos].revealed = true;
       return this.board[pos];
     }
-    return null;
+    return undefined;
   }
 }

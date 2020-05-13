@@ -23,8 +23,7 @@ export default class {
     this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
-    console.log(this._eventEmitter);
-    this._context = new GameContext(this._eventEmitter);
+    this._context = new GameContext(this._eventEmitter, this.pushHistory.bind(this));
   }
 
   private _eventEmitter: EventEmitter;
@@ -93,11 +92,6 @@ export default class {
     }
     return null;
   }
-
-  // private setGameState(newState: EGameState) {
-  //   this._state = newState;
-  //   this._io.to(this._uuid).emit("gameStateChanged", this._state);
-  // }
 
   playersBlue(): number {
     return this.countPlayers("team", "blue");
@@ -202,20 +196,7 @@ export default class {
   tryReveal(playerUUID: string, pos: number) {
     const player = this._players.get(playerUUID);
     if (player) {
-      const cardRevealed = this._context.revealCard(
-        player,
-        this._boardManager,
-        pos
-      );
-      if (cardRevealed) {
-        this.pushHistory({
-          player: this._players.get(playerUUID),
-          action: "revealed",
-          card: cardRevealed,
-        });
-        this._eventEmitter.emit("boardUpdate");
-        return true;
-      }
+      return this._context.revealCard(player, this._boardManager, pos);
     }
     return false;
   }

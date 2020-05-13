@@ -59,4 +59,9 @@ export const en = {
     },
     profile: "Profile page",
   },
+  settingsBar: {
+    passTurn: "Passer le tour",
+    lobby: "Lobby",
+    setGuess: "Faire deviner",
+  },
 };

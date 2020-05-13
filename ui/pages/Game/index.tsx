@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
 import GameLobby from "./Lobby";
-import SettingsBar from "./SettingsBar";
+import SettingsBar from "./History/SettingsBar";
 
 interface GameProps {
   guid: string;
@@ -63,7 +63,7 @@ const Game = ({ guid }: GameProps) => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton
+            <Button
               onClick={() => {
                 const dummy = document.createElement("textarea");
                 // dummy.style.display = 'none'
@@ -75,7 +75,7 @@ const Game = ({ guid }: GameProps) => {
               }}
             >
               <FileCopy color="action" fontSize="small" />
-            </IconButton>
+            </Button>
           </InputAdornment>
         ),
       }}

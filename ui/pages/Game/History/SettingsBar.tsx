@@ -1,10 +1,10 @@
 import * as React from "react";
-import ISocketConnectedProps from "../../shared/ISocketConnectedProps";
-import { Button, IconButton } from "@material-ui/core";
-import { Store } from "../../Store";
-import { Settings } from "@material-ui/icons";
-import GameLobby from "./Lobby";
-import { EGameState } from "../../../shared";
+import ISocketConnectedProps from "../../../shared/ISocketConnectedProps";
+import { Button, IconButton, Tooltip } from "@material-ui/core";
+import { Store } from "../../../Store";
+import { Settings, SupervisedUserCircle, SupervisorAccount, Loop, Visibility } from "@material-ui/icons";
+import GameLobby from "../Lobby";
+import { EGameState } from "../../../../shared";
 
 interface SettingsBarProps extends ISocketConnectedProps {
   gameState: EGameState;
@@ -41,12 +41,18 @@ const SettingsBar = ({ gameState, socket }: SettingsBarProps) => {
           width: "-webkit-fill-available",
         }}
       >
-        <Button onClick={passTurn}>{state.langRes.game.passTurn}</Button>
-        <Button onClick={setGuess}>setGuess</Button>
+        <Tooltip placement="top" title={state.langRes.settingsBar.passTurn}>
+          <Button onClick={passTurn}><Loop/></Button>
+        </Tooltip>
+        <Tooltip placement="top" title={state.langRes.settingsBar.lobby}>
+          <Button onClick={setGuess}><Visibility/></Button>
+        </Tooltip>
         {console.log(gameState)}
-        <IconButton color="primary" onClick={changeLobbyState}>
-          <Settings />
-        </IconButton>
+        <Tooltip placement="top" title={state.langRes.settingsBar.lobby}>
+          <Button onClick={changeLobbyState}>
+            <SupervisorAccount />
+          </Button>
+        </Tooltip>
       </div>
       {isLobbyOpen ? <GameLobby socket={socket} /> : null}
     </>

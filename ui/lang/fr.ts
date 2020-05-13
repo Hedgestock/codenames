@@ -14,7 +14,6 @@ export const fr = {
     title: "Choisissez un nom",
   },
   game: {
-    passTurn: "Passer le tour",
     roomLinkTitle: "Copiez ce lien pour partager cette partie.",
     startGame: "Commencer la partie !",
   },
@@ -58,5 +57,10 @@ export const fr = {
       french: "Français",
     },
     profile: "Page de profil",
+  },
+  settingsBar: {
+    passTurn: "Passer le tour",
+    lobby: "Lobby",
+    setGuess: "Faire deviner",
   },
 };

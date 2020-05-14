@@ -16,6 +16,7 @@
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Add loading game state</span>
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
+- [ ] <span style="background-color:lightcoral">Check for duplicates in board</span>
 - [ ] <span style="background-color:lightgreen">Add last card revealed outline</span>
 - [x] <span style="background-color:darkorange">Add possibility to set a guess</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>
@@ -68,15 +69,16 @@
 
 ## Cleanup
 
+- [ ] <span style="background-color:lightcoral">Splice player name at cookie reading and server-side</span>
 - [ ] <span style="background-color:yellow">Fix how win message display is handled and move it to index?</span>
 - [ ] <span style="background-color:yellow">Fix implementation of different IHistoryItem</span>
-- [ ] <span style="background-color:yellow">Throw error on accessing wrong getter</span>
-- [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Look at fork-ts-checker-webpack-plugin</span>
 - [ ] <span style="background-color:yellow">Make setter to dispatch players changed event</span>
+- [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Sort Game.ts methods</span>
 - [ ] <span style="background-color:yellow">Split Game.ts</span>
+- [ ] <span style="background-color:yellow">Throw error on accessing wrong getter</span>
 - [ ] <span style="background-color:yellow">Use class for player instead of interface</span>
 - [ ] <span style="background-color:yellow">Use enums instead of types for Team and HistoryAction</span>
 - [ ] <span style="background-color:yellow">find a method to bundle 'playersUpdate'</span>

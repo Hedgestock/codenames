@@ -1,12 +1,12 @@
-import socketio from "socket.io";
 import { EventEmitter } from "events";
+import socketio from "socket.io";
 import {
-  IUser,
-  IChatMessage,
-  EGameState,
-  IPlayer,
-  IHistoryItem,
   HistoryAction,
+  IChatMessage,
+  IGuess,
+  IHistoryItem,
+  IPlayer,
+  IUser,
   Team,
 } from "../shared";
 import BoardManager from "./BoardManager";
@@ -218,10 +218,10 @@ export default class {
     return false;
   }
 
-  trySetGuess(playerUUID: string) {
+  trySetGuess(playerUUID: string, guess: IGuess) {
     const player = this._players.get(playerUUID);
     if (player) {
-      return this._context.setGuess(player, null);
+      return this._context.setGuess(player, guess);
     }
     return false;
   }

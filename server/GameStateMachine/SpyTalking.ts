@@ -31,8 +31,8 @@ export class SpyTalking implements IGameState {
 
   setGuess(context: GameContext, player: IPlayer, guess: IGuess) {
     if (player.isSpyMaster && player.team == this._team) {
-      // TODO: Set guess
       context.state = new TeamGuessing(this._team);
+      context.guess = guess;
       return true;
     }
     return false;

@@ -1,12 +1,12 @@
-import { IPlayer, Team, IGuess, IHistoryItem, EGameState } from "../../shared";
-import BoardManager from "../BoardManager";
-import { IGameState } from "./IGameState";
-import { BeforeStart } from "./BeforeStart";
 import { EventEmitter } from "events";
-import { SpyTalking } from "./SpyTalking";
+import { IGuess, IHistoryItem, IPlayer, Team } from "../../shared";
+import BoardManager from "../BoardManager";
+import { BeforeStart } from "./BeforeStart";
+import { IGameState } from "./IGameState";
 
 export class GameContext {
   private _state: IGameState;
+  private _guess: IGuess;
   readonly eventEmitter: EventEmitter;
   readonly players: Map<string, IPlayer>;
   readonly pushHistory: (historyItem: IHistoryItem) => void;
@@ -20,14 +20,23 @@ export class GameContext {
     this.state = new BeforeStart();
   }
 
+  get state() {
+    return this._state;
+  }
+
   set state(newState: IGameState) {
     this._state = newState;
     this.pushHistory({ action: this._state.state });
     this.eventEmitter.emit("gameStateChanged", newState.state);
   }
 
-  get state() {
-    return this._state;
+  get guess() {
+    return this._guess;
+  }
+
+  set guess(value: IGuess) {
+    this._guess = value;
+    this.pushHistory({ ...value, action: "talked" });
   }
 
   revealCard(player: IPlayer, board: BoardManager, pos: number) {

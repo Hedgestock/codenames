@@ -40,7 +40,7 @@ export const fr = {
   guess: {
     hint: "Indice",
     word: "mot(s)",
-    in: "en",
+    in: "En",
   },
   home: {
     createGame: "Créer une partie",

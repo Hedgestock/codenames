@@ -11,12 +11,13 @@
 
 ## Game
 
-- [ ] <span style="background-color:darkorange">Add possibility to set a guess</span>
+- [ ] <span style="background-color:darkorange   ">Add handling of number of word proposed</span>
 - [ ] <span style="background-color:darkorange">Add First Team Handling</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Add loading game state</span>
 - [ ] <span style="background-color:darkorange">Better wordlist</span>
 - [ ] <span style="background-color:lightgreen">Add last card revealed outline</span>
+- [x] <span style="background-color:darkorange">Add possibility to set a guess</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>
 - [x] <span style="background-color:darkorange">Fix chat size</span>
 - [x] <span style="background-color:darkorange">Give gamemaster option to change role during a game</span>
@@ -57,6 +58,7 @@
 
 ## Tests
 
+- [ ] <span style="background-color:lightcoral">Do more test on setGuess server-side</span>
 - [ ] <span style="background-color:lightcoral">Join game exactly when it deletes</span>
 - [ ] <span style="background-color:lightcoral">Server Crash on gamestart ??? isAdmin undefined</span>
 - [ ] <span style="background-color:yellow">Begin</span>
@@ -67,6 +69,7 @@
 ## Cleanup
 
 - [ ] <span style="background-color:yellow">Fix how win message display is handled and move it to index?</span>
+- [ ] <span style="background-color:yellow">Fix implementation of different IHistoryItem</span>
 - [ ] <span style="background-color:yellow">Throw error on accessing wrong getter</span>
 - [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
@@ -90,19 +93,18 @@
 
 ## Style
 
-- [ ] <span style="background-color:lightgreen">Add animations</span>
 - [ ] <span style="background-color:darkorange">Disable player context menues for nonGameMaster</span>
 - [ ] <span style="background-color:darkorange">Disable startGame for nonGameMaster</span>
-- [ ] <span style="background-color:darkorange">put border around dinamic elements</span>
-- [ ] <span style="background-color:lightgreen">Extremely long name breaks style</span>
+- [ ] <span style="background-color:darkorange">Put border around dinamic elements</span>
+- [ ] <span style="background-color:lightgreen">Add animations</span>
 - [ ] <span style="background-color:yellow">Put everything in theme</span>
+- [x] <span style="background-color:lightgreen">Extremely long name breaks style</span>
 - [x] <span style="background-color:yellow">Add icons to playerchip</span>
 
 ## Features
 
 - [ ] <span style="background-color:darkorange">Add games overview on home page</span>
 - [ ] <span style="background-color:darkorange">Going to profile from a game remembers it ? (also use last page or mouse 4 button you dummy...)</span>
-- [x] <span style="background-color:darkorange">New game after game finish</span>
 - [ ] <span style="background-color:lightgreen">Add possibility of custom board</span>
 - [ ] <span style="background-color:lightgreen">Add possibility of custom wordlist</span>
 - [ ] <span style="background-color:lightgreen">Possibility to kick a player</span>
@@ -111,5 +113,6 @@
 - [ ] <span style="background-color:lightgreen">voting system ?</span>
 - [x] <span style="background-color:darkorange">Display name on profile page</span>
 - [x] <span style="background-color:darkorange">Fix typos</span>
+- [x] <span style="background-color:darkorange">New game after game finish</span>
 
 ## One step-er

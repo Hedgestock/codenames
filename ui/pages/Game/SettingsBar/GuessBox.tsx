@@ -10,18 +10,30 @@ import * as React from "react";
 import ISocketConnectedProps from "../../../shared/ISocketConnectedProps";
 import { Store } from "../../../Store";
 import { Send } from "@material-ui/icons";
+import { IGuess } from "../../../../shared";
 
 const GuessBox = ({ socket }: ISocketConnectedProps) => {
   const { state } = React.useContext(Store);
 
   const [hint, setHint] = React.useState("");
-  const [wordNumber, setWordNumber] = React.useState(1);
+  const [wordNumber, setWordNumber] = React.useState(2);
 
   const setGuess = React.useCallback(() => {
-    if (socket) {
-      socket.emit("trySetGuess");
+    const trimmed = hint.trim().split(" ")[0];
+    if (trimmed !== "" && socket) {
+      const guess: IGuess = { wordNumber, hint: trimmed };
+      socket.emit("trySetGuess", guess);
+      setHint("");
+      setWordNumber(2);
     }
   }, [socket, hint, wordNumber]);
+
+  function handleKeyPress(e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      setGuess();
+    }
+  }
 
   function handleHintChange(e) {
     setHint(e.target.value);
@@ -33,10 +45,7 @@ const GuessBox = ({ socket }: ISocketConnectedProps) => {
   }
 
   const WordNumberSelect = (
-    <Select
-      value={wordNumber}
-      onChange={handleWordNumberChange}
-     >
+    <Select value={wordNumber} onChange={handleWordNumberChange}>
       {[...new Array(9).keys()].map((num) => {
         num++;
         return (
@@ -54,6 +63,7 @@ const GuessBox = ({ socket }: ISocketConnectedProps) => {
       margin="dense"
       value={hint}
       onChange={handleHintChange}
+      onKeyDown={handleKeyPress}
       helperText={state.langRes.guess.helper}
       label={state.langRes.guess.hint}
       placeholder={state.langRes.guess.hint}
@@ -68,6 +78,9 @@ const GuessBox = ({ socket }: ISocketConnectedProps) => {
             </Button>
           </InputAdornment>
         ),
+      }}
+      inputProps={{
+        maxLength: 32,
       }}
     />
   );

@@ -73,20 +73,20 @@ io.on("connection", function (socket) {
     game.pushMessage({ message, author: name });
   });
 
-    socket.on("tryStartGame", () => {
+  socket.on("tryStartGame", () => {
     game.tryStartGame(userUUID);
   });
 
-        socket.on("tryReveal", (pos) => {
-          game.tryReveal(userUUID, pos);
-        });
+  socket.on("tryReveal", (pos) => {
+    game.tryReveal(userUUID, pos);
+  });
 
   socket.on("tryPassTurn", () => {
     game.tryPassTurn(userUUID);
   });
 
-  socket.on("trySetGuess", () => {
-    game.trySetGuess(userUUID);
+  socket.on("trySetGuess", (guess) => {
+    game.trySetGuess(userUUID, guess);
   });
 
   socket.on("tryRestartGame", () => {

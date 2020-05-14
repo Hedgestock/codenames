@@ -10,4 +10,5 @@ export type HistoryAction =
   | "reconnected"
   | "revealed"
   | "startedGame"
+  | "talked"
   | EGameState;

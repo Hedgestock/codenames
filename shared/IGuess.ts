@@ -1,4 +1,4 @@
 export interface IGuess {
-  numberOfWords: number;
+  wordNumber: number;
   hint: string;
 }

@@ -1,4 +1,4 @@
-import { IGuess, IPlayer, Team, ICard, EGameState } from "../../shared";
+import { IGuess, IPlayer, Team, EGameState } from "../../shared";
 import { GameContext } from "./GameContext";
 import BoardManager from "../BoardManager";
 
@@ -11,7 +11,11 @@ export interface IGameState {
     pos: number
   ): boolean;
   startGame(context: GameContext, player: IPlayer, first: Team): boolean;
-  restartGame(context: GameContext, player: IPlayer, board: BoardManager): boolean;
+  restartGame(
+    context: GameContext,
+    player: IPlayer,
+    board: BoardManager
+  ): boolean;
   passTurn(context: GameContext, player: IPlayer): boolean;
   setGuess(context: GameContext, player: IPlayer, guess: IGuess): boolean;
 }

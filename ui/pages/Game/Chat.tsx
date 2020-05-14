@@ -37,8 +37,8 @@ const Chat = ({ socket }: ISocketConnectedProps) => {
     const trimmed = message.trim();
     if (trimmed !== "" && socket) {
       socket.emit("message", trimmed);
+      setMessage("");
     }
-    setMessage("");
   }, [socket, message]);
 
   function handleChange(e) {

@@ -40,7 +40,7 @@ export const en = {
   guess: {
     hint: "Hint",
     word: "word(s)",
-    in: "in",
+    in: "In",
   },
   home: {
     createGame: "Create game",

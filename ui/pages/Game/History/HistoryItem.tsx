@@ -10,7 +10,13 @@ import {
 } from "../../../shared/theme";
 import PlayerChip from "../PlayerChip";
 
-const HistoryItem = ({ player, action, card }: IHistoryItem) => {
+const HistoryItem = ({
+  player,
+  wordNumber,
+  action,
+  hint,
+  card,
+}: IHistoryItem) => {
   const { state } = React.useContext(Store);
 
   return (
@@ -22,8 +28,16 @@ const HistoryItem = ({ player, action, card }: IHistoryItem) => {
         whiteSpace: "nowrap",
       }}
     >
-      {player ? <PlayerChip player={player} style={{marginRight: "5px"}}/> : null}
-      <Typography>{state.langRes.history[action]}</Typography>
+      {player ? (
+        <PlayerChip player={player} style={{ marginRight: "5px" }} />
+      ) : null}
+
+      <Typography>
+        {wordNumber && hint
+          ? `${state.langRes.guess.in} ${wordNumber} ${state.langRes.guess.word}: ${hint}.`
+          : null}
+        {state.langRes.history[action]}
+      </Typography>
       {card ? (
         <Chip
           size="small"

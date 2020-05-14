@@ -24,23 +24,26 @@ export class TeamGuessing implements IGameState {
     if (player.team == this._team && !player.isSpyMaster) {
       const card = board.revealCard(pos);
       if (!card) return false;
-      
+
       context.pushHistory({
         player,
         action: "revealed",
         card,
       });
-      
+
       context.eventEmitter.emit("boardUpdate");
 
-      if (card.color != this._team) {
-        if (card.color == "black") {
-          context.state = new Finished(this._team == "blue" ? "red" : "blue");
-        } else {
-          context.state = new SpyTalking(this._team == "blue" ? "red" : "blue");
-          // TODO: actually use the guess object
-        }
+      if (card.color == "black") {
+        context.state = new Finished(this._team == "blue" ? "red" : "blue");
+      } else if (card.color == "white") {
+        context.state = new SpyTalking(this._team == "blue" ? "red" : "blue");
+      } else if (board.getRemainingCards(card.color) <= 0) {
+        context.state = new Finished(card.color);
+      } else if (card.color != this._team) {
+        context.state = new SpyTalking(this._team == "blue" ? "red" : "blue");
+        // TODO: actually use the guess object
       }
+      
       return true;
     }
     return false;

@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
 import GameLobby from "./Lobby";
-import SettingsBar from "./History/SettingsBar";
+import SettingsBar from "./SettingsBar";
 
 interface GameProps {
   guid: string;

@@ -4,11 +4,15 @@ import { ICard, Team } from "../shared";
 export default class {
   constructor(first: Team = "blue") {
     this._first = first;
+    this._second = first === "blue" ? "red" : "blue";
     this.initBoard();
   }
 
   private _first: Team;
+  private _second: Team;
   private _board: ICard[];
+  private _remainingFirst: number;
+  private _remainingSecond: number;
 
   set first(value: Team) {
     this._first = value;
@@ -27,8 +31,16 @@ export default class {
     });
   }
 
-  initBoard(remainingFirst = 9, remainingSecond = 8) {
-    const second: "blue" | "red" = this._first === "blue" ? "red" : "blue";
+  getRemainingCards(team: Team) {
+    if (team == this._first) {
+      return this._remainingFirst;
+    }
+    return this._remainingSecond;
+  }
+
+  initBoard() {
+    let remainingFirst = (this._remainingFirst = 9);
+    let remainingSecond = (this._remainingSecond = 8);
     this._board = [];
     for (let i = 0; i < 25; i++) {
       this._board.push({
@@ -52,15 +64,22 @@ export default class {
     while (remainingSecond) {
       index = Math.floor(Math.random() * this._board.length);
       if (this._board[index].color === "white") {
-        this._board[index].color = second;
+        this._board[index].color = this._second;
         remainingSecond--;
       }
     }
   }
 
   revealCard(pos: number): ICard {
-    if (this._board[pos] && !this._board[pos].revealed) {
-      this._board[pos].revealed = true;
+    const card = this._board[pos];
+    if (card && !card.revealed) {
+      card.revealed = true;
+      if (card.color == this._first )
+      {
+        this._remainingFirst--;
+      } else if (card.color == this._second) {
+        this._remainingSecond--;
+      }
       return this._board[pos];
     }
     return undefined;

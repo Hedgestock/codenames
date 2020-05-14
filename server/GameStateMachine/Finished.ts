@@ -12,8 +12,21 @@ export class Finished implements IGameState {
       team == "blue" ? EGameState.blueTeamWon : EGameState.redTeamWon;
   }
 
-  revealCard() {
-    return false;
+  revealCard(
+    context: GameContext,
+    player: IPlayer,
+    board: BoardManager,
+    pos: number
+  ) {
+    const card = board.revealCard(pos);
+    if (!card) return false;
+    context.pushHistory({
+      player,
+      action: "revealed",
+      card,
+    });
+    context.eventEmitter.emit("boardUpdate");
+    return true;
   }
 
   startGame() {

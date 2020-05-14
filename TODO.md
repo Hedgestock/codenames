@@ -11,6 +11,7 @@
 
 ## Game
 
+- [ ] <span style="background-color:darkorange">Add possibility to set a guess</span>
 - [ ] <span style="background-color:darkorange">Add First Team Handling</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Add loading game state</span>
@@ -64,7 +65,7 @@
 
 ## Cleanup
 
-- [ ] <span style="background-color:yellow">Fix how win message display is handled</span>
+- [ ] <span style="background-color:yellow">Fix how win message display is handled and move it to index?</span>
 - [ ] <span style="background-color:yellow">Throw error on accessing wrong getter</span>
 - [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>

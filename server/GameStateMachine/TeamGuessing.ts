@@ -25,6 +25,8 @@ export class TeamGuessing implements IGameState {
       const card = board.revealCard(pos);
       if (!card) return false;
 
+      context.guess.wordNumber--;
+
       context.pushHistory({
         player,
         action: "revealed",
@@ -39,11 +41,10 @@ export class TeamGuessing implements IGameState {
         context.state = new SpyTalking(this._team == "blue" ? "red" : "blue");
       } else if (board.getRemainingCards(card.color) <= 0) {
         context.state = new Finished(card.color);
-      } else if (card.color != this._team) {
+      } else if (card.color != this._team || context.guess.wordNumber <= 0) {
         context.state = new SpyTalking(this._team == "blue" ? "red" : "blue");
-        // TODO: actually use the guess object
       }
-      
+
       return true;
     }
     return false;

@@ -11,24 +11,24 @@
 
 ## Game
 
-- [ ] <span style="background-color:lightcoral">change back color should take care of spymaster</span>
-- [ ] <span style="background-color:lightgreen">Add last card revealed outline</span>
 - [ ] <span style="background-color:darkorange">Add First Team Handling</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
-- [ ] <span style="background-color:darkorange">Better wordlist</span>
 - [ ] <span style="background-color:darkorange">Add loading game state</span>
-- [x] <span style="background-color:darkorange">Pass your turn</span>
-- [x] <span style="background-color:lightcoral">implement win condition</span>
+- [ ] <span style="background-color:darkorange">Better wordlist</span>
+- [ ] <span style="background-color:lightgreen">Add last card revealed outline</span>
 - [x] <span style="background-color:darkorange">Add spymaster interface</span>
 - [x] <span style="background-color:darkorange">Fix chat size</span>
 - [x] <span style="background-color:darkorange">Give gamemaster option to change role during a game</span>
 - [x] <span style="background-color:darkorange">Make player afk on disconnect</span>
+- [x] <span style="background-color:darkorange">Pass your turn</span>
 - [x] <span style="background-color:lightcoral">Add word picking/board generation</span>
 - [x] <span style="background-color:lightcoral">Fix goback with websocket</span>
 - [x] <span style="background-color:lightcoral">Hitting F5 too much will disconnect beacause of multipple instances</span>
 - [x] <span style="background-color:lightcoral">Update board on role change</span>
+- [x] <span style="background-color:lightcoral">change back color should take care of spymaster</span>
 - [x] <span style="background-color:lightcoral">change color should take care of spymaster</span>
 - [x] <span style="background-color:lightcoral">connecting from two tabs and then disconnecting disconnect the player</span>
+- [x] <span style="background-color:lightcoral">implement win condition</span>
 - [x] <span style="background-color:yellow">Delete game on last quit</span>
 - [x] <span style="background-color:yellow">Use state machine pattern for game</span>
 
@@ -65,6 +65,7 @@
 ## Cleanup
 
 - [ ] <span style="background-color:yellow">Fix how win message display is handled</span>
+- [ ] <span style="background-color:yellow">Throw error on accessing wrong getter</span>
 - [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Look at fork-ts-checker-webpack-plugin</span>

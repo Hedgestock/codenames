@@ -132,7 +132,7 @@ const Board = ({ gameState, socket }: BoardProps) => {
       ) : null}
       {gameState === EGameState.blueTeamWon ||
       gameState === EGameState.redTeamWon ? (
-        <Button fullWidth onClick={tryRestartGame}>
+        <Button fullWidth variant="contained" onClick={tryRestartGame}>
           {state.langRes.game.restart}
         </Button>
       ) : null}

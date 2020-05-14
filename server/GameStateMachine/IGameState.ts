@@ -11,7 +11,7 @@ export interface IGameState {
     pos: number
   ): boolean;
   startGame(context: GameContext, player: IPlayer, first: Team): boolean;
-  restartGame(context: GameContext, player: IPlayer): boolean;
+  restartGame(context: GameContext, player: IPlayer, board: BoardManager): boolean;
   passTurn(context: GameContext, player: IPlayer): boolean;
   setGuess(context: GameContext, player: IPlayer, guess: IGuess): boolean;
 }

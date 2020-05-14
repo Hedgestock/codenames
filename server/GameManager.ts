@@ -23,7 +23,10 @@ export default class {
     this._players = new Map<string, IPlayer>();
     this._boardManager = new BoardManager();
     this._eventEmitter = new EventEmitter();
-    this._context = new GameContext(this._eventEmitter, this.pushHistory.bind(this));
+    this._context = new GameContext(
+      this._eventEmitter,
+      this.pushHistory.bind(this)
+    );
   }
 
   private _eventEmitter: EventEmitter;
@@ -83,7 +86,7 @@ export default class {
     for (const [uuid, player] of this._players.entries()) {
       if (player.isSpyMaster && player.team === team) return player;
     }
-    return null;
+    return undefined;
   }
 
   get gameMaster(): IPlayer {
@@ -120,6 +123,8 @@ export default class {
         if (found) {
           this.makePlayerSpyMaster(found[0]);
         }
+      } else if (!this.getSpyMaster(player.team)) {
+        player.isSpyMaster = true;
       }
       this.emitPlayersUpdate();
       this.pushHistory({
@@ -196,11 +201,10 @@ export default class {
   tryRestartGame(playerUUID: string) {
     const player = this._players.get(playerUUID);
     if (player) {
-      return this._context.restartGame(player);
+      return this._context.restartGame(player, this._boardManager);
     }
     return false;
   }
-
 
   tryReveal(playerUUID: string, pos: number) {
     const player = this._players.get(playerUUID);

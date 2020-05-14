@@ -35,8 +35,8 @@ export class GameContext {
     return this._state.startGame(this, player, first);
   }
 
-  restartGame(player: IPlayer) {
-    return this._state.restartGame(this, player);
+  restartGame(player: IPlayer, board: BoardManager) {
+    return this._state.restartGame(this, player, board);
   }
 
   passTurn(player: IPlayer) {

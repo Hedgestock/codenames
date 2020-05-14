@@ -13,7 +13,7 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
   const { state } = React.useContext(Store);
 
   const [players, setPlayers] = React.useState(new Map<string, IPlayer>());
- 
+
   React.useEffect(() => {
     if (socket) {
       socket.on("playersUpdate", (playersArray) => {
@@ -35,6 +35,12 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
     [socket]
   );
 
+  const tryStartGame = React.useCallback(() => {
+    if (socket) {
+      socket.emit("tryStartGame");
+    }
+  }, [socket]);
+
   return (
     <>
       <div
@@ -49,7 +55,7 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
             <PlayerChip
               key={i}
               player={player}
-              style={{marginTop: "5px", marginLeft: "5px"}}
+              style={{ marginTop: "5px", marginLeft: "5px" }}
               commands={{
                 makeGameMaster: tryModifyPlayer(
                   uuid,
@@ -66,7 +72,7 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => socket.emit("tryStartGame")}
+          onClick={tryStartGame}
           style={{ width: "min-content", alignSelf: "center" }}
         >
           {state.langRes.game.startGame}

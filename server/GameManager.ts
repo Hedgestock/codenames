@@ -193,6 +193,15 @@ export default class {
     return false;
   }
 
+  tryRestartGame(playerUUID: string) {
+    const player = this._players.get(playerUUID);
+    if (player) {
+      return this._context.restartGame(player);
+    }
+    return false;
+  }
+
+
   tryReveal(playerUUID: string, pos: number) {
     const player = this._players.get(playerUUID);
     if (player) {

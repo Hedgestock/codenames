@@ -16,8 +16,9 @@ export const en = {
   game: {
     roomLinkTitle: "Copy this link to share the room.",
     startGame: "Start the game!",
-    redTeamWon: "L'équipe rouge remporte la partie !!!",
-    blueTeamWon: "L'équipe bleue remporte la partie !!!",
+    redTeamWon: "Blue team wins the game!!!",
+    blueTeamWon: "Red team wins the game!!!",
+    restart: "Restart",
   },
   history: {
     disconnected: "disconnected.",

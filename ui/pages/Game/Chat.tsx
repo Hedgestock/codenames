@@ -27,16 +27,16 @@ const Chat = ({ socket }: ISocketConnectedProps) => {
     }
   }, [socket]);
 
-  function handleChange(e) {
-    setMessage(e.target.value);
-  }
-
-  function sendMessage() {
+  const sendMessage = React.useCallback(() => {
     const trimmed = message.trim();
-    if (trimmed !== "") {
+    if (trimmed !== "" && socket) {
       socket.emit("message", trimmed);
     }
     setMessage("");
+  }, [socket, message]);
+
+  function handleChange(e) {
+    setMessage(e.target.value);
   }
 
   function handleKeyPress(e) {

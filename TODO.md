@@ -64,6 +64,7 @@
 
 ## Cleanup
 
+- [ ] <span style="background-color:yellow">Fix how win message display is handled</span>
 - [ ] <span style="background-color:yellow">Move websocket handling outside of main.ts</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
 - [ ] <span style="background-color:yellow">Look at fork-ts-checker-webpack-plugin</span>
@@ -97,7 +98,7 @@
 
 - [ ] <span style="background-color:darkorange">Add games overview on home page</span>
 - [ ] <span style="background-color:darkorange">Going to profile from a game remembers it ? (also use last page or mouse 4 button you dummy...)</span>
-- [ ] <span style="background-color:darkorange">New game after game finish</span>
+- [x] <span style="background-color:darkorange">New game after game finish</span>
 - [ ] <span style="background-color:lightgreen">Add possibility of custom board</span>
 - [ ] <span style="background-color:lightgreen">Add possibility of custom wordlist</span>
 - [ ] <span style="background-color:lightgreen">Possibility to kick a player</span>

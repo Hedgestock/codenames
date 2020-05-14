@@ -18,6 +18,7 @@ export const fr = {
     startGame: "Commencer la partie !",
     redTeamWon: "L'équipe rouge remporte la partie !!!",
     blueTeamWon: "L'équipe bleue remporte la partie !!!",
+    restart: "Recommencer une partie",
   },
   history: {
     disconnected: "a quitté la partie.",

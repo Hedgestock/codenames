@@ -11,7 +11,7 @@ import {
   revealedCardColor,
 } from "../../shared/theme";
 import GameCard from "./GameCard";
-import { Typography } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 
 interface BoardProps extends ISocketConnectedProps {
   gameState: EGameState;
@@ -56,6 +56,23 @@ const Board = ({ gameState, socket }: BoardProps) => {
 
   const [board, setBoard] = React.useState([]);
 
+  const tryReveal = React.useCallback(
+    (index: number) => {
+      return () => {
+        if (socket) {
+          socket.emit("tryReveal", index);
+        }
+      };
+    },
+    [socket]
+  );
+
+  const tryRestartGame = React.useCallback(() => {
+    if (socket) {
+      socket.emit("tryRestartGame");
+    }
+  }, [socket]);
+
   React.useEffect(() => {
     if (socket) {
       socket.on("boardUpdate", (boardObject) => {
@@ -99,9 +116,25 @@ const Board = ({ gameState, socket }: BoardProps) => {
   return (
     <>
       {gameState === EGameState.blueTeamWon ? (
-        <Typography variant="h3" style={{color: blueTeamColor}}>{state.langRes.game.blueTeamWon}</Typography>
+        <Typography
+          variant="h3"
+          style={{ color: blueTeamColor, alignSelf: "center" }}
+        >
+          {state.langRes.game.blueTeamWon}
+        </Typography>
       ) : gameState === EGameState.redTeamWon ? (
-        <Typography variant="h3" style={{color: redTeamColor}}>{state.langRes.game.blueTeamWon}</Typography>
+        <Typography
+          variant="h3"
+          style={{ color: redTeamColor, alignSelf: "center" }}
+        >
+          {state.langRes.game.redTeamWon}
+        </Typography>
+      ) : null}
+      {gameState === EGameState.blueTeamWon ||
+      gameState === EGameState.redTeamWon ? (
+        <Button fullWidth onClick={tryRestartGame}>
+          {state.langRes.game.restart}
+        </Button>
       ) : null}
       <div className="game-board">
         {board.map((c, i) => (
@@ -111,7 +144,7 @@ const Board = ({ gameState, socket }: BoardProps) => {
             row={Math.floor(i / 5 + 1)}
             style={getStyle(c)}
             // votes={Math.floor(Math.random() * 5)}
-            onClick={() => socket.emit("tryReveal", i)}
+            onClick={tryReveal(i)}
           >
             {c.word}
           </GameCard>

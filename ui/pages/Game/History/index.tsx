@@ -7,13 +7,21 @@ const GameHistory = ({ socket }: ISocketConnectedProps) => {
 
   React.useEffect(() => {
     if (socket) {
-      socket.on("historyMessage", (historyMessage) => {
-        setHistoryValue((prevHistory) => [historyMessage, ...prevHistory]);
-      });
-
-      socket.on("historyInit", (historyObject) => {
+      function initListener(historyObject) {
+        console.log(historyObject);
         setHistoryValue(historyObject);
-      });
+      }
+      socket.on("historyInit", initListener);
+
+      function listener(historyMessage) {
+        setHistoryValue((prevHistory) => [historyMessage, ...prevHistory]);
+      }
+      socket.on("historyMessage", listener);
+
+      return () => {
+        socket.off("historyInit", initListener);
+        socket.off("historyMessage", listener);
+      };
     }
   }, [socket]);
 

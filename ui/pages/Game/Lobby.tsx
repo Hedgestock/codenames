@@ -15,12 +15,17 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
   const [players, setPlayers] = React.useState(new Map<string, IPlayer>());
 
   React.useEffect(() => {
+    function listener(playersArray) {
+      setPlayers(new Map(playersArray));
+    }
     if (socket) {
-      socket.on("playersUpdate", (playersArray) => {
-        setPlayers(new Map(playersArray));
-      });
+      socket.on("playersUpdate", listener);
 
       socket.emit("requestPlayers");
+
+      return () => {
+        socket.off("playersUpdate", listener);
+      };
     }
   }, [socket]);
 
@@ -55,7 +60,7 @@ const GameLobby = ({ socket, hasStartGameButton = false }: GameLobbyProps) => {
             <PlayerChip
               key={i}
               player={player}
-              style={{ marginTop: "5px", marginLeft: "5px" }}
+              style={{ marginTop: "5px", marginRight: "5px" }}
               commands={{
                 makeGameMaster: tryModifyPlayer(
                   uuid,

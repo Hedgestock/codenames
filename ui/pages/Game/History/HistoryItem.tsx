@@ -22,7 +22,7 @@ const HistoryItem = ({ player, action, card }: IHistoryItem) => {
         whiteSpace: "nowrap",
       }}
     >
-      {player ? <PlayerChip player={player} style={{marginLeft: "5px"}}/> : null}
+      {player ? <PlayerChip player={player} style={{marginRight: "5px"}}/> : null}
       <Typography>{state.langRes.history[action]}</Typography>
       {card ? (
         <Chip

@@ -22,8 +22,6 @@ const iconStyle = { color: "#FFF" };
 const PlayerChip = ({ player, commands, style = {} }: PlayerChipProps) => {
   const { state } = React.useContext(Store);
 
-  const theme = useTheme();
-
   const [anchor, setAnchor] = React.useState(null);
   const isMenuOpen = Boolean(anchor);
 

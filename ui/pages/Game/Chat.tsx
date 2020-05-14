@@ -17,13 +17,19 @@ const Chat = ({ socket }: ISocketConnectedProps) => {
 
   React.useEffect(() => {
     if (socket) {
-      socket.on("message", (messageObject) =>
-        setChat((prevChat) => [messageObject, ...prevChat])
-      );
-
-      socket.on("chatInit", (chatObject) => {
+      function initListener(chatObject) {
         setChat(chatObject);
-      });
+      }
+      socket.on("chatInit", initListener);
+      function listener(messageObject) {
+        setChat((prevChat) => [messageObject, ...prevChat]);
+      }
+      socket.on("message", listener);
+
+      return () => {
+        socket.off("chatInit", initListener);
+        socket.off("message", listener);
+      };
     }
   }, [socket]);
 

@@ -43,6 +43,7 @@
 
 ### History
 
+- [ ] <span style="background-color:darkorange">Add chips for spy talking</span>
 - [x] <span style="background-color:darkorange">Fix text alignment</span>
 - [x] <span style="background-color:darkorange">Make playerchip white theme friendly</span>
 - [x] <span style="background-color:lightcoral">Handle card reveal</span>
@@ -89,6 +90,7 @@
 
 ## Style
 
+- [ ] <span style="background-color:lightgreen">Add animations</span>
 - [ ] <span style="background-color:darkorange">Disable player context menues for nonGameMaster</span>
 - [ ] <span style="background-color:darkorange">Disable startGame for nonGameMaster</span>
 - [ ] <span style="background-color:darkorange">put border around dinamic elements</span>

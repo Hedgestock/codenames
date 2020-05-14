@@ -75,13 +75,14 @@ const Board = ({ gameState, socket }: BoardProps) => {
 
   React.useEffect(() => {
     if (socket) {
-      socket.on("boardUpdate", (boardObject) => {
+      function listener(boardObject) {
         setBoard(boardObject);
-      });
+      }
+      socket.on("boardUpdate", listener);
 
-      socket.on("boardUpdate", (boardObject) => {
-        setBoard(boardObject);
-      });
+      return () => {
+        socket.off("boardUpdate", listener);
+      };
     }
   }, [socket]);
 
@@ -132,7 +133,12 @@ const Board = ({ gameState, socket }: BoardProps) => {
       ) : null}
       {gameState === EGameState.blueTeamWon ||
       gameState === EGameState.redTeamWon ? (
-        <Button fullWidth variant="contained" color="primary" onClick={tryRestartGame}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={tryRestartGame}
+        >
           {state.langRes.game.restart}
         </Button>
       ) : null}

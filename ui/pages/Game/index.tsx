@@ -45,9 +45,14 @@ const Game = ({ guid }: GameProps) => {
 
   React.useEffect(() => {
     if (socket) {
-      socket.on("gameStateChanged", (gameStateObject) =>
-        setGameState(gameStateObject)
-      );
+      function listener(gameStateObject) {
+        setGameState(gameStateObject);
+      }
+      socket.on("gameStateChanged", listener);
+
+      return () => {
+        socket.off("gameStateChanged", listener);
+      };
     }
   }, [socket]);
 
@@ -105,7 +110,7 @@ const Game = ({ guid }: GameProps) => {
         {gameState === EGameState.beforeStart ? (
           <GameLobby socket={socket} hasStartGameButton />
         ) : (
-          <Board socket={socket} gameState={gameState}/>
+          <Board socket={socket} gameState={gameState} />
         )}
         <ShareURL />
       </div>

@@ -57,6 +57,10 @@ const ChooseNameModal = () => {
             value={name}
             onChange={(event) => setName(event.target.value)}
             helperText={help}
+            style={{width: "50%"}}
+            inputProps={{
+              maxLength: 32
+            }}
           />
           <Button variant="contained" color="primary" onClick={onNameChoose}>
             {state.langRes.chooseName.choose}

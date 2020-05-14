@@ -1,9 +1,9 @@
 export enum EGameState {
-  beforeStart,
-  blueSpyTalking,
-  blueTeamGuessing,
-  redSpyTalking,
-  redTeamGuessing,
-  blueTeamWon,
-  redTeamWon,
+  beforeStart = "beforeStart",
+  blueSpyTalking = "blueSpyTalking",
+  blueTeamGuessing = "blueTeamGuessing",
+  redSpyTalking = "redSpyTalking",
+  redTeamGuessing = "redTeamGuessing",
+  blueTeamWon = "blueTeamWon",
+  redTeamWon = "redTeamWon",
 }

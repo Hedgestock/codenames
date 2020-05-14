@@ -1,3 +1,5 @@
+import { EGameState } from "./EGameState";
+
 export type HistoryAction =
   | "init"
   | "isRed"
@@ -7,4 +9,5 @@ export type HistoryAction =
   | "disconnected"
   | "reconnected"
   | "revealed"
-  | "startedGame";
+  | "startedGame"
+  | EGameState;

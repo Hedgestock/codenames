@@ -29,6 +29,18 @@ export const en = {
     reconnected: "reconnected.",
     revealed: "revealed",
     startedGame: "started a game.",
+    beforeStart: "Waiting for the next game...",
+    blueSpyTalking: "The blue spy is talking.",
+    blueTeamGuessing: "The blue team is guessing.",
+    redSpyTalking: "The red spy is talking.",
+    redTeamGuessing: "The red team is guessing.",
+    redTeamWon: "Blue team wins the game!!!",
+    blueTeamWon: "Red team wins the game!!!",
+  },
+  guess: {
+    hint: "Hint",
+    word: "word(s)",
+    in: "in",
   },
   home: {
     createGame: "Create game",

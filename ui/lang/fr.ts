@@ -29,6 +29,18 @@ export const fr = {
     reconnected: "s'est reconnecté.",
     revealed: "a révélé",
     startedGame: "a lancé une partie.",
+    beforeStart: "En attente pour une nouvelle partie...",
+    blueSpyTalking: "Le maître espion bleu va parler.",
+    blueTeamGuessing: "L'équipe bleue devine.",
+    redSpyTalking: "Le maître espion rouge va parler.",
+    redTeamGuessing: "L'équipe rouge devine.",
+    redTeamWon: "L'équipe rouge remporte la partie !!!",
+    blueTeamWon: "L'équipe bleue remporte la partie !!!",
+  },
+  guess: {
+    hint: "Indice",
+    word: "mot(s)",
+    in: "en",
   },
   home: {
     createGame: "Créer une partie",

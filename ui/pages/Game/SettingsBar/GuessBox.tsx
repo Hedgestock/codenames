@@ -1,33 +1,76 @@
+import {
+  Input,
+  TextField,
+  MenuItem,
+  Select,
+  InputAdornment,
+  Button,
+} from "@material-ui/core";
 import * as React from "react";
 import ISocketConnectedProps from "../../../shared/ISocketConnectedProps";
-import { Button, IconButton, Tooltip } from "@material-ui/core";
 import { Store } from "../../../Store";
-import { Settings, SupervisedUserCircle, SupervisorAccount, Loop, Visibility } from "@material-ui/icons";
-import GameLobby from "../Lobby";
-import { EGameState } from "../../../../shared";
+import { Send } from "@material-ui/icons";
 
-
-const SettingsBar = ({ socket }: ISocketConnectedProps) => {
+const GuessBox = ({ socket }: ISocketConnectedProps) => {
   const { state } = React.useContext(Store);
-  
+
+  const [hint, setHint] = React.useState("");
+  const [wordNumber, setWordNumber] = React.useState(1);
+
   const setGuess = React.useCallback(() => {
     if (socket) {
       socket.emit("trySetGuess");
     }
-  }, [socket]);
+  }, [socket, hint, wordNumber]);
+
+  function handleHintChange(e) {
+    setHint(e.target.value);
+  }
+
+  function handleWordNumberChange(e) {
+    console.log(typeof e.target.value);
+    setWordNumber(e.target.value);
+  }
+
+  const WordNumberSelect = (
+    <Select
+      value={wordNumber}
+      onChange={handleWordNumberChange}
+     >
+      {[...new Array(9).keys()].map((num) => {
+        num++;
+        return (
+          <MenuItem key={num} value={num}>
+            {`${state.langRes.guess.in} ${num} ${state.langRes.guess.word}`}
+          </MenuItem>
+        );
+      })}
+    </Select>
+  );
 
   return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "-webkit-fill-available",
-        }}
-      >
-        
-      </div>
+    <TextField
+      variant="outlined"
+      margin="dense"
+      value={hint}
+      onChange={handleHintChange}
+      helperText={state.langRes.guess.helper}
+      label={state.langRes.guess.hint}
+      placeholder={state.langRes.guess.hint}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="end">{WordNumberSelect}</InputAdornment>
+        ),
+        endAdornment: (
+          <InputAdornment position="end">
+            <Button color="primary" onClick={setGuess}>
+              <Send />
+            </Button>
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 
-export default SettingsBar;
+export default GuessBox;

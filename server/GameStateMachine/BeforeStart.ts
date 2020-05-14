@@ -12,6 +12,11 @@ export class BeforeStart implements IGameState {
 
   startGame(context: GameContext, player: IPlayer, first: Team) {
     if (player.isGameMaster) {
+      context.pushHistory({
+        player: { ...player },
+        action: "startedGame",
+      });
+      
       context.state = new SpyTalking(first);
 
       return true;

@@ -128,7 +128,7 @@ export default class {
       }
       this.emitPlayersUpdate();
       this.pushHistory({
-        player,
+        player: { ...player },
         action: ("is" + this.capitalize(player.team)) as HistoryAction,
       });
       return true;
@@ -145,7 +145,7 @@ export default class {
       this._gameMasterUUID = playerUUID;
       this.emitPlayersUpdate();
       this.pushHistory({
-        player,
+        player: { ...player },
         action: "isGameMaster",
       });
       return true;
@@ -164,7 +164,7 @@ export default class {
       blueSpy && (blueSpy.isSpyMaster = false);
     }
     player.isSpyMaster = true;
-    this.pushHistory({ player, action: "isSpyMaster" });
+    this.pushHistory({ player: { ...player }, action: "isSpyMaster" });
     this._eventEmitter.emit("boardUpdate");
     this.emitPlayersUpdate();
   }
@@ -188,10 +188,6 @@ export default class {
   tryStartGame(playerUUID: string) {
     const player = this._players.get(playerUUID);
     if (player && this.context.startGame(player, this._first)) {
-      this.pushHistory({
-        player: player,
-        action: "startedGame",
-      });
       this._eventEmitter.emit("boardUpdate");
       return true;
     }
@@ -246,7 +242,7 @@ export default class {
 
       if (player.socketsNo == 1) {
         this.pushHistory({
-          player,
+          player: { ...player },
           action: "reconnected",
         });
       }
@@ -278,18 +274,18 @@ export default class {
 
       if (player.isGameMaster) {
         this.pushHistory({
-          player,
+          player: { ...player },
           action: "isGameMaster",
         });
       }
 
       this.pushHistory({
-        player,
+        player: { ...player },
         action: ("is" + this.capitalize(player.team)) as HistoryAction,
       });
 
       if (isSpyMaster) {
-        this.pushHistory({ player, action: "isSpyMaster" });
+        this.pushHistory({ player: { ...player }, action: "isSpyMaster" });
       }
 
       this._players.set(user.uuid, player);
@@ -309,7 +305,10 @@ export default class {
         this.eventEmitter.emit("gameIsEmpty");
         return;
       }
-      this.pushHistory({ player: disconectedPlayer, action: "disconnected" });
+      this.pushHistory({
+        player: { ...disconectedPlayer },
+        action: "disconnected",
+      });
 
       if (disconectedPlayer.isGameMaster) {
         const found = this.connectedPlayers[0];

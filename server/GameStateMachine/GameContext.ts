@@ -1,4 +1,4 @@
-import { IPlayer, Team, IGuess, IHistoryItem } from "../../shared";
+import { IPlayer, Team, IGuess, IHistoryItem, EGameState } from "../../shared";
 import BoardManager from "../BoardManager";
 import { IGameState } from "./IGameState";
 import { BeforeStart } from "./BeforeStart";
@@ -11,7 +11,10 @@ export class GameContext {
   readonly players: Map<string, IPlayer>;
   readonly pushHistory: (historyItem: IHistoryItem) => void;
 
-  constructor(eventEmitter: EventEmitter, ph: (historyItem: IHistoryItem) => void) {
+  constructor(
+    eventEmitter: EventEmitter,
+    ph: (historyItem: IHistoryItem) => void
+  ) {
     this.eventEmitter = eventEmitter;
     this.pushHistory = ph;
     this.state = new BeforeStart();
@@ -19,13 +22,13 @@ export class GameContext {
 
   set state(newState: IGameState) {
     this._state = newState;
+    this.pushHistory({ action: this._state.state });
     this.eventEmitter.emit("gameStateChanged", newState.state);
   }
 
   get state() {
     return this._state;
   }
-
 
   revealCard(player: IPlayer, board: BoardManager, pos: number) {
     return this._state.revealCard(this, player, board, pos);

@@ -11,7 +11,10 @@
 
 ## Game
 
-- [ ] <span style="background-color:darkorange   ">Add handling of number of word proposed</span>
+- [ ] <span style="background-color:darkorange">Add handling of number of word proposed</span>
+- [ ] <span style="background-color:darkorange">Display name</span>
+- [ ] <span style="background-color:darkorange">Pass spymaster turn</span>
+- [ ] <span style="background-color:darkorange">Display number of cards remaining</span>
 - [ ] <span style="background-color:darkorange">Add First Team Handling</span>
 - [ ] <span style="background-color:darkorange">Add english board generation</span>
 - [ ] <span style="background-color:darkorange">Add loading game state</span>
@@ -70,6 +73,7 @@
 ## Cleanup
 
 - [ ] <span style="background-color:lightcoral">Splice player name at cookie reading and server-side</span>
+- [ ] <span style="background-color:yellow">Look at vscode debugger for debugging server</span>
 - [ ] <span style="background-color:yellow">Fix how win message display is handled and move it to index?</span>
 - [ ] <span style="background-color:yellow">Fix implementation of different IHistoryItem</span>
 - [ ] <span style="background-color:yellow">Implement reducers</span>
@@ -111,6 +115,10 @@
 - [ ] <span style="background-color:lightgreen">Add possibility of custom wordlist</span>
 - [ ] <span style="background-color:lightgreen">Possibility to kick a player</span>
 - [ ] <span style="background-color:lightgreen">Possibility to make password protected games</span>
+- [ ] <span style="background-color:lightgreen">Leaderboard ?</span>
+- [ ] <span style="background-color:lightgreen">Database ?</span>
+- [ ] <span style="background-color:lightgreen">Booo player who fails</span>
+- [ ] <span style="background-color:lightgreen">Add confirmation in tight situation</span>
 - [ ] <span style="background-color:lightgreen">Team chats</span>
 - [ ] <span style="background-color:lightgreen">voting system ?</span>
 - [x] <span style="background-color:darkorange">Display name on profile page</span>

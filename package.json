@@ -8,7 +8,7 @@
     "@material-ui/icons": "^4.9.1",
     "body-parser": "^1.19.0",
     "cookie": "^0.4.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-sse": "^0.5.3",
     "forever": "^2.0.0",
     "node-fetch": "^2.6.0",
